@@ -1,0 +1,17 @@
+local cron = require 'cron'
+ 
+-- This scheduler script can be used to run a script at a given time
+-- https://help.interfaceware.com/code/details/scheduler-lua
+ 
+ 
+-- Within the editor we the function runs all the time.
+local function DoBatchProcess()
+   print("ggsdfgsdfg sdfgsgs")
+end
+ 
+function main()
+   -- schedule the job function to run at 11.30pm 
+   scheduler.runAt(23.5, DoBatchProcess, "Some Argument") 
+end
+
+main()

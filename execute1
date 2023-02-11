@@ -1,0 +1,13 @@
+function execute(command) 
+    local t = os.execute(command); 
+    print(t); 
+end 
+
+function execute_gpio(action, name) 
+    local space = " local command = "/sbin/gpio.sh" .. space .. action .. space .. name; 
+    print(command); 
+    execute(command); 
+end 
+
+-- execute('ls'); execute_gpio("set", "DOUT1"); 
+execute_gpio("get", "DOUT1"); 

@@ -1,0 +1,10 @@
+local http = require("socket.http")
+local ltn12 = require 'ltn12'
+
+local body = {}
+local res, code, headers, status = http.request{
+  url = "https://httpbin.org/get",
+  sink = ltn12.sink.table(body)
+}
+
+local response = table.concat(body)
