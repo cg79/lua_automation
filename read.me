@@ -1,0 +1,53 @@
+
+# Programare comenzi 
+
+Routerul teltonika poate sa primeasca comenzi de executie sub forma de mai jos
+
+0,72,8:12:3,1,1
+
+Numarul zilei din an, 
+Ora din zi, 
+Tipul comenzii
+ - Posibile valori
+    - GPIO = 1
+
+Valoarea primita de comanda    
+1 - open
+0 - close
+
+ - Exemplu programare comenzi multiple
+
+1,{72,[8:12:3,1,1],[8:15:3,1,0]},{75,[8:12:3,1,1],[8:15:3,1,1]}
+
+Nota: daca ziua numarul 74 nu are setata comenzi, se va lua in considerare ziua precedenta (in exemplul de mai sus se va considera ziua numarul 72)
+
+
+# Posibile operatii
+
+0 : executia unei singure comenzi la un anumit timp
+1 : programarea executiei mai multor comenzi la intervale diferite de timp cu posibilitate de salvare
+2 : arata timpul de pe ruter
+3 : setarea timpului pe ruter
+4 : returneaza timpul folosind cartela GSM
+5 : returneaza timpul folosind sistemul GPS
+6 : returneaza toate informatiile oferite de sistemul GPS
+7 : prezinta operatiile programate (aferente unei zile X)
+8 : prezinta care sunt urmatoarele N comenzi care se vor executa
+9 : trimite o notificare (SMS || Email || Aplicatie) cu X secunde inainte sau dupa de executia unei comenzi. exemplu: X = -10
+10: returneaza parametrii ruterului (DOUT2, DOUT1, trebuie sa investighez ce mai pot citi +++) 
+11: returneaza logurile de pe ruter pentru o anumita zi X
+12: returneaza informatii despre sistemul ruterului (spatiu disponibil, cat trafic de date s-a folosit, +++)
+13: restart
+14: setare numar pt fiecare ruter
+
+
+calculare sunset
+https://gist.github.com/alexander-yakushev/88531e23a89a0f2acbf1
+
+
+
+
+
+
+
+

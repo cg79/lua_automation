@@ -1,0 +1,96 @@
+
+
+-- local arr = 
+
+function execute(command)
+ --local ostime_vrbl = os.time() + second
+ --print(ostime_vrbl);
+ os.execute(command);
+end
+
+function wait(second)
+ execute("sleep " .. second);
+end
+
+function dateToString(date)
+  return os.date('%Y-%m-%d %H:%M:%S', date)
+end
+
+function addSecondsToDate(time, seconds)
+   time= time + seconds;
+  return time;
+end
+
+function getDateValues()
+  return os.date("*t")
+
+  -- https://www.lua.org/manual/5.4/manual.html#pdf-os.date
+  -- year, month (1–12), day (1–31), hour (0–23), min (0–59), sec (0–61, due to leap seconds), wday (weekday, 1–7, Sunday is 
+  -- 1), yday (day of the year, 1–366), and isdst (daylight saving flag, a boolean)
+end 
+
+function createDateFromValues(year, month, day, hour, minute)             
+  return os.time({year=2001, month=9, day=11, hour=13, minute=46})
+end
+
+function createTimeFromHMS(hour, minute, second)
+  local date= getDateValues()
+  return os.time({year=date.year, month=date.month, day=date.day, hour=hour, min=minute, sec=second})
+end
+
+function dayOfTheYear()
+  -- https://www.lua.org/manual/5.4/manual.html#pdf-os.date
+  return os.date("*t").yday
+end  
+
+function localTime()
+ return os.time()
+end
+
+function getUTCLocalTime()     
+ return os.time(os.date('!*t'))
+end
+
+function timeToString(time)                   
+ local stamp = os.date("%H:%M:%S", time)
+ return stamp;
+end
+
+
+function getSeccondsUntilDate(t1)
+ local seconds = os.difftime(t1, localTime())         
+ return seconds;                          
+end
+                                       
+
+function secondsBetweenTwoTimeStamp(t1,t2)
+ local seconds = (t2-t1)/1000;            
+ return seconds;                          
+end                                       
+
+function executeAfterXSecconds(seconds, func)
+ wait(seconds)
+ func()
+end  
+
+function printPLM() 
+  print(timeToString(localTime()) .. " test")
+end
+
+print(timeToString(localTime()));
+
+executeAfterXSecconds(2, printPLM)
+
+local after1Minute = addSecondsToDate(localTime(), 60)
+print("after 60 sec " .. dateToString(after1Minute))
+
+print("local time " .. dateToString(localTime()))
+
+local newDate= createTimeFromHMS(12,00,00)
+ 
+print("date as string " ..  dateToString(newDate))
+print("asta merge bine? " .. getSeccondsUntilDate(newDate))
+print("one minute " .. getSeccondsUntilDate(after1Minute))
+print("UTC local time " .. timeToString(getUTCLocalTime()))
+
+

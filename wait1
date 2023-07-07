@@ -1,0 +1,19 @@
+local counter = 0;
+
+function wait(second)
+ --local ostime_vrbl = os.time() + second
+ --print(ostime_vrbl);
+ os.execute("sleep " .. second);
+end
+
+function main()
+
+  while counter < 10 do
+   counter = counter + 1;
+   wait(2)
+   print(counter)
+  end
+
+end
+
+main()

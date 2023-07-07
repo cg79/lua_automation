@@ -1,0 +1,3 @@
+file = io.open('/tmp/hi.txt', 'w')
+file:write('hello!')
+io.close(file)
