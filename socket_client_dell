@@ -1,0 +1,112 @@
+
+
+
+
+--local json = require "lunajson";
+--local json = require("json");
+
+local host = "5.tcp.eu.ngrok.io";
+local port = 17195;
+ 
+local socket = require("socket") 
+
+print("aici e ok");
+-- json.encode({ 1, 2, 3, { x = 10 } }) 
+
+local tcp = assert(socket.tcp())  
+--print("a")
+
+
+local connection = tcp:connect(host, port);
+
+
+local whoStr = '{"commandtype":"who","name":"router1"}';
+--print(whosStr);
+
+tcp:send(whoStr .. "\n");
+
+
+-- print("b")
+
+if connection == nil then
+  print ('socket server este nil')
+  os.exit();
+end
+
+-- print("connection is not nil")
+-- print(connection)
+
+-- #################################### execute commands
+
+function execute(command)     
+  local t = os.execute(command);     
+  -- print(t);
+  return t; 
+end   
+
+function execute_gpio(command)     
+ local space = " ";     
+ local command = "/sbin/gpio.sh" .. space .. command;     
+ print(command);     
+
+ execute(command);
+ 
+end
+
+local mcount = 0;
+function monitor()
+  
+ if mcount > 0 then 
+   return;
+ end
+
+ mcount = 0;
+ while mcount < 2 do
+  os.execute("sleep 5")
+  local resp = execute("/sbin/gpio.sh get DOUT2")
+  print(resp)
+    
+  local whoStr = [[{"commandtype":"monitor","name":"router1", "value":"]] .. resp.. [["}]]
+  tcp:send(whoStr .. "\n");
+  mcount = mcount +1;
+
+ end 
+ mcount = 0;
+end
+
+ 
+-- ###################################
+
+
+
+--note the newline below 
+
+--if connection ~= nil then
+-- print ('sending first message')
+-- tcp:send("hello from teltonika client: Claudiu Gombos\n") 
+--end
+
+
+
+-- print("start sending messages to socket server") 
+-- tcp:send("hello world with good conection\n");  
+
+ while true do     
+  local s, status, partial = tcp:receive()     
+ 
+  local commandFromServer = s or partial;
+  print(commandFromServer)
+
+  execute_gpio(commandFromServer)
+  -- monitor()
+ 
+  if status == "closed" then break end
+ end
+
+ tcp:close()
+
+
+
+
+
+
