@@ -6,7 +6,6 @@ local hfile = {
     __DESCRIPTION = 'File-related functions for lua',
 }
   
-  
 function hfile.test()
   print("hfile merge")
 end
@@ -23,6 +22,12 @@ end
 function hfile.writeToFile(fileName, text)
   local file = io.open(fileName, 'w')
   file:write(text)
+  io.close(file)
+end
+
+function hfile.appendToFile(fileName, text)
+  local file = io.open(fileName, 'a+')
+  file:write(text .. '\n')
   io.close(file)
 end
 

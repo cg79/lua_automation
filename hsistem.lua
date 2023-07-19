@@ -16,7 +16,7 @@ function hsistem.execute(command)
  end
  
  function hsistem.wait(second)
-  execute("sleep " .. second);
+  hsistem.execute("sleep " .. second);
  end
 
  function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
