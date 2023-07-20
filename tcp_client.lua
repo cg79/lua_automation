@@ -1,9 +1,13 @@
 
 local hsistem = require 'hsistem'
 local hlog = require 'hlog'
+local hstring = require 'hstring'
 
-local host = "7.tcp.eu.ngrok.io";
-local port = 14456;
+-- local host = "7.tcp.eu.ngrok.io";
+-- local port = 14456;
+
+local host = "localhost";
+local port = 8007;
  
 -- https://w3.impa.br/~diego/software/luasocket/introduction.html
 -- https://web.tecgraf.puc-rio.br/luasocket/old/luasocket-1.0/
@@ -43,6 +47,8 @@ function connectToServer()
   connection = tempConnection;
   
   hlog.logToFile('TCP_CLIENT. CONEXIUNE STABILITA');
+  tcp:send(whoStr);
+
   hsistem.wait(10);
 end
 
@@ -54,14 +60,24 @@ connectToServer();
 --   end
 
 
-tcp:send(whoStr);
 
-function execute_gpio(command)     
- local space = " ";     
- local command = "/sbin/gpio.sh" .. space .. command;     
- print(command);     
 
- hsistem.execute(command);
+function execute_gpio(command)
+  print(command);     
+
+  local array  = hstring.splitBy(command, ' ')
+  local action = array[1];
+  print(action .. 'x');
+
+  if (action == 'reboot') then
+    print('comanda de reboot');
+    hsistem.execute(action);
+  else
+    local space = " ";     
+    local command = "/sbin/gpio.sh" .. space .. command;     
+
+    hsistem.execute(command);
+  end
 end
 
 local mcount = 0;
@@ -92,7 +108,7 @@ function receiveCommandsFromServer()
     local s, status, partial = tcp:receive()     
    
     local commandFromServer = s or partial;
-    print('commandFromServer' .. commandFromServer  .. status)
+    print('commandFromServer' .. commandFromServer)
   
     if (status == 'closed') then
       resetConnection();

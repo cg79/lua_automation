@@ -1,1 +1,1 @@
-Lua test.lua
+lua test.lua
