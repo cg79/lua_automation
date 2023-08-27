@@ -1,4 +1,12 @@
 
+
+local hfile = require 'hfile'
+local hconstants = require 'hconstants'
+local hgps = require 'hgps'
+local hexecute = require 'hexecute'
+local hsettings = require 'hsettings'
+
+
 local hboot = {
     __VERSION     = '1.0',
     __DESCRIPTION = 'bootlua',
@@ -8,27 +16,25 @@ function hboot.test()
   print("hlog merge")
 end
 
-function hboot.execute(command)
-  --local ostime_vrbl = os.time() + second
-  --print(ostime_vrbl);
-  os.execute(command);
- end
-
-
-
 --  1: se adauga symlinkul
 -- hboot.execute("ln -s /Users/claudiugombos/work/arduino/lua_automation lua_automation")
 
---  2. se executa scriptul de mai jos
- hboot.execute('lua lua_automation/test.lua &')
+hfile.ensureDirectory(hconstants.LOGS_DIRECTORY)
+hfile.ensureDirectory(hconstants.GPS_DIRECTORY)
+hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
 
 
+hgps.writeCoordinatesToFile()
 
--- hboot.execute("ls -l /Users/claudiugombos/work/arduino/lua_automation")
+hsettings.setName('pl')
+hsettings.setPhoneNumber('pl')
+hsettings.setRegion('pl')
+hsettings.setIsMaster('pl')
 
--- hboot.execute('cd lua_automation & ls')
--- 
--- hboot.execute('cd lua_automation & ls')
+
+-- local test = os.clock()
+-- print(test)
+-- hexecute.execute('lua tcp_client.lua &')
 
 return hboot
   

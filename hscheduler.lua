@@ -4,32 +4,16 @@ local hlog = require 'hlog'
 local htime = require 'htime'
 local hsistem = require 'hsistem'
 
+
 local hscheduler = {
     __VERSION     = '1.0',
     __DESCRIPTION = 'Scheduler-related functions for lua',
-    __DIRECTORY = './schedules'
+    __DIRECTORY = './h_schedules'
   }
   
   
 function hscheduler.test()
   print("hscheduler merge")
-end
-
-function stringCommandsToTable(input)
-  local arr = {}
-  local dayValue = 0;
-
-  for capture in string.gmatch(input, "%{(.-)%}") do
-      --    print(capture)
-     dayValue = hstring.textUntil(capture,',')
-     arr[dayValue] = capture;
-  end
-  
-  -- for k, v in pairs(arr) do
-  --     print(k,v)
-  -- end
-
-  return arr
 end
 
 function stringCommandAsObject(command) 
@@ -78,26 +62,6 @@ function getSchedulerFileName(dayIndex)
   return hscheduler.__DIRECTORY  .. '/' .. dayIndex
 end
 
-function saveTableToDisc(table) 
-  for k, v in pairs(table) do
-      print(k,v)
-      local fileName = getSchedulerFileName(k)
-      -- print(fileName)
-      hfile.writeToFile(fileName, v)
-  end
-end
-
-function hscheduler.saveCommandsToDisc(input)
-  hfile.ensureDirectory(hscheduler.__DIRECTORY)
-
-  -- hfile.delete(hscheduler.__DIRECTORY)
-  -- hfile.delete("del.lua")
-
-  local input = "1,{72,[8:12:3,1,1],[8:15:3,1,0]},{75,[8:12:3,1,1],[8:15:3,1,1]}"
-  local table = stringCommandsToTable(input)
-
-  saveTableToDisc(table)
-end
 
 function hscheduler.getCommandsForDay(dayNo)
   local fileName = ''
@@ -107,7 +71,7 @@ function hscheduler.getCommandsForDay(dayNo)
     fileName = getSchedulerFileName(dayIndex)
    
     fileExists = hfile.exists(fileName)
-    print(fileName,  fileExists)
+    -- print(fileName,  fileExists)
     if  fileExists then
       return hfile.readFile(fileName)
     end
@@ -134,8 +98,10 @@ function hscheduler.loadCommandsForDay(dayNo)
   local commandsFromFile = hscheduler.getCommandsForDay(dayNo)
   print(commandsFromFile)
 
-  local commandsArray = createAnArrayOfObjectsFromADailyCommand(commandsFromFile)
-  scheduleObjects(commandsArray)
+  if(commandsFromFile ~= nil) then
+    local commandsArray = createAnArrayOfObjectsFromADailyCommand(commandsFromFile)
+    scheduleObjects(commandsArray)
+  end
 end
 
 
@@ -144,6 +110,8 @@ function hscheduler.start()
 
   hscheduler.loadCommandsForDay(dayOfYear)
 end
+
+
 -- hscheduler.saveCommandsToDisc()
 -- local fn = hscheduler.__DIRECTORY  .. '/' .. "72"
 -- hlog.log(hfile.readFile(fn))

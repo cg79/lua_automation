@@ -1,25 +1,31 @@
 
-local hsistem = require 'hsistem'
 local hlog = require 'hlog'
 local hstring = require 'hstring'
-
+local hconstants = require 'hconstants'
+local hexecute = require 'hexecute'
+local hsistem = require 'hsistem'
+local socket = require("socket") 
 -- local host = "7.tcp.eu.ngrok.io";
 -- local port = 14456;
-
-local host = "localhost";
-local port = 8007;
  
 -- https://w3.impa.br/~diego/software/luasocket/introduction.html
 -- https://web.tecgraf.puc-rio.br/luasocket/old/luasocket-1.0/
-local socket = require("socket") 
+
+local name = hsistem.executeGetCommand('name') or 'guest'
+print(name)
+local phone = hsistem.executeGetCommand('phone')
+local region = hsistem.executeGetCommand('region')
+local master = hsistem.executeGetCommand('master')
+
 
 local masterSocket = socket.tcp();
 local tcp = assert(masterSocket)  
 -- local connection = nil;
 
-local whoStr = '{"commandtype":"who","name":"router1"}\n';
+-- local whoStr = '{"commandtype":"who","name":"router1"}\n';
+local whoStr = "{\"commandtype\":\"who" .. name .. "\"}"
 
-local pingCommand = '{"commandtype":"ping","name":"router1"}\n';
+-- local pingCommand = '{"commandtype":"ping","name":"router1"}\n';
 
 function resetConnection()
   tcp:close();
@@ -29,16 +35,16 @@ end
 
 function connectToServer()
   
-  local tempConnection = tcp:connect(host, port);
+  local tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
   
 
   while (tempConnection == nil) do
-    hsistem.wait(10);
+    hexecute.wait(10);
 
     hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
-    tempConnection = tcp:connect(host, port);
+    tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
     print(tempConnection);
   end
 
@@ -49,17 +55,10 @@ function connectToServer()
   hlog.logToFile('TCP_CLIENT. CONEXIUNE STABILITA');
   tcp:send(whoStr);
 
-  hsistem.wait(10);
+  hexecute.wait(10);
 end
 
 connectToServer();
-
-
--- for i,v in ipairs(tcp) do 
---       print(i) 
---   end
-
-
 
 
 function execute_gpio(command)
@@ -71,12 +70,16 @@ function execute_gpio(command)
 
   if (action == 'reboot') then
     print('comanda de reboot');
-    hsistem.execute(action);
+    hexecute.execute(action);
   else
-    local space = " ";     
+
+    local routerValueMessage = '{"commandtype":"valuefromrouter","name":"router1", "value":1}\n';
+    tcp:send(routerValueMessage);
+
+    local space = " ";
     local command = "/sbin/gpio.sh" .. space .. command;     
 
-    hsistem.execute(command);
+    hexecute.execute(command);
   end
 end
 

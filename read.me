@@ -1,23 +1,42 @@
 
+routerul cand se porneste (hbootstrap.lua): 
+    - verifica existenta directorului 'h_logs'
+    - verifica existenta directorului 'h_gps'
+    - verifica existenta directorului 'h_settings'
+    - apeleaza comanda care returneaza coordonatele GPS (hgps) si le scrie in h_gps\info.txt
+
+comenzi ca parte a setarilor hsettings
+ - get set name 
+ - get set phone
+ - get set isMaster
+ - get set region name
+
+
+hschedule 
+
+
+
+time
+
+
+region - cand setez regiunea, si in ui e selectata alta regiune, pinul sa dispara din ui
+
 # Programare comenzi 
 
 Routerul teltonika poate sa primeasca comenzi de executie sub forma de mai jos
 
-0,72,8:12:3,1,1
+72,8:12:3,1,1
 
-Numarul zilei din an, 
-Ora din zi, 
-Tipul comenzii
- - Posibile valori
-    - GPIO = 1
-
+Numarul zilei din an - 72 
+Ora din zi           - 8:12:3
+Tipul comenzii       - 1 (GPIO = 1), (REBOOT = 2)
 Valoarea primita de comanda    
 1 - open
 0 - close
 
  - Exemplu programare comenzi multiple
 
-1,{72,[8:12:3,1,1],[8:15:3,1,0]},{75,[8:12:3,1,1],[8:15:3,1,1]}
+{72,[8:12:3,1,1],[8:15:3,1,0]},{75,[8:12:3,1,1],[8:15:3,1,1]}
 
 Nota: daca ziua numarul 74 nu are setata comenzi, se va lua in considerare ziua precedenta (in exemplul de mai sus se va considera ziua numarul 72)
 

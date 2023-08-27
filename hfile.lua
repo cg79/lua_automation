@@ -1,5 +1,5 @@
 
-local hsistem = require 'hsistem'
+local hexecute = require 'hexecute'
 
 local hfile = {
     __VERSION     = '1.0',
@@ -52,7 +52,7 @@ end
 function hfile.ensureDirectory(path)
   -- "/" works on both Unix and Windows
   if not hfile.exists(path) then
-    hsistem.execute("mkdir " .. path)
+    hexecute.execute("mkdir " .. path)
   end
 end
 
