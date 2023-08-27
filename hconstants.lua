@@ -10,8 +10,9 @@ local hconstants = {
     FILE_REGION = 'region.txt',
     FILE_MASTER = 'master.txt',
     GPS_FILE = 'h_gps/info.txt',
-    SERVER = 'loclhost',
-    PORT = 8007
+    SERVER = 'localhost',
+    PORT = 8007,
+    RECCONNECT_DELAY = 60
 }
   
   

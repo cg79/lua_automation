@@ -5,6 +5,7 @@ local hconstants = require 'hconstants'
 local hgps = require 'hgps'
 local hexecute = require 'hexecute'
 local hsettings = require 'hsettings'
+local hjson = require 'hjson'
 
 
 local hboot = {
@@ -35,6 +36,13 @@ hsettings.setIsMaster('pl')
 -- local test = os.clock()
 -- print(test)
 -- hexecute.execute('lua tcp_client.lua &')
+-- local test = hjson.createMessageFromRouterCommand('a', 'b', 'c')
+-- print(test)
+
+-- local test = hjson.createMessageFromRouterCommand('xxx', 'yyy', 'zzz')
+-- print(test)
+
+hexecute.execute('lua tcp_client.lua &')
 
 return hboot
   

@@ -78,22 +78,22 @@ end
   end
 
   if (name == 'name') then
-    response = hsettings.getName(value)
+    response = hsettings.getName(value) or 'name'
     return response;
   end
 
   if (name == 'phone') then
-    response = hsettings.getPhoneNumber(value)
+    response = hsettings.getPhoneNumber(value) or 'phone'
     return response;
   end
 
   if (name == 'region') then
-    response = hsettings.getRegion(value)
+    response = hsettings.getRegion(value) or '-'
     return response
   end
 
   if (name == 'master') then
-    response = hsettings.getIsMaster(value)
+    response = hsettings.getIsMaster(value) or 0
     return response
   end
 
@@ -104,6 +104,11 @@ end
 
   if (name == 'gsmtime') then
     response = 'gsm time'
+    return response
+  end
+
+  if (name == 'memory') then
+    response = 'os memory'
     return response
   end
 
@@ -122,6 +127,11 @@ end
     return
   end
 
+  if (name == 'firmware') then
+    hexecute.execute("reboot")
+    return
+  end
+
   if(getOrSet == 'set') then
     hsistem.executeSetCommand(name, value)
     return
@@ -130,6 +140,30 @@ end
   if(getOrSet == 'get') then
     hsistem.executeGetCommand(name)
     return
+  end
+
+
+ end
+
+ function hsistem.executeCommandFromServer(command)
+  print(command);     
+
+  local array  = hstring.splitBy(command, ' ')
+  local action = array[1];
+  print(action .. 'x');
+
+  if (action == 'reboot') then
+    print('comanda de reboot');
+    hexecute.execute(action);
+  else
+
+    -- local routerValueMessage = '{"commandtype":"valuefromrouter","name":"router1", "value":1}\n';
+    -- tcp:send(routerValueMessage);
+
+    local space = " ";
+    local command = "/sbin/gpio.sh" .. space .. command;     
+
+    hexecute.execute(command);
   end
 
 

@@ -5,3 +5,43 @@
 9:4:28:ggg
 9:5:11:ggg
 9:5:25:ggg
+11:23:0:ggg
+11:25:19:ggg
+11:25:29:TCP_CLIENT. Se incearca conexiunea la server
+11:25:39:TCP_CLIENT. Se incearca conexiunea la server
+11:25:49:TCP_CLIENT. Se incearca conexiunea la server
+11:25:59:TCP_CLIENT. Se incearca conexiunea la server
+11:26:9:TCP_CLIENT. Se incearca conexiunea la server
+11:26:19:TCP_CLIENT. Se incearca conexiunea la server
+11:26:29:TCP_CLIENT. Se incearca conexiunea la server
+11:26:39:TCP_CLIENT. Se incearca conexiunea la server
+11:26:41:TCP_CLIENT. Se incearca conexiunea la server
+11:26:41:TCP_CLIENT. Se incearca conexiunea la server
+11:26:41:TCP_CLIENT. Se incearca conexiunea la server
+11:26:41:TCP_CLIENT. Se incearca conexiunea la server
+11:26:42:TCP_CLIENT. Se incearca conexiunea la server
+11:26:42:TCP_CLIENT. Se incearca conexiunea la server
+11:26:42:TCP_CLIENT. Se incearca conexiunea la server
+11:26:42:TCP_CLIENT. Se incearca conexiunea la server
+12:32:4:ggg
+12:33:19:ggg
+12:34:16:ggg
+12:34:53:ggg
+12:35:53:TCP_CLIENT. Se incearca conexiunea la server
+12:36:6:TCP_CLIENT. Se incearca conexiunea la server
+12:36:8:TCP_CLIENT. Se incearca conexiunea la server
+12:36:9:TCP_CLIENT. Se incearca conexiunea la server
+12:36:24:TCP_CLIENT. Se incearca conexiunea la server
+12:36:24:TCP_CLIENT. Se incearca conexiunea la server
+12:36:24:TCP_CLIENT. Se incearca conexiunea la server
+12:36:24:TCP_CLIENT. Se incearca conexiunea la server
+12:36:24:TCP_CLIENT. Se incearca conexiunea la server
+12:36:25:TCP_CLIENT. Se incearca conexiunea la server
+12:36:57:TCP_CLIENT. Se incearca conexiunea la server
+12:36:58:TCP_CLIENT. Se incearca conexiunea la server
+12:36:58:TCP_CLIENT. Se incearca conexiunea la server
+12:36:58:TCP_CLIENT. Se incearca conexiunea la server
+12:36:58:TCP_CLIENT. Se incearca conexiunea la server
+12:36:58:TCP_CLIENT. Se incearca conexiunea la server
+12:38:10:ggg
+12:38:10:TCP_CLIENT. CONEXIUNE STABILITA

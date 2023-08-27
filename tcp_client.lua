@@ -1,6 +1,7 @@
 
 local hlog = require 'hlog'
 local hstring = require 'hstring'
+local hjson = require 'hjson'
 local hconstants = require 'hconstants'
 local hexecute = require 'hexecute'
 local hsistem = require 'hsistem'
@@ -11,11 +12,13 @@ local socket = require("socket")
 -- https://w3.impa.br/~diego/software/luasocket/introduction.html
 -- https://web.tecgraf.puc-rio.br/luasocket/old/luasocket-1.0/
 
-local name = hsistem.executeGetCommand('name') or 'guest'
+local name = hsistem.executeGetCommand('name')
 print(name)
 local phone = hsistem.executeGetCommand('phone')
 local region = hsistem.executeGetCommand('region')
 local master = hsistem.executeGetCommand('master')
+
+
 
 
 local masterSocket = socket.tcp();
@@ -23,7 +26,8 @@ local tcp = assert(masterSocket)
 -- local connection = nil;
 
 -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-local whoStr = "{\"commandtype\":\"who" .. name .. "\"}"
+local whoStr = hjson.createWhoCommand(name);
+print(whoStr)
 
 -- local pingCommand = '{"commandtype":"ping","name":"router1"}\n';
 
@@ -41,21 +45,19 @@ function connectToServer()
   
 
   while (tempConnection == nil) do
-    hexecute.wait(10);
+    hexecute.wait(hconstants.RECCONNECT_DELAY);
 
     hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
     tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
     print(tempConnection);
   end
 
-  -- local x = tcp:send(pingCommand);
-  -- print(x)
   connection = tempConnection;
   
   hlog.logToFile('TCP_CLIENT. CONEXIUNE STABILITA');
   tcp:send(whoStr);
 
-  hexecute.wait(10);
+  hexecute.wait(hconstants.RECCONNECT_DELAY);
 end
 
 connectToServer();
@@ -118,14 +120,18 @@ function receiveCommandsFromServer()
       connectToServer();
       
     else
-      execute_gpio(commandFromServer)
+      -- execute_gpio(commandFromServer)
+      local commandResponse = hsistem.executeCommandFromServer(commandFromServer)
+      if(commandResponse ~= nil) then
+        -- local message = hjson.
+      end
     end
     
    end
 end
 
 
-receiveCommandsFromServer();
+-- receiveCommandsFromServer();
 
 
  
