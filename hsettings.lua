@@ -17,6 +17,15 @@ function hsettings.log(text)
   print(text)
 end
 
+function hsettings.deviceId()
+  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_ID);
+  if(response == nil) then
+    response = hconstants.uuid()
+    hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_ID, response)
+  end
+  
+  return response
+end
 
 function hsettings.setName(name)
   hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_NAME, name)

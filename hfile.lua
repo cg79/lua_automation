@@ -11,12 +11,15 @@ function hfile.test()
 end
 
 function hfile.readFile(fileName)
-  local file = io.open(fileName, 'r')
-  io.input(file)
-  local text = io.read()
-  io.close(file)
+  if hfile.exists(fileName) then
+    local file = io.open(fileName, 'r')
+    io.input(file)
+    local text = io.read()
+    io.close(file)
 
-  return text
+    return text
+  end
+  return nil
 end
 
 function hfile.writeToFile(fileName, text)

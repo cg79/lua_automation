@@ -20,17 +20,19 @@ end
 --  1: se adauga symlinkul
 -- hboot.execute("ln -s /Users/claudiugombos/work/arduino/lua_automation lua_automation")
 
+
 hfile.ensureDirectory(hconstants.LOGS_DIRECTORY)
 hfile.ensureDirectory(hconstants.GPS_DIRECTORY)
 hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
+hsettings.deviceId();
 
 
-hgps.writeCoordinatesToFile()
+hgps.saveCoordinatesToFile()
 
-hsettings.setName('pl')
-hsettings.setPhoneNumber('pl')
-hsettings.setRegion('pl')
-hsettings.setIsMaster('pl')
+-- hsettings.setName('pl')
+-- hsettings.setPhoneNumber('pl')
+-- hsettings.setRegion('pl')
+-- hsettings.setIsMaster('pl')
 
 
 -- local test = os.clock()

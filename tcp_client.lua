@@ -5,6 +5,7 @@ local hjson = require 'hjson'
 local hconstants = require 'hconstants'
 local hexecute = require 'hexecute'
 local hsistem = require 'hsistem'
+local hsettings = require 'hsettings'
 local socket = require("socket") 
 -- local host = "7.tcp.eu.ngrok.io";
 -- local port = 14456;
@@ -13,12 +14,13 @@ local socket = require("socket")
 -- https://web.tecgraf.puc-rio.br/luasocket/old/luasocket-1.0/
 
 local name = hsistem.executeGetCommand('name')
-print(name)
 local phone = hsistem.executeGetCommand('phone')
 local region = hsistem.executeGetCommand('region')
 local master = hsistem.executeGetCommand('master')
+local coordinates = hsistem.executeGetCommand('gps')
+local id = hsettings.deviceId()
 
-
+-- print(name, phone, region, master, coordinates);
 
 
 local masterSocket = socket.tcp();
@@ -26,8 +28,8 @@ local tcp = assert(masterSocket)
 -- local connection = nil;
 
 -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-local whoStr = hjson.createWhoCommand(name);
-print(whoStr)
+local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates);
+-- print(whoStr)
 
 -- local pingCommand = '{"commandtype":"ping","name":"router1"}\n';
 
@@ -85,26 +87,25 @@ function execute_gpio(command)
   end
 end
 
-local mcount = 0;
-function monitor()
-  
- if mcount > 0 then 
-   return;
- end
+-- local mcount = 0;
+-- function monitor()
+--  if mcount > 0 then 
+--    return;
+--  end
 
- mcount = 0;
- while mcount < 2 do
-  os.execute("sleep 5")
-  local resp = execute("/sbin/gpio.sh get DOUT2")
-  print(resp)
+--  mcount = 0;
+--  while mcount < 2 do
+--   os.execute("sleep 5")
+--   local resp = execute("/sbin/gpio.sh get DOUT2")
+--   print(resp)
     
-  local whoStr = [[{"commandtype":"monitor","name":"router1", "value":"]] .. resp.. [["}]]
-  tcp:send(whoStr .. "\n");
-  mcount = mcount +1;
+--   local whoStr = [[{"commandtype":"monitor","name":"router1", "value":"]] .. resp.. [["}]]
+--   tcp:send(whoStr .. "\n");
+--   mcount = mcount +1;
 
- end 
- mcount = 0;
-end
+--  end 
+--  mcount = 0;
+-- end
 
  
 -- ###################################
@@ -131,7 +132,7 @@ function receiveCommandsFromServer()
 end
 
 
--- receiveCommandsFromServer();
+receiveCommandsFromServer();
 
 
  

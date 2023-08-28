@@ -2,6 +2,8 @@
 local hsettings = require 'hsettings'
 local hschedulersave = require 'hschedulersave'
 local hexecute = require 'hexecute'
+local hgps = require 'hgps'
+local hstring = require 'hstring'
 
 local hsistem = {
     __VERSION     = '1.0',
@@ -66,6 +68,16 @@ end
     return
   end
 
+  if (name == 'gps') then
+    hgps.writeCoordinatesToFile(value)
+    return
+  end
+
+  if (name == 'sms') then
+    return
+  end
+
+
  end
 
  function hsistem.executeGetCommand(name)
@@ -89,6 +101,11 @@ end
 
   if (name == 'region') then
     response = hsettings.getRegion(value) or '-'
+    return response
+  end
+
+  if (name == 'gps') then
+    response = hgps.readCoordinatesFromFile() 
     return response
   end
 
@@ -146,6 +163,9 @@ end
  end
 
  function hsistem.executeCommandFromServer(command)
+  if(command == nil) then
+    print("command is nil. wtf? ");  
+  end
   print(command);     
 
   local array  = hstring.splitBy(command, ' ')

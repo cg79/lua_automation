@@ -18,16 +18,14 @@ function hlog.log(text)
 end
 
 function hlog.logToFile(text)
-  print(hconstants.LOGS_DIRECTORY);
+  -- print(hconstants.LOGS_DIRECTORY);
   local dateValues = htime.getDateValues()
   local filePath = hconstants.LOGS_DIRECTORY .. '/' .. tostring(dateValues.year) .. '_' .. tostring(dateValues.month) .. '_' .. tostring(dateValues.day) .. '.txt'
   -- local filePath = 'hlogs/' .. tostring(dateValues.year) .. '_' .. tostring(dateValues.month) .. '_' .. tostring(dateValues.day) .. '.txt'
-  print(filePath)
+  -- print(filePath)
   local hms = dateValues.hour .. ':' .. dateValues.min .. ':' .. dateValues.sec .. ':'
   hfile.appendToFile(filePath, hms .. text)
 end
-
-hlog.logToFile('ggg')
 
 return hlog
   
