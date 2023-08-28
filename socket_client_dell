@@ -5,8 +5,10 @@
 --local json = require "lunajson";
 --local json = require("json");
 
-local host = "5.tcp.eu.ngrok.io";
-local port = 17195;
+-- local host = "5.tcp.eu.ngrok.io";
+-- local port = 17195;
+local host = "localhost";
+local port = 22222;
  
 local socket = require("socket") 
 

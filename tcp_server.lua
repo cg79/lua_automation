@@ -1,5 +1,5 @@
 local socket = require("socket")
-local server = assert(socket.bind("*", 51515))
+local server = assert(socket.bind("*", 22222))
 local tcp = assert(socket.tcp())
 
 print(socket._VERSION)

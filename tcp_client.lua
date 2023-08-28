@@ -13,6 +13,8 @@ local socket = require("socket")
 -- https://w3.impa.br/~diego/software/luasocket/introduction.html
 -- https://web.tecgraf.puc-rio.br/luasocket/old/luasocket-1.0/
 
+print(socket._VERSION)
+
 local name = hsistem.executeGetCommand('name')
 local phone = hsistem.executeGetCommand('phone')
 local region = hsistem.executeGetCommand('region')
@@ -59,7 +61,7 @@ function connectToServer()
   hlog.logToFile('TCP_CLIENT. CONEXIUNE STABILITA');
   tcp:send(whoStr);
 
-  hexecute.wait(hconstants.RECCONNECT_DELAY);
+  -- hexecute.wait(hconstants.RECCONNECT_DELAY);
 end
 
 connectToServer();
@@ -115,6 +117,7 @@ function receiveCommandsFromServer()
    
     local commandFromServer = s or partial;
     print('commandFromServer' .. commandFromServer)
+    hlog.logToFile(commandFromServer)
   
     if (status == 'closed') then
       resetConnection();
