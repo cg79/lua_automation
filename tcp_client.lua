@@ -22,7 +22,7 @@ local master = hsistem.executeGetCommand('master')
 local coordinates = hsistem.executeGetCommand('gps')
 local id = hsettings.deviceId()
 
--- print(name, phone, region, master, coordinates);
+print(name, phone, region, master, coordinates);
 
 
 local masterSocket = socket.tcp();

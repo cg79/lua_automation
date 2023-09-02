@@ -18,7 +18,7 @@ function hjson.createKeyValue(key, value)
 end
 
 function hjson.createWhoCommand(id, name, phone, region, master, coordinates) 
-  local sid = hjson.createKeyValue('id', id);
+  local sid = hjson.createKeyValue('guid', id);
   local sctype = hjson.createKeyValue('commandtype', 'who');
   local sname = hjson.createKeyValue('name', name);
   local sphone = hjson.createKeyValue('phone', phone);

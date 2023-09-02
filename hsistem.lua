@@ -133,7 +133,6 @@ end
 
 
  function hsistem.executeCommand(getOrSet, name, value)
-
   if (name == 'reboot') then
     hexecute.execute("reboot")
     return
@@ -158,9 +157,36 @@ end
     hsistem.executeGetCommand(name)
     return
   end
-
-
  end
+
+
+ function hsistem.reboot()
+  hexecute.execute("reboot")
+ end
+
+ function hsistem.executeGpio(command)
+  local space = " ";
+    local command = "/sbin/gpio.sh" .. space .. command;     
+
+    hexecute.execute(command);
+ end
+
+ function hsistem.updatesettings(command)
+  local vals = hstring.splitBy(command, '|')
+  
+  hsistem.executeSetCommand('name', vals[1])
+  hsistem.executeSetCommand('phone', vals[2])
+  hsistem.executeSetCommand('master', vals[3])
+  hsistem.executeSetCommand('region', vals[4])
+  if(vals[5] ~= '') then
+    hsistem.executeSetCommand('coordinates', vals[5])
+  end
+ end
+
+ function hsistem.updategps(command)
+    hsistem.executeSetCommand('gps', command)
+ end
+
 
  function hsistem.executeCommandFromServer(command)
   if(command == nil) then
@@ -168,26 +194,64 @@ end
   end
   print(command);     
 
-  local array  = hstring.splitBy(command, ' ')
-  local action = array[1];
-  print(action .. 'x');
+  local cmdtypeandcmd  = hstring.splitBy(command, ':')
+  local cmdtype = cmdtypeandcmd[1];
+  local command = cmdtypeandcmd[2];
+  print(cmdtype);
 
-  if (action == 'reboot') then
-    print('comanda de reboot');
-    hexecute.execute(action);
-  else
+  if (cmdtype == 'reboot') then
+    hsistem.reboot()
+    return
+  end
 
     -- local routerValueMessage = '{"commandtype":"valuefromrouter","name":"router1", "value":1}\n';
     -- tcp:send(routerValueMessage);
 
-    local space = " ";
-    local command = "/sbin/gpio.sh" .. space .. command;     
-
-    hexecute.execute(command);
+  if (cmdtype == 'gpio') then
+    hsistem.executeGpio(command)
+    return
   end
+
+  if(cmdtype == 'updatesettings') then
+    hsistem.updatesettings(command)
+    return
+  end
+
+  if(cmdtype == 'gps') then
+    hsistem.updategps(command)
+    return
+  end
+  
 
 
  end
+
+--  function hsistem.executeCommandFromServer(command)
+--   if(command == nil) then
+--     print("command is nil. wtf? ");  
+--   end
+--   print(command);     
+
+--   local array  = hstring.splitBy(command, ' ')
+--   local action = array[1];
+--   print(action .. 'x');
+
+--   if (action == 'reboot') then
+--     print('comanda de reboot');
+--     hexecute.execute(action);
+--   else
+
+--     -- local routerValueMessage = '{"commandtype":"valuefromrouter","name":"router1", "value":1}\n';
+--     -- tcp:send(routerValueMessage);
+
+--     local space = " ";
+--     local command = "/sbin/gpio.sh" .. space .. command;     
+
+--     hexecute.execute(command);
+--   end
+
+
+--  end
 
   
 return hsistem

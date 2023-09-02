@@ -27,7 +27,7 @@ hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
 hsettings.deviceId();
 
 
-hgps.saveCoordinatesToFile()
+hgps.getGpsCoordinates()
 
 -- hsettings.setName('pl')
 -- hsettings.setPhoneNumber('pl')

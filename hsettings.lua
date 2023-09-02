@@ -33,6 +33,7 @@ end
 
 function hsettings.getName()
   local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_NAME)
+  return response
 end
 
 function hsettings.setPhoneNumber(phone)
@@ -40,7 +41,8 @@ function hsettings.setPhoneNumber(phone)
 end
 
 function hsettings.getPhoneNumber()
-  hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_PHONE)
+  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_PHONE)
+  return response
 end
 
 function hsettings.setRegion(region)
@@ -49,6 +51,7 @@ end
 
 function hsettings.getRegion()
   local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_REGION)
+  return response
 end
 
 
@@ -58,6 +61,7 @@ end
 
 function hsettings.getIsMaster()
   local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_MASTER)
+  return response
 end
 
 

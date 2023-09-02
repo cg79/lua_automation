@@ -14,26 +14,26 @@ function hgps.test()
   print("hgps merge")
 end
 
-function hgps.getGPSCoordinates()
+function hgps.executeGetGpsCoordinates()
   local gps_reouter = hexecute.execute('gps')
   return gps_reouter
 end
 
 
-function hgps.saveCoordinatesToFile()
-  local gps_reouter = hgps.getGPSCoordinates()
+function hgps.getGpsCoordinates()
+  local gps_reouter = hgps.executeGetGpsCoordinates()
   if (gps_reouter ~= '0,0') then
-    hfile.writeToFile(hconstants.GPS_FILE, gps_reouter) 
+    hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE, gps_reouter)
   end
 end
 
 function hgps.writeCoordinatesToFile(coordinates)
-  hfile.writeToFile(hconstants.GPS_FILE, coordinates) 
+  hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE, coordinates)
 end
 
 function hgps.readCoordinatesFromFile()
-    local fileContent = hfile.readFile(hconstants.GPS_FILE) 
-    return fileContent or '0';
+    local fileContent = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE) 
+    return fileContent or '';
 end
 
 

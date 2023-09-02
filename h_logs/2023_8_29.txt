@@ -29,3 +29,70 @@
 2:21:50:TCP_CLIENT. Se incearca conexiunea la server
 2:21:54:TCP_CLIENT. Se incearca conexiunea la server
 2:21:54:TCP_CLIENT. CONEXIUNE STABILITA
+2:34:8:TCP_CLIENT. CONEXIUNE STABILITA
+2:34:14:gpio:set DOUT2 
+2:49:8:
+2:49:12:TCP_CLIENT. Se incearca conexiunea la server
+2:49:12:TCP_CLIENT. CONEXIUNE STABILITA
+2:49:13:TCP_CLIENT. CONEXIUNE STABILITA
+2:49:30:gpio:set DOUT2 
+2:50:8:TCP_CLIENT. CONEXIUNE STABILITA
+2:50:12:gpio:set DOUT2 
+2:50:20:gpio:clear DOUT2 
+2:50:30:gpio:reboot  
+2:56:57:gpio:get  
+2:59:57:TCP_CLIENT. CONEXIUNE STABILITA
+3:0:7:gpio:set DOUT2 
+3:0:22:gpio:clear DOUT2 
+3:1:44:
+3:2:5:TCP_CLIENT. Se incearca conexiunea la server
+3:2:5:TCP_CLIENT. CONEXIUNE STABILITA
+3:2:7:TCP_CLIENT. CONEXIUNE STABILITA
+3:2:11:reboot:reboot  
+3:2:23:gpio:set DOUT2 
+3:11:10:gpio:set DOUT2 
+3:11:23:TCP_CLIENT. CONEXIUNE STABILITA
+3:11:37:updatesettings:name,phone,false,0,63e8f7fa478a852917c7953d
+3:20:8:TCP_CLIENT. CONEXIUNE STABILITA
+3:20:32:updatesettings:name1,phone1,true,63e8f7fa478a852917c7953d,0,8
+3:22:11:TCP_CLIENT. CONEXIUNE STABILITA
+3:22:36:updatesettings:name1|phone1|false|-|0
+3:22:53:TCP_CLIENT. CONEXIUNE STABILITA
+3:23:32:gpio:set DOUT2 
+3:23:40:gpio:clear DOUT2 
+3:27:33:TCP_CLIENT. CONEXIUNE STABILITA
+9:30:23:
+9:30:25:TCP_CLIENT. Se incearca conexiunea la server
+9:30:26:TCP_CLIENT. Se incearca conexiunea la server
+9:30:26:TCP_CLIENT. Se incearca conexiunea la server
+9:30:26:TCP_CLIENT. Se incearca conexiunea la server
+9:30:30:TCP_CLIENT. Se incearca conexiunea la server
+9:30:30:TCP_CLIENT. Se incearca conexiunea la server
+9:30:30:TCP_CLIENT. CONEXIUNE STABILITA
+13:3:21:TCP_CLIENT. CONEXIUNE STABILITA
+13:5:41:
+13:6:41:TCP_CLIENT. Se incearca conexiunea la server
+13:6:41:TCP_CLIENT. CONEXIUNE STABILITA
+13:6:52:gpio:set DOUT2 
+13:11:32:
+13:12:32:TCP_CLIENT. Se incearca conexiunea la server
+13:12:32:TCP_CLIENT. CONEXIUNE STABILITA
+13:13:36:
+13:14:36:TCP_CLIENT. Se incearca conexiunea la server
+13:14:36:TCP_CLIENT. CONEXIUNE STABILITA
+13:14:36:reboot:reboot  
+13:25:44:TCP_CLIENT. CONEXIUNE STABILITA
+13:26:26:TCP_CLIENT. CONEXIUNE STABILITA
+13:43:31:TCP_CLIENT. CONEXIUNE STABILITA
+13:45:13:TCP_CLIENT. CONEXIUNE STABILITA
+13:49:58:TCP_CLIENT. CONEXIUNE STABILITA
+13:50:43:updatesettings:name1|phone1|false|63e8f7fa478a852917c7953d|0
+13:51:2:
+13:51:3:TCP_CLIENT. Se incearca conexiunea la server
+13:51:3:TCP_CLIENT. Se incearca conexiunea la server
+13:51:4:TCP_CLIENT. Se incearca conexiunea la server
+13:51:4:TCP_CLIENT. Se incearca conexiunea la server
+13:51:8:TCP_CLIENT. Se incearca conexiunea la server
+13:51:8:TCP_CLIENT. Se incearca conexiunea la server
+13:51:8:TCP_CLIENT. CONEXIUNE STABILITA
+13:51:10:TCP_CLIENT. CONEXIUNE STABILITA

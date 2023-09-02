@@ -1,0 +1,47 @@
+8:25:3:TCP_CLIENT. CONEXIUNE STABILITA
+8:33:39:TCP_CLIENT. CONEXIUNE STABILITA
+8:38:10:TCP_CLIENT. CONEXIUNE STABILITA
+8:43:10:TCP_CLIENT. CONEXIUNE STABILITA
+8:45:38:TCP_CLIENT. CONEXIUNE STABILITA
+8:46:10:
+8:47:10:TCP_CLIENT. Se incearca conexiunea la server
+8:47:10:TCP_CLIENT. CONEXIUNE STABILITA
+8:49:55:TCP_CLIENT. CONEXIUNE STABILITA
+8:50:17:TCP_CLIENT. CONEXIUNE STABILITA
+8:50:24:updatesettings:name1w|phone1|false|63e8f7fa478a852917c7953d|0
+8:50:24:
+8:51:24:TCP_CLIENT. Se incearca conexiunea la server
+8:52:24:TCP_CLIENT. Se incearca conexiunea la server
+8:53:24:TCP_CLIENT. Se incearca conexiunea la server
+8:53:49:TCP_CLIENT. Se incearca conexiunea la server
+8:53:49:TCP_CLIENT. CONEXIUNE STABILITA
+8:53:52:TCP_CLIENT. CONEXIUNE STABILITA
+8:54:2:updatesettings:name1ww|phone1|false|63e8f7fa478a852917c7953d|0
+8:54:35:
+8:55:35:TCP_CLIENT. Se incearca conexiunea la server
+8:55:35:TCP_CLIENT. CONEXIUNE STABILITA
+8:56:11:TCP_CLIENT. CONEXIUNE STABILITA
+8:58:21:updatesettings:name1ww|phone1v|false|63e8f7fa478a852917c7953d|0
+9:25:59:TCP_CLIENT. CONEXIUNE STABILITA
+9:26:59:TCP_CLIENT. CONEXIUNE STABILITA
+9:27:31:updatesettings:name1ww|phone1vgg|false|63e8f7fa478a852917c7953d|0
+9:28:33:updatesettings:name1ww|phone1vgg|false|63e8f7fa478a852917c7953d|0
+9:28:44:
+9:28:53:TCP_CLIENT. Se incearca conexiunea la server
+9:28:53:TCP_CLIENT. Se incearca conexiunea la server
+9:28:53:TCP_CLIENT. Se incearca conexiunea la server
+9:28:53:TCP_CLIENT. Se incearca conexiunea la server
+9:28:54:TCP_CLIENT. Se incearca conexiunea la server
+9:28:54:TCP_CLIENT. Se incearca conexiunea la server
+9:28:54:TCP_CLIENT. Se incearca conexiunea la server
+9:28:54:TCP_CLIENT. Se incearca conexiunea la server
+9:28:54:TCP_CLIENT. Se incearca conexiunea la server
+9:28:54:TCP_CLIENT. Se incearca conexiunea la server
+9:28:59:TCP_CLIENT. Se incearca conexiunea la server
+9:28:59:TCP_CLIENT. CONEXIUNE STABILITA
+9:43:49:TCP_CLIENT. CONEXIUNE STABILITA
+9:44:6:updatesettings:name1ww|phone1vgg|true|63e8f7e0478a852917c7953b|0
+9:44:18:updatesettings:xxx|phone1vgg|true|63e8f7e0478a852917c7953b|0
+13:43:27:TCP_CLIENT. CONEXIUNE STABILITA
+13:43:41:TCP_CLIENT. CONEXIUNE STABILITA
+13:43:45:updatesettings:xxx1|phone1vgg|false|63e8f7e0478a852917c7953b|0
