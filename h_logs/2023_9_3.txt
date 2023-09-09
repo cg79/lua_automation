@@ -1,0 +1,23 @@
+9:8:26:TCP_CLIENT. CONEXIUNE STABILITA
+9:12:48:TCP_CLIENT. CONEXIUNE STABILITA
+9:26:28:TCP_CLIENT. CONEXIUNE STABILITA
+15:37:43:updatesettings:xxx1|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,16
+15:40:1:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,16
+15:40:40:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,17
+17:48:52:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,18
+17:49:39:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,19
+17:53:0:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,23
+17:53:49:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,24
+17:54:19:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,23.5
+17:55:51:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,23.5
+17:57:28:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,24
+17:57:43:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,25
+17:58:7:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,26
+17:58:47:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,27
+18:0:10:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,27
+18:0:16:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,28
+18:2:53:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,23
+18:4:41:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,24
+18:5:11:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,24
+18:5:37:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,24
+18:6:52:updatesettings:yyy|phone1vgg|false|63e8f7e0478a852917c7953b|46.77509767720344,23
