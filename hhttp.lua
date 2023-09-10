@@ -24,18 +24,8 @@ function hhttp.get(url)
   return response;
 end
 
-function hhttp.downloadFile(url, filename)
-  local body, code = http.request(url)
-  if not body then error(code) end
 
-  -- save the content to a file
-  local f = assert(io.open(filename, 'wb')) -- open in "binary" mode
-  f:write(body)
-  f:close()
-end
-
-
-hhttp.get('http://localhost:3001/api/teltonika/tfiles')
+-- hhttp.get('http://localhost:3001/api/teltonika/tfiles')
 
 return hhttp
   
