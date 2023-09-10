@@ -136,12 +136,12 @@ end
   end
 
   if (name == 'download') then
-    hexecute.execute("reboot")
+    hexecute.execute("download")
     return
   end
 
   if (name == 'firmware') then
-    hexecute.execute("reboot")
+    hexecute.execute("firmware")
     return
   end
 
