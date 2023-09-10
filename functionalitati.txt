@@ -1,0 +1,1 @@
+ENOENT: no such file or directory, stat '/Users/claudiugombos/work/quiz_docker/nodeserver/uploads/teltonika/functionalitati.txt'

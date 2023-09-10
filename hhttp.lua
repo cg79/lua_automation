@@ -15,13 +15,22 @@ end
 function hhttp.get(url)
   local body = {}
     local res, code, headers, status = http.request{
-    url = "",
+    url = url,
     sink = ltn12.sink.table(body)
   }
 
   local response = table.concat(body)
-  print(response)
   return response;
+end
+
+function hhttp.downloadFile(url, filename)
+  local body, code = http.request(url)
+  if not body then error(code) end
+
+  -- save the content to a file
+  local f = assert(io.open(filename, 'wb')) -- open in "binary" mode
+  f:write(body)
+  f:close()
 end
 
 

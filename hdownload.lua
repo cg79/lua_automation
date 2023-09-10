@@ -17,13 +17,10 @@ function hdownload.downloadFiles(str)
   -- str = url:filename,
   local  urlAndFileArr = hstring.splitBy(str, ',')
   local length = #(urlAndFileArr)
-  -- print(length);
 
   for nameCount = 1, length do
-    
     local strUrlANdFile = urlAndFileArr[nameCount];
     local urlAndFile = hstring.splitBy(strUrlANdFile, '|')
-    print (urlAndFile[1])
     hhttp.downloadFile(urlAndFile[1], urlAndFile[2])
   end
 
@@ -31,7 +28,7 @@ end
 
 function hdownload.start()
   local filesFromServer = hhttp.get('http://localhost:3001/api/teltonika/tfiles');
-  -- hdownload.downloadFiles('http://pbs.twimg.com/media/CCROQ8vUEAEgFke.jpg|ggg.jpg')
+  hdownload.downloadFiles(filesFromServer)
 end
 
 hdownload.start()
