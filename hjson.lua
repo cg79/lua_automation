@@ -30,13 +30,16 @@ function hjson.createWhoCommand(id, name, phone, region, master, coordinates)
   return response .. "\n"
 end
 
-function hjson.createMessageFromRouterCommand(name, prop, value)
+
+
+function hjson.createMessageFromRouterCommand(id, name, prop, value)
   local jcommandType = hjson.createKeyValue('commandtype', 'valuefromrouter') 
+  local jid = hjson.createKeyValue('id', id);
   local jname = hjson.createKeyValue('name', name);
   local jprop = hjson.createKeyValue('prop', prop);
   local jvalue = hjson.createKeyValue('value', value);
 
-  local response = "{"  .. jcommandType .. "," .. jname .. "," .. jprop .. "," .. jvalue .. "}\n"
+  local response = "{"  .. jcommandType .. "," .. jid .. "," .. jname .. "," .. jprop .. "," .. jvalue .. "}\n"
   return response .. "\n"
 end
 

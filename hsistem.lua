@@ -20,9 +20,6 @@ function hsistem.getGPS()
 end
 
 
- 
-
-
  function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
   print("ok0=========== " .. seconds)
   hexecute.execute("sleep " .. seconds);
@@ -202,6 +199,10 @@ end
   if (cmdtype == 'reboot') then
     hsistem.reboot()
     return
+  end
+
+  if (cmdtype == 'ping') then
+    return 'pong'
   end
 
     -- local routerValueMessage = '{"commandtype":"valuefromrouter","name":"router1", "value":1}\n';

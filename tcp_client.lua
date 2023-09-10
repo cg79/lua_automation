@@ -128,6 +128,10 @@ function receiveCommandsFromServer()
       local commandResponse = hsistem.executeCommandFromServer(commandFromServer)
       if(commandResponse ~= nil) then
         -- local message = hjson.
+        print('id' .. id)
+        local msg = hjson.createMessageFromRouterCommand(id,name, 'pong', 'pong')
+        print('sending ' .. msg)
+        tcp:send(msg);
       end
     end
     
