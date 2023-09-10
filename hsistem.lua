@@ -213,6 +213,17 @@ end
     return
   end
 
+  if (cmdtype == 'fotocell') then
+    hsistem.executeGpio(command)
+    return
+  end
+
+  if (cmdtype == 'modbus') then
+    -- hsistem.executeGpio(command)
+    -- execute the modbus command
+    return
+  end
+
   if(cmdtype == 'updatesettings') then
     hsistem.updatesettings(command)
     return

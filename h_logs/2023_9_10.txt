@@ -56,3 +56,54 @@
 10:18:11:ping:ping  
 10:22:29:TCP_CLIENT. CONEXIUNE STABILITA
 10:24:2:TCP_CLIENT. CONEXIUNE STABILITA
+17:28:10:TCP_CLIENT. CONEXIUNE STABILITA
+17:29:14:ping:ping  
+17:33:7:gpio:set DOUT2 
+17:33:29:
+17:34:29:TCP_CLIENT. Se incearca conexiunea la server
+17:34:29:TCP_CLIENT. CONEXIUNE STABILITA
+18:47:7:
+18:48:7:TCP_CLIENT. Se incearca conexiunea la server
+18:49:7:TCP_CLIENT. Se incearca conexiunea la server
+18:50:7:TCP_CLIENT. Se incearca conexiunea la server
+18:50:7:TCP_CLIENT. CONEXIUNE STABILITA
+18:50:30:
+18:51:30:TCP_CLIENT. Se incearca conexiunea la server
+18:52:30:TCP_CLIENT. Se incearca conexiunea la server
+18:53:30:TCP_CLIENT. Se incearca conexiunea la server
+18:54:30:TCP_CLIENT. Se incearca conexiunea la server
+18:54:30:TCP_CLIENT. CONEXIUNE STABILITA
+18:55:27:
+18:56:27:TCP_CLIENT. Se incearca conexiunea la server
+18:56:27:TCP_CLIENT. CONEXIUNE STABILITA
+18:56:41:
+18:56:45:TCP_CLIENT. Se incearca conexiunea la server
+18:56:45:TCP_CLIENT. Se incearca conexiunea la server
+18:56:51:TCP_CLIENT. Se incearca conexiunea la server
+18:56:51:TCP_CLIENT. CONEXIUNE STABILITA
+19:8:31:TCP_CLIENT. CONEXIUNE STABILITA
+19:8:53:
+19:9:34:TCP_CLIENT. Se incearca conexiunea la server
+19:10:34:TCP_CLIENT. Se incearca conexiunea la server
+19:11:3:TCP_CLIENT. Se incearca conexiunea la server
+19:11:3:TCP_CLIENT. CONEXIUNE STABILITA
+19:11:11:TCP_CLIENT. CONEXIUNE STABILITA
+19:13:31:fotocell:set DOUT2fotocell:set DOUT2fotocell:set DOUT2
+19:14:4:TCP_CLIENT. Se incearca conexiunea la server
+19:14:4:TCP_CLIENT. CONEXIUNE STABILITA
+19:14:10:TCP_CLIENT. CONEXIUNE STABILITA
+19:14:29:fotocell:set DOUT2
+19:15:21:TCP_CLIENT. Se incearca conexiunea la server
+19:15:21:TCP_CLIENT. CONEXIUNE STABILITA
+19:15:25:TCP_CLIENT. CONEXIUNE STABILITA
+19:15:27:fotocell:set DOUT2
+19:15:36:fotocell:set DOUT2
+19:15:54:
+19:16:54:TCP_CLIENT. Se incearca conexiunea la server
+19:16:54:TCP_CLIENT. CONEXIUNE STABILITA
+19:17:1:
+19:18:1:TCP_CLIENT. Se incearca conexiunea la server
+19:18:1:TCP_CLIENT. CONEXIUNE STABILITA
+19:19:53:
+19:19:58:TCP_CLIENT. Se incearca conexiunea la server
+19:19:58:TCP_CLIENT. CONEXIUNE STABILITA
