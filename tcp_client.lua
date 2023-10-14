@@ -46,8 +46,6 @@ function connectToServer()
   local tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
-  
-
   while (tempConnection == nil) do
     hexecute.wait(hconstants.RECCONNECT_DELAY);
 
@@ -104,7 +102,6 @@ end
 --   local whoStr = [[{"commandtype":"monitor","name":"router1", "value":"]] .. resp.. [["}]]
 --   tcp:send(whoStr .. "\n");
 --   mcount = mcount +1;
-
 --  end 
 --  mcount = 0;
 -- end
@@ -117,7 +114,7 @@ function receiveCommandsFromServer()
    
     local commandFromServer = s or partial;
     print('commandFromServer' .. commandFromServer)
-    hlog.logToFile(commandFromServer)
+    -- hlog.logToFile(commandFromServer)
   
     if (status == 'closed') then
       resetConnection();
@@ -129,7 +126,7 @@ function receiveCommandsFromServer()
       if(commandResponse ~= nil) then
         -- local message = hjson.
         print('id' .. id)
-        local msg = hjson.createMessageFromRouterCommand(id,name, 'pong', 'pong')
+        local msg = hjson.createMessageFromRouterCommand(id,name, vals)
         print('sending ' .. msg)
         tcp:send(msg);
       end

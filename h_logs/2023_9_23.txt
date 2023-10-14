@@ -1,0 +1,170 @@
+5:41:34:TCP_CLIENT. CONEXIUNE STABILITA
+5:43:59:
+5:44:8:TCP_CLIENT. Se incearca conexiunea la server
+5:44:8:TCP_CLIENT. Se incearca conexiunea la server
+5:44:16:TCP_CLIENT. Se incearca conexiunea la server
+5:44:16:TCP_CLIENT. CONEXIUNE STABILITA
+5:44:18:TCP_CLIENT. CONEXIUNE STABILITA
+5:44:22:fotocell:set DOUT2
+5:44:33:fotocell:set DOUT2
+5:44:41:fotocell:set DOUT2
+5:44:50:fotocell:set DOUT2
+5:45:4:fotocell:set DOUT2
+5:45:43:fotocell:set DOUT2
+5:45:53:fotocell:set DOUT2
+5:46:49:fotocell:set DOUT2
+5:51:12:
+5:52:12:TCP_CLIENT. Se incearca conexiunea la server
+5:52:12:TCP_CLIENT. CONEXIUNE STABILITA
+5:52:27:generic:plm
+5:54:37:
+5:55:37:TCP_CLIENT. Se incearca conexiunea la server
+5:55:37:TCP_CLIENT. CONEXIUNE STABILITA
+5:57:30:generic:plm
+6:2:20:
+6:2:21:TCP_CLIENT. Se incearca conexiunea la server
+6:2:24:TCP_CLIENT. Se incearca conexiunea la server
+6:3:24:TCP_CLIENT. Se incearca conexiunea la server
+6:4:24:TCP_CLIENT. Se incearca conexiunea la server
+6:5:24:TCP_CLIENT. Se incearca conexiunea la server
+6:6:24:TCP_CLIENT. Se incearca conexiunea la server
+8:4:5:TCP_CLIENT. Se incearca conexiunea la server
+10:27:27:TCP_CLIENT. Se incearca conexiunea la server
+12:26:49:TCP_CLIENT. Se incearca conexiunea la server
+12:27:49:TCP_CLIENT. Se incearca conexiunea la server
+12:28:49:TCP_CLIENT. Se incearca conexiunea la server
+12:29:49:TCP_CLIENT. Se incearca conexiunea la server
+12:30:49:TCP_CLIENT. Se incearca conexiunea la server
+12:31:49:TCP_CLIENT. Se incearca conexiunea la server
+12:32:49:TCP_CLIENT. Se incearca conexiunea la server
+12:33:49:TCP_CLIENT. Se incearca conexiunea la server
+12:34:49:TCP_CLIENT. Se incearca conexiunea la server
+12:35:49:TCP_CLIENT. Se incearca conexiunea la server
+12:36:49:TCP_CLIENT. Se incearca conexiunea la server
+12:37:49:TCP_CLIENT. Se incearca conexiunea la server
+12:38:49:TCP_CLIENT. Se incearca conexiunea la server
+12:39:49:TCP_CLIENT. Se incearca conexiunea la server
+12:40:49:TCP_CLIENT. Se incearca conexiunea la server
+12:41:49:TCP_CLIENT. Se incearca conexiunea la server
+12:42:50:TCP_CLIENT. Se incearca conexiunea la server
+12:43:50:TCP_CLIENT. Se incearca conexiunea la server
+12:44:50:TCP_CLIENT. Se incearca conexiunea la server
+12:45:50:TCP_CLIENT. Se incearca conexiunea la server
+12:46:50:TCP_CLIENT. Se incearca conexiunea la server
+12:47:50:TCP_CLIENT. Se incearca conexiunea la server
+12:48:50:TCP_CLIENT. Se incearca conexiunea la server
+12:49:50:TCP_CLIENT. Se incearca conexiunea la server
+12:50:50:TCP_CLIENT. Se incearca conexiunea la server
+12:51:50:TCP_CLIENT. Se incearca conexiunea la server
+12:52:50:TCP_CLIENT. Se incearca conexiunea la server
+12:53:50:TCP_CLIENT. Se incearca conexiunea la server
+12:54:50:TCP_CLIENT. Se incearca conexiunea la server
+12:55:50:TCP_CLIENT. Se incearca conexiunea la server
+12:56:50:TCP_CLIENT. Se incearca conexiunea la server
+12:57:50:TCP_CLIENT. Se incearca conexiunea la server
+12:58:50:TCP_CLIENT. Se incearca conexiunea la server
+12:59:50:TCP_CLIENT. Se incearca conexiunea la server
+13:0:50:TCP_CLIENT. Se incearca conexiunea la server
+13:1:50:TCP_CLIENT. Se incearca conexiunea la server
+13:2:50:TCP_CLIENT. Se incearca conexiunea la server
+13:3:50:TCP_CLIENT. Se incearca conexiunea la server
+13:4:50:TCP_CLIENT. Se incearca conexiunea la server
+13:5:50:TCP_CLIENT. Se incearca conexiunea la server
+13:6:50:TCP_CLIENT. Se incearca conexiunea la server
+13:7:50:TCP_CLIENT. Se incearca conexiunea la server
+13:8:50:TCP_CLIENT. Se incearca conexiunea la server
+13:9:50:TCP_CLIENT. Se incearca conexiunea la server
+13:10:50:TCP_CLIENT. Se incearca conexiunea la server
+13:11:50:TCP_CLIENT. Se incearca conexiunea la server
+13:12:50:TCP_CLIENT. Se incearca conexiunea la server
+13:13:50:TCP_CLIENT. Se incearca conexiunea la server
+13:14:50:TCP_CLIENT. Se incearca conexiunea la server
+13:15:51:TCP_CLIENT. Se incearca conexiunea la server
+13:16:51:TCP_CLIENT. Se incearca conexiunea la server
+13:17:51:TCP_CLIENT. Se incearca conexiunea la server
+13:18:51:TCP_CLIENT. Se incearca conexiunea la server
+13:19:51:TCP_CLIENT. Se incearca conexiunea la server
+13:20:51:TCP_CLIENT. Se incearca conexiunea la server
+13:21:51:TCP_CLIENT. Se incearca conexiunea la server
+13:22:51:TCP_CLIENT. Se incearca conexiunea la server
+13:23:51:TCP_CLIENT. Se incearca conexiunea la server
+13:24:51:TCP_CLIENT. Se incearca conexiunea la server
+13:25:51:TCP_CLIENT. Se incearca conexiunea la server
+13:26:51:TCP_CLIENT. Se incearca conexiunea la server
+13:27:51:TCP_CLIENT. Se incearca conexiunea la server
+13:28:51:TCP_CLIENT. Se incearca conexiunea la server
+13:29:51:TCP_CLIENT. Se incearca conexiunea la server
+13:30:51:TCP_CLIENT. Se incearca conexiunea la server
+13:31:51:TCP_CLIENT. Se incearca conexiunea la server
+13:32:51:TCP_CLIENT. Se incearca conexiunea la server
+13:33:51:TCP_CLIENT. Se incearca conexiunea la server
+13:34:51:TCP_CLIENT. Se incearca conexiunea la server
+13:35:51:TCP_CLIENT. Se incearca conexiunea la server
+13:36:51:TCP_CLIENT. Se incearca conexiunea la server
+13:37:51:TCP_CLIENT. Se incearca conexiunea la server
+13:38:51:TCP_CLIENT. Se incearca conexiunea la server
+13:39:51:TCP_CLIENT. Se incearca conexiunea la server
+13:40:51:TCP_CLIENT. Se incearca conexiunea la server
+13:41:51:TCP_CLIENT. Se incearca conexiunea la server
+13:42:51:TCP_CLIENT. Se incearca conexiunea la server
+13:43:51:TCP_CLIENT. Se incearca conexiunea la server
+13:44:51:TCP_CLIENT. Se incearca conexiunea la server
+13:45:51:TCP_CLIENT. Se incearca conexiunea la server
+13:46:51:TCP_CLIENT. Se incearca conexiunea la server
+13:47:51:TCP_CLIENT. Se incearca conexiunea la server
+13:48:51:TCP_CLIENT. Se incearca conexiunea la server
+13:49:51:TCP_CLIENT. Se incearca conexiunea la server
+13:50:51:TCP_CLIENT. Se incearca conexiunea la server
+13:51:52:TCP_CLIENT. Se incearca conexiunea la server
+13:52:52:TCP_CLIENT. Se incearca conexiunea la server
+13:53:52:TCP_CLIENT. Se incearca conexiunea la server
+13:54:52:TCP_CLIENT. Se incearca conexiunea la server
+13:55:52:TCP_CLIENT. Se incearca conexiunea la server
+13:56:52:TCP_CLIENT. Se incearca conexiunea la server
+13:57:52:TCP_CLIENT. Se incearca conexiunea la server
+13:58:52:TCP_CLIENT. Se incearca conexiunea la server
+13:59:52:TCP_CLIENT. Se incearca conexiunea la server
+14:36:27:TCP_CLIENT. Se incearca conexiunea la server
+15:32:42:TCP_CLIENT. Se incearca conexiunea la server
+15:33:42:TCP_CLIENT. Se incearca conexiunea la server
+15:34:42:TCP_CLIENT. Se incearca conexiunea la server
+15:35:42:TCP_CLIENT. Se incearca conexiunea la server
+15:36:42:TCP_CLIENT. Se incearca conexiunea la server
+15:37:42:TCP_CLIENT. Se incearca conexiunea la server
+15:38:42:TCP_CLIENT. Se incearca conexiunea la server
+15:39:42:TCP_CLIENT. Se incearca conexiunea la server
+15:40:42:TCP_CLIENT. Se incearca conexiunea la server
+15:41:42:TCP_CLIENT. Se incearca conexiunea la server
+15:42:42:TCP_CLIENT. Se incearca conexiunea la server
+15:43:42:TCP_CLIENT. Se incearca conexiunea la server
+15:44:42:TCP_CLIENT. Se incearca conexiunea la server
+15:45:42:TCP_CLIENT. Se incearca conexiunea la server
+15:46:42:TCP_CLIENT. Se incearca conexiunea la server
+15:47:42:TCP_CLIENT. Se incearca conexiunea la server
+15:48:42:TCP_CLIENT. Se incearca conexiunea la server
+15:49:42:TCP_CLIENT. Se incearca conexiunea la server
+15:50:42:TCP_CLIENT. Se incearca conexiunea la server
+15:51:42:TCP_CLIENT. Se incearca conexiunea la server
+15:52:42:TCP_CLIENT. Se incearca conexiunea la server
+15:53:42:TCP_CLIENT. Se incearca conexiunea la server
+15:54:42:TCP_CLIENT. Se incearca conexiunea la server
+15:55:43:TCP_CLIENT. Se incearca conexiunea la server
+15:56:43:TCP_CLIENT. Se incearca conexiunea la server
+15:57:43:TCP_CLIENT. Se incearca conexiunea la server
+15:58:43:TCP_CLIENT. Se incearca conexiunea la server
+15:59:43:TCP_CLIENT. Se incearca conexiunea la server
+16:0:43:TCP_CLIENT. Se incearca conexiunea la server
+16:1:43:TCP_CLIENT. Se incearca conexiunea la server
+16:2:43:TCP_CLIENT. Se incearca conexiunea la server
+16:3:43:TCP_CLIENT. Se incearca conexiunea la server
+16:4:43:TCP_CLIENT. Se incearca conexiunea la server
+16:5:43:TCP_CLIENT. Se incearca conexiunea la server
+16:45:0:TCP_CLIENT. Se incearca conexiunea la server
+18:52:8:TCP_CLIENT. Se incearca conexiunea la server
+18:53:8:TCP_CLIENT. Se incearca conexiunea la server
+18:54:8:TCP_CLIENT. Se incearca conexiunea la server
+18:55:8:TCP_CLIENT. Se incearca conexiunea la server
+18:56:8:TCP_CLIENT. Se incearca conexiunea la server
+18:57:8:TCP_CLIENT. Se incearca conexiunea la server
+20:53:34:TCP_CLIENT. Se incearca conexiunea la server
+22:48:10:TCP_CLIENT. Se incearca conexiunea la server

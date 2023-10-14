@@ -8,12 +8,16 @@ local hconstants = {
     FILE_NAME = 'name.txt',
     FILE_PHONE = 'phone.txt',
     FILE_REGION = 'region.txt',
+    FILE_SUNTIME1 = 'suntime1.txt',    
+    FILE_SUNTIME2 = 'suntime2.txt',
+    FILE_BARRIER = 'barrier.txt',
     FILE_MASTER = 'master.txt',
     FILE_ID = 'id.txt',
     GPS_FILE = 'gps.txt',
     SERVER = 'localhost',
     PORT = 8007,
-    RECCONNECT_DELAY = 60
+    RECCONNECT_DELAY = 60,
+    SERVER_FILES_URL = 'https://fullsd.com/api/teltonika/tfiles'
 }
   
   

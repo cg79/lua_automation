@@ -54,6 +54,33 @@ function hsettings.getRegion()
   return response
 end
 
+function hsettings.setSuntimeRise(value)
+  hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_SUNTIME1, value)
+end
+
+function hsettings.getSuntimeRise()
+  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_SUNTIME1)
+  return response
+end
+
+function hsettings.getSuntime2()
+  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_SUNTIME2)
+  return response
+end
+
+function hsettings.setSuntime2(value)
+  hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_SUNTIME2, value)
+end
+
+function hsettings.getBarrier()
+  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_BARRIER)
+  return response
+end
+
+function hsettings.setBarrier(value)
+  hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_BARRIER, value)
+end
+
 
 function hsettings.setIsMaster(region)
   hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_MASTER, region)

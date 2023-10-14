@@ -1,6 +1,7 @@
 
 local hstring = require 'hstring'
 local hhttp = require 'hhttp'
+local hconstants = require 'hconstants'
 
 
 local hdownload = {
@@ -27,11 +28,11 @@ function hdownload.downloadFiles(str)
 end
 
 function hdownload.start()
-  local filesFromServer = hhttp.get('http://localhost:3001/api/teltonika/tfiles');
+  local filesFromServer = hhttp.get(hconstants.SERVER_FILES_URL);
   hdownload.downloadFiles(filesFromServer)
 end
 
-hdownload.start()
+-- hdownload.start()
 
 
 return hdownload

@@ -4,6 +4,8 @@ local hschedulersave = require 'hschedulersave'
 local hexecute = require 'hexecute'
 local hgps = require 'hgps'
 local hstring = require 'hstring'
+local hdownload = require 'hdownload'
+local hfile = require 'hfile'
 
 local hsistem = {
     __VERSION     = '1.0',
@@ -21,11 +23,105 @@ end
 
 
  function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
-  print("ok0=========== " .. seconds)
+  print("executie dupa " .. seconds .. ' secunde')
   hexecute.execute("sleep " .. seconds);
-  -- print(commandType .. parameters)
+
+  print(commandType .. ' ' ..  parameters)
+
+  return hsistem.executeGeneric(command)
  end
 
+ function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
+  print("executie dupa " .. seconds)
+  
+  hexecute.execute("sleep " .. seconds);
+
+  print('command' .. ' ' ..  command)
+
+  return hsistem.executeGeneric(command)
+ end
+
+ function hsistem.executeFunctionAfterXSeconds(seconds, func)
+  print("executie dupa " .. seconds)
+  
+  hexecute.execute("sleep " .. seconds);
+
+  return func()
+ end
+
+ function hsistem.logs(anlunazi)
+    anlunazi = htime.getLogFilePath(anlunazi)
+    response = hfile.readFile(anlunazi)
+
+    return response
+ end
+
+ function hsistem.executeGetCommand(name, value)
+  local response = ''
+
+  if (name == 'gpio') then
+    -- "gpio 1 sau 0"
+    
+    response = hexecute.execute("/sbin/gpio.sh get DOUT2")
+    -- print(response)
+    return response
+  end
+
+  if (name == 'name') then
+    response = hsettings.getName(value) or 'name'
+    return response;
+  end
+
+  if (name == 'phone') then
+    response = hsettings.getPhoneNumber(value) or 'phone'
+    return response;
+  end
+
+  if (name == 'region') then
+    response = hsettings.getRegion(value) or '-'
+    return response
+  end
+
+  if (name == 'gps') then
+    response = hgps.readCoordinatesFromFile() 
+    return response
+  end
+
+  if (name == 'master') then
+    response = hsettings.getIsMaster(value) or 0
+    return response
+  end
+
+  if (name == 'time') then
+    response = os.clock()
+    return response
+  end
+
+  if (name == 'gsmtime') then
+    response = 'gsm time'
+    return response
+  end
+
+  if (name == 'memory') then
+    response = 'os memory'
+    return response
+  end 
+
+  if (name == 'suntime') then
+    val1 =  hsettings.getSuntimeRise()
+    val2 =  hsettings.getSuntime2()
+    return val1 .. ',' .. val2;
+  end
+
+  if (name == 'barrier') then
+    return hsettings.getBarrier()
+  end
+
+  if (name == 'logs') then
+    return hsistem.logs(value)
+  end
+
+ end
 
  function hsistem.executeSetCommand(name, value)
   if (name == 'gpio') then
@@ -74,57 +170,18 @@ end
     return
   end
 
-
- end
-
- function hsistem.executeGetCommand(name)
-  local response = ''
-
-  if (name == 'gpio') then
-    -- "gpio 1 sau 0"
-    response = hsistem.execute("/sbin/gpio.sh get DOUT2")
-    return response
+  if(name == 'suntime') then
+    print(value)
+    hsistem.updatesuntime(value)
   end
 
-  if (name == 'name') then
-    response = hsettings.getName(value) or 'name'
-    return response;
-  end
 
-  if (name == 'phone') then
-    response = hsettings.getPhoneNumber(value) or 'phone'
-    return response;
+  if(name == 'barrier') then
+    print(value)
+    hsistem.updatebarrier(value)
   end
+  
 
-  if (name == 'region') then
-    response = hsettings.getRegion(value) or '-'
-    return response
-  end
-
-  if (name == 'gps') then
-    response = hgps.readCoordinatesFromFile() 
-    return response
-  end
-
-  if (name == 'master') then
-    response = hsettings.getIsMaster(value) or 0
-    return response
-  end
-
-  if (name == 'time') then
-    response = os.clock()
-    return response
-  end
-
-  if (name == 'gsmtime') then
-    response = 'gsm time'
-    return response
-  end
-
-  if (name == 'memory') then
-    response = 'os memory'
-    return response
-  end
 
  end
 
@@ -135,10 +192,7 @@ end
     return
   end
 
-  if (name == 'download') then
-    hexecute.execute("download")
-    return
-  end
+  
 
   if (name == 'firmware') then
     hexecute.execute("firmware")
@@ -161,11 +215,15 @@ end
   hexecute.execute("reboot")
  end
 
+ function hsistem.executeGeneric(command)
+  return hexecute.execute(command)
+ end
+
  function hsistem.executeGpio(command)
   local space = " ";
-    local command = "/sbin/gpio.sh" .. space .. command;     
+  local command = "/sbin/gpio.sh" .. space .. command;     
 
-    hexecute.execute(command);
+  return hexecute.execute(command);
  end
 
  function hsistem.updatesettings(command)
@@ -184,11 +242,36 @@ end
     hsistem.executeSetCommand('gps', command)
  end
 
+ function hsistem.updatesuntime(suntimeValues)
+  arr = hstring.splitBy(suntimeValues, ',')
+  hsettings.setSuntimeRise(arr[1])
+  hsettings.setSuntime2(arr[2])
+
+  hsistem.executeCommandFromServer('reboot');
+ end
+
+ function hsistem.updatebarrier(barrier)
+  -- 9:0:0,18:0:0
+  -- arr = hstring.splitBy(suntimeValues, ',')
+  hsettings.setBarrier(barrier)
+ end
+ 
+
+
+ function hsistem.createKeyValueResponse(key, value)
+    vals = {}
+    vals[1] = key
+    vals[2] = value
+    return  vals;
+ end
+
 
  function hsistem.executeCommandFromServer(command)
   if(command == nil) then
-    print("command is nil. wtf? ");  
+    print("command is nil. wtf? ");
+    return
   end
+  
   print(command);     
 
   local cmdtypeandcmd  = hstring.splitBy(command, ':')
@@ -198,24 +281,35 @@ end
 
   if (cmdtype == 'reboot') then
     hsistem.reboot()
-    return
+    return nil
   end
 
   if (cmdtype == 'ping') then
-    return 'pong'
+    return  hsistem.createKeyValueResponse('ping', 'pong');
   end
 
-    -- local routerValueMessage = '{"commandtype":"valuefromrouter","name":"router1", "value":1}\n';
-    -- tcp:send(routerValueMessage);
+  if (cmdtype == 'generic') then
+    response = hsistem.executeGeneric(command)
+    if(response == nil) then
+        return nil
+    end
+    return hsistem.createKeyValueResponse('generic', response);
+  end
 
   if (cmdtype == 'gpio') then
-    hsistem.executeGpio(command)
-    return
+    response = hsistem.executeGpio(command)
+    if(response == nil) then
+        return nil
+    end
+    return hsistem.createKeyValueResponse('gpio', response);
   end
 
   if (cmdtype == 'fotocell') then
-    hsistem.executeGpio(command)
-    return
+    response = hsistem.executeGpio(command)
+    if(response == nil) then
+        return nil
+    end
+    return hsistem.createKeyValueResponse('fotocell', response);
   end
 
   if (cmdtype == 'modbus') then
@@ -226,44 +320,55 @@ end
 
   if(cmdtype == 'updatesettings') then
     hsistem.updatesettings(command)
-    return
+    return nil;
   end
+
+  if(cmdtype == 'updatesuntime') then
+    hsistem.updatesuntime(command)
+    return nil;
+  end
+
+  if(cmdtype == 'updatebarrier') then
+    hsistem.updatebarrier(command)
+    return nil;
+  end
+
 
   if(cmdtype == 'gps') then
     hsistem.updategps(command)
+    return nil;
+  end
+
+  if(cmdtype == 'get') then
+    vals = hstring.splitBy(command, ',')
+    response = hsistem.executeGetCommand(vals[1], vals[2])
+    if(response == nil) then
+        return nil
+    end
+    propName = vals[2] or 'get'
+    return hsistem.createKeyValueResponse(propName, response);
+  end
+
+  if(cmdtype == 'set') then
+    -- set:name,ion
+    print('set command: ' .. command)
+    setValues = hstring.splitBy(command, '|')
+    response = hsistem.executeSetCommand(setValues[1], setValues[2])
+    if(response == nil) then
+        return nil
+    end
+    return hsistem.createKeyValueResponse('set', response);
+  end
+
+  if (name == 'download') then
+    hdownload.start()
+    hsistem.reboot()
     return
   end
   
 
 
  end
-
---  function hsistem.executeCommandFromServer(command)
---   if(command == nil) then
---     print("command is nil. wtf? ");  
---   end
---   print(command);     
-
---   local array  = hstring.splitBy(command, ' ')
---   local action = array[1];
---   print(action .. 'x');
-
---   if (action == 'reboot') then
---     print('comanda de reboot');
---     hexecute.execute(action);
---   else
-
---     -- local routerValueMessage = '{"commandtype":"valuefromrouter","name":"router1", "value":1}\n';
---     -- tcp:send(routerValueMessage);
-
---     local space = " ";
---     local command = "/sbin/gpio.sh" .. space .. command;     
-
---     hexecute.execute(command);
---   end
-
-
---  end
 
   
 return hsistem

@@ -2,7 +2,6 @@
 
 local hfile = require 'hfile'
 local hconstants = require 'hconstants'
-local hgps = require 'hgps'
 local hexecute = require 'hexecute'
 local hsettings = require 'hsettings'
 local hjson = require 'hjson'
@@ -27,7 +26,8 @@ hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
 hsettings.deviceId();
 
 
-hgps.getGpsCoordinates()
+
+print('gpsAndSuntimeAndScheduler started')
 
 -- hsettings.setName('pl')
 -- hsettings.setPhoneNumber('pl')
@@ -44,7 +44,7 @@ hgps.getGpsCoordinates()
 -- local test = hjson.createMessageFromRouterCommand('xxx', 'yyy', 'zzz')
 -- print(test)
 
-hexecute.execute('lua tcp_client.lua &')
+hexecute.execute('lua tcp_client.lua & lua hscheduler.lua &')
 
 return hboot
   

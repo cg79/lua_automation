@@ -1,6 +1,6 @@
 
 local hstring = require 'hstring'
-
+local hconstants = require 'hconstants'
 
 local htime = {
     __VERSION     = '1.0',
@@ -30,13 +30,37 @@ function htime.getDateValues()
   -- 1), yday (day of the year, 1–366), and isdst (daylight saving flag, a boolean)
 end 
 
+function htime.getLogFileName(dateValues)             
+  local filePath = tostring(dateValues.year) .. '_' .. tostring(dateValues.month) .. '_' .. tostring(dateValues.day) .. '.txt'
+  return filePath;
+end
+
+function htime.getLogFilePath(fileName)
+  local dateValues = htime.getDateValues()
+  -- print('fileName ', fileName)
+
+  if(fileName == nil) then
+    fileName = htime.getLogFileName(dateValues)
+  end
+
+  
+  local filePath = hconstants.LOGS_DIRECTORY .. '/' .. fileName
+  return filePath
+end
+
+
 function htime.createDateFromValues(year, month, day, hour, minute)             
   return os.time({year=2001, month=9, day=11, hour=13, minute=46})
 end
 
 function htime.createTimeFromHMSValues(hour, minute, second)
   local date= htime.getDateValues()
-  return os.time({year=date.year, month=date.month, day=date.day, hour=hour, min=minute, sec=second})
+  -- print(date.hour .. ' - ' .. date.min)
+
+  response = os.time({year=date.year, month=date.month, day=date.day, hour=hour, min=minute, sec=second})
+  print(response)
+
+  return response
 end
 
 function htime.createTimeFromHMS(hms)
@@ -81,27 +105,22 @@ function htime.executeAfterXSecconds(seconds, func)
  func()
 end  
 
+function htime.getSecondsUntil4AM()
+  -- now = htime.localTime();
+  midnight = htime.createTimeFromHMS('23:59:00');
+  r1 = htime.getSeccondsUntilDate(midnight)
+
+  -- print(r1)
+  return r1 + 4 * 60 * 60;
+
+end  
+
 function printtest() 
   print(timeToString(localTime()) .. " test")
 end
 
--- print(timeToString(localTime()));
-
--- executeAfterXSecconds(2, printtest)
-
--- local after1Minute = addSecondsToDate(localTime(), 60)
--- print("after 60 sec " .. dateToString(after1Minute))
-
--- print("local time " .. dateToString(localTime()))
-
--- local newDate= createTimeFromHMS(12,00,00)
- 
--- print("date as string " ..  dateToString(newDate))
--- print("asta merge bine? " .. getSeccondsUntilDate(newDate))
--- print("one minute " .. getSeccondsUntilDate(after1Minute))
--- print("UTC local time " .. timeToString(getUTCLocalTime()))
-
   
+-- htime.getSecondsUntil4AM();
 return htime
   
   

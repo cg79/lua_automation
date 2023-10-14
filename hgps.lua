@@ -15,16 +15,17 @@ function hgps.test()
 end
 
 function hgps.executeGetGpsCoordinates()
-  local gps_reouter = hexecute.execute('gps')
+  local gps_reouter = hexecute.execute('gpsgpsclt -h')
   return gps_reouter
 end
 
 
 function hgps.getGpsCoordinates()
   local gps_reouter = hgps.executeGetGpsCoordinates()
-  if (gps_reouter ~= '0,0') then
+  if (gps_reouter ~= nil) then
     hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE, gps_reouter)
   end
+  return gps_reouter
 end
 
 function hgps.writeCoordinatesToFile(coordinates)
@@ -33,10 +34,13 @@ end
 
 function hgps.readCoordinatesFromFile()
     local fileContent = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE) 
-    return fileContent or '';
+    return fileContent or '46.76775971140317,23.553090097696654';
 end
 
-
+function hgps.getGpsTime()
+  local response = hexecute.execute('gpsgpsclt -h')
+  return response
+end
 
 return hgps
   

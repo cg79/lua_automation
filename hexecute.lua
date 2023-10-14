@@ -14,7 +14,8 @@ end
 function hexecute.execute(command)
   --local ostime_vrbl = os.time() + second
   --print(ostime_vrbl);
-  os.execute(command);
+  local response = os.execute(command);
+  return response;
  end
  
  function hexecute.wait(second)
