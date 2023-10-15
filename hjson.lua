@@ -9,24 +9,30 @@ function hjson.test()
   print("hjson merge")
 end
 
-
-
 function hjson.createKeyValue(key, value) 
   -- key, value ==> "key": "value"
+  print(key .. value)
   local response = "\"" .. key .. "\"" .. ":" .. "\"" .. value .. "\"" 
   return response
 end
 
-function hjson.createWhoCommand(id, name, phone, region, master, coordinates) 
+function hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, suntime, barrier, hour) 
   local sid = hjson.createKeyValue('guid', id);
   local sctype = hjson.createKeyValue('commandtype', 'who');
   local sname = hjson.createKeyValue('name', name);
   local sphone = hjson.createKeyValue('phone', phone);
   local sregion = hjson.createKeyValue('region', region);
   local smaster = hjson.createKeyValue('master', master);
-  local scoordinates = hjson.createKeyValue('coordinates', coordinates);
+  local scoordinates = hjson.createKeyValue('coordinates', coordinates)
+  local vs = hjson.createKeyValue('started', started)
+  local vt = hjson.createKeyValue('voltage', voltage)
+  local vSuntime = hjson.createKeyValue('suntime', suntime)
+  local vBarrier = hjson.createKeyValue('barrier', barrier)
+  local vhour = hjson.createKeyValue('hour', hour)
 
-  local response = "{" .. sid .. "," .. sctype .. "," .. sname .. "," .. sphone .. "," .. sregion .. "," .. smaster .. "," .. scoordinates .. "}\n"
+  local response = "{" .. sid .. "," .. vs .. "," .. vt.. "," .. sctype .. "," .. sname .. "," .. sphone .. "," .. sregion .. "," .. smaster .. "," .. scoordinates
+  response = response .. vSuntime .. "," .. vBarrier .. "," .. vhour .. "}\n"
+
   return response .. "\n"
 end
 

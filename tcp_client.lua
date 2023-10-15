@@ -7,6 +7,9 @@ local hexecute = require 'hexecute'
 local hsistem = require 'hsistem'
 local hsettings = require 'hsettings'
 local socket = require("socket") 
+local hgps = require('hgps')
+local hsuntime = require('hsuntime')
+
 -- local host = "7.tcp.eu.ngrok.io";
 -- local port = 14456;
  
@@ -15,25 +18,39 @@ local socket = require("socket")
 
 print(socket._VERSION)
 
-local name = hsistem.executeGetCommand('name')
-local phone = hsistem.executeGetCommand('phone')
-local region = hsistem.executeGetCommand('region')
-local master = hsistem.executeGetCommand('master')
-local coordinates = hsistem.executeGetCommand('gps')
-local id = hsettings.deviceId()
+function createWhoJsonString()
+  local name = hsistem.executeGetCommand('name')
+  local phone = hsistem.executeGetCommand('phone')
+  local region = hsistem.executeGetCommand('region')
+  local master = hsistem.executeGetCommand('master')
+  local coordinates = hgps.tryGetGpsCoordinates();
+  -- .executeGetCommand('gps')
+  local id = hsettings.deviceId()
+  local started = hsistem.tryExecuteGetIsStarted()
+  local voltage = hsistem.tryExecuteGetVoltage();
+  
+  local latitudeLongitude = hstring.splitBy(coordinates, ',')
+  local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
+  -- print('suntime')
+  -- print(suntime)
+  local vsuntime = suntime[1] .. ',' .. suntime[2]
+  
+  local barrier = hsettings.getBarrier()
+  local hour = hsistem.getHour()
+  
+  print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
+  
+  -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
+  local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour  );
 
-print(name, phone, region, master, coordinates);
+  return whoStr
+end
 
+local whoStr = createWhoJsonString()
 
 local masterSocket = socket.tcp();
 local tcp = assert(masterSocket)  
--- local connection = nil;
-
--- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates);
--- print(whoStr)
-
--- local pingCommand = '{"commandtype":"ping","name":"router1"}\n';
+  -- local connection = nil;
 
 function resetConnection()
   tcp:close();
@@ -42,8 +59,11 @@ function resetConnection()
 end
 
 function connectToServer()
+  print(hconstants.SERVER .. "," .. hconstants.PORT)
   
   local tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
+
+  print("AJUNGE AIIIIICI")
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
   while (tempConnection == nil) do

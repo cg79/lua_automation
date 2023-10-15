@@ -139,7 +139,7 @@ end
 
 function hscheduler.gpsAndSuntimeAndScheduler()
   -- scrie coordonatele gps in fisier
-  hgps.getGpsCoordinates();
+  hgps.tryGetGpsCoordinates();
 
   -- citeste coordonatele GPS din fisier
   local gpsCoordinates = hgps.readCoordinatesFromFile()
@@ -151,11 +151,11 @@ function hscheduler.gpsAndSuntimeAndScheduler()
 
   local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
 
-  -- hsettings.setSuntimeRise(suntime[1])
-  -- hsettings.setSuntime2(suntime[2])
+  hsettings.setSuntimeRise(suntime[1])
+  hsettings.setSuntime2(suntime[2])
 
-  hsettings.setSuntimeRise('13:25')
-  hsettings.setSuntime2('13:26')
+  -- hsettings.setSuntimeRise('13:25')
+  -- hsettings.setSuntime2('13:26')
 
 
   print(suntime[1])
@@ -212,7 +212,7 @@ function hscheduler.sheduleCommand(command, func)
   
   hsistem.executeFunctionAfterXSeconds(afterHowManySeconds, func)
 
-  hexecute.execute('lua tcp_client.lua & lua hscheduler.lua &')
+  hexecute.execute('lua hscheduler.lua &')
 end
 
 
