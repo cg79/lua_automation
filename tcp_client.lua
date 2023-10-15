@@ -40,11 +40,6 @@ function createWhoJsonString()
   
   print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
   
-  
-  local masterSocket = socket.tcp();
-  local tcp = assert(masterSocket)  
-  -- local connection = nil;
-  
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
   local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour  );
 
@@ -52,6 +47,10 @@ function createWhoJsonString()
 end
 
 local whoStr = createWhoJsonString()
+
+local masterSocket = socket.tcp();
+local tcp = assert(masterSocket)  
+  -- local connection = nil;
 
 function resetConnection()
   tcp:close();
@@ -63,6 +62,8 @@ function connectToServer()
   print(hconstants.SERVER .. "," .. hconstants.PORT)
   
   local tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
+
+  print("AJUNGE AIIIIICI")
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
   while (tempConnection == nil) do
