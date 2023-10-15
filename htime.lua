@@ -112,11 +112,14 @@ function htime.getSecondsUntil4AM()
 
   -- print(r1)
   return r1 + 4 * 60 * 60;
-
 end  
 
+function htime.timeAsString()
+  return htime.timeToString(htime.localTime())
+end
+
 function printtest() 
-  print(timeToString(localTime()) .. " test")
+  print(timeToString(htime.localTime()) .. " test")
 end
 
   

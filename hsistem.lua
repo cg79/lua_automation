@@ -6,6 +6,8 @@ local hgps = require 'hgps'
 local hstring = require 'hstring'
 local hdownload = require 'hdownload'
 local hfile = require 'hfile'
+local hgsm = require 'hgsm'
+local htime = require 'htime'
 
 local hsistem = {
     __VERSION     = '1.0',
@@ -56,20 +58,92 @@ end
     return response
  end
 
+
+ function hsistem.errorFct()
+  -- //log
+  print('error dout')
+ end
+
+
+ function hsistem.errorVoltage()
+  -- //log
+   print('error v')
+ end
+
+function getVoltage()
+  -- response = hexecute.execute("cat /sys/class/hwmon/hwmon0/device/in0_input")
+  response = hfile.readFile('/sys/class/hwmon/hwmon0/device/in0_input')
+  -- response = hexecute.execute("ubus call ioman.gpio.din1 status")
+  return response
+end
+
+-- https://community.teltonika-networks.com/33433/rut-955-battery-voltage-via-ssh
+-- https://community.teltonika-networks.com/27473/what-command-read-input-voltage-rutx12-from-power-connector
+function hsistem.tryExecuteGetVoltage() 
+  status, ret = xpcall(getVoltage, hsistem.errorFct)
+  print ('status')
+  print (status)
+
+  if(ret ~= nil) then 
+    return ret
+  else 
+    return -1
+  end
+
+end
+
+function hsistem.getIsStarted()
+  response = hexecute.execute("/sbin/gpio.sh get DOUT2")
+  return response
+end
+
+function hsistem.tryExecuteGetIsStarted() 
+  status, ret = xpcall(hsistem.getIsStarted, hsistem.errorFct)
+    print ('status')
+    print (status)
+  
+    if(ret ~= nil) then 
+      return ret
+    else 
+      return -1
+    end
+end
+
+function hsistem.getMemory()
+  response = hexecute.execute("os memory")
+  return response
+end
+
+function hsistem.tryExecuteGetMemory() 
+  status, ret = xpcall(hsistem.getMemory, hsistem.errorFct)
+    print ('status')
+    print (status)
+  
+    if(ret ~= nil) then 
+      return ret
+    else 
+      return 0
+    end
+end
+
+
+
  function hsistem.executeGetCommand(name, value)
   local response = ''
 
   if (name == 'gpio') then
     -- "gpio 1 sau 0"
-    
-    response = hexecute.execute("/sbin/gpio.sh get DOUT2")
-    -- print(response)
+    response = hsistem.tryExecuteGetIsStarted()
     return response
   end
 
   if (name == 'name') then
     response = hsettings.getName(value) or 'name'
     return response;
+  end
+
+  if (name == 'voltage') then
+    return hsistem.tryExecuteGetVoltage() 
   end
 
   if (name == 'phone') then
@@ -93,17 +167,27 @@ end
   end
 
   if (name == 'time') then
-    response = os.clock()
+    response = hexecute.execute("date +%T")
+    return response
+  end
+
+  if (name == 'datetime') then
+    response = hexecute.execute("date")
     return response
   end
 
   if (name == 'gsmtime') then
-    response = 'gsm time'
+    response = hgsm.tryExecuteGetGSMTime() 
+    return response
+  end
+
+  if (name == 'gpstime') then
+    response = hgsm.tryGetGpsCoordinates()
     return response
   end
 
   if (name == 'memory') then
-    response = 'os memory'
+    response = hsistem.tryExecuteGetMemory()
     return response
   end 
 
@@ -122,6 +206,7 @@ end
   end
 
  end
+
 
  function hsistem.executeSetCommand(name, value)
   if (name == 'gpio') then
@@ -370,7 +455,14 @@ end
 
  end
 
-  
+ 
+ function hsistem.getHour() 
+  local response = htime.timeAsString() .. ',' .. hgsm.tryExecuteGetGSMTime()  .. ',' .. hgps.tryGetGpsTime()
+  return response
+ end
+
+--  print(hsistem.getHour())
+
 return hsistem
   
   

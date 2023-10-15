@@ -17,6 +17,7 @@ local hconstants = {
     SERVER = 'localhost',
     PORT = 8007,
     RECCONNECT_DELAY = 60,
+    SERVER_URL = 'https://fullsd.com',
     SERVER_FILES_URL = 'https://fullsd.com/api/teltonika/tfiles'
 }
   

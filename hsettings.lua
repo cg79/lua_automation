@@ -74,7 +74,7 @@ end
 
 function hsettings.getBarrier()
   local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_BARRIER)
-  return response
+  return response or ''
 end
 
 function hsettings.setBarrier(value)

@@ -9,9 +9,12 @@ local hgps = {
     __DESCRIPTION = 'GPS methods',
 }
   
-  
 function hgps.test()
   print("hgps merge")
+end
+
+function hgps.errorFct()
+  print('error gps')
 end
 
 function hgps.executeGetGpsCoordinates()
@@ -20,8 +23,22 @@ function hgps.executeGetGpsCoordinates()
 end
 
 
-function hgps.getGpsCoordinates()
-  local gps_reouter = hgps.executeGetGpsCoordinates()
+function hgps.tryExecuteGetGPS() 
+  status, ret = xpcall(hgps.executeGetGpsCoordinates, hgps.errorFct)
+
+  -- print(status)
+  -- print ('ret  ')
+
+  if(ret ~= nil) then 
+    return ret
+  else 
+    return hgps.readCoordinatesFromFile()
+  end
+end
+
+
+function hgps.tryGetGpsCoordinates()
+  local gps_reouter = hgps.tryExecuteGetGPS()
   if (gps_reouter ~= nil) then
     hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE, gps_reouter)
   end
@@ -41,6 +58,21 @@ function hgps.getGpsTime()
   local response = hexecute.execute('gpsgpsclt -h')
   return response
 end
+
+function hgps.tryGetGpsTime() 
+  status, ret = xpcall(getGpsTime, hgps.errorFct)
+
+  -- print(status)
+
+  if(ret ~= nil) then 
+    return ret
+  else 
+    return '0:0'
+  end
+end
+
+
+-- print(hgps.tryExecuteGetGPS())
 
 return hgps
   
