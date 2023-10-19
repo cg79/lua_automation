@@ -8,6 +8,8 @@ local hdownload = require 'hdownload'
 local hfile = require 'hfile'
 local hgsm = require 'hgsm'
 local htime = require 'htime'
+local hsuntime = require('hsuntime')
+local hjson = require 'hjson'
 
 local hsistem = {
     __VERSION     = '1.0',
@@ -197,6 +199,12 @@ end
     return val1 .. ',' .. val2;
   end
 
+  if (name == 'all') then
+    local id = hsettings.deviceId()
+    local name = hsistem.executeGetCommand('name')
+    return hsistem.getAll(id, name)
+  end
+
   if (name == 'barrier') then
     return hsettings.getBarrier()
   end
@@ -207,6 +215,63 @@ end
 
  end
 
+ function hsistem.getAll(id, name)
+  local phone = hsistem.executeGetCommand('phone')
+  local region = hsistem.executeGetCommand('region')
+  local master = hsistem.executeGetCommand('master')
+  local coordinates = hgps.tryGetGpsCoordinates();
+  -- .executeGetCommand('gps')
+  
+  local started = hsistem.tryExecuteGetIsStarted()
+  local voltage = hsistem.tryExecuteGetVoltage();
+  
+  local latitudeLongitude = hstring.splitBy(coordinates, ',')
+  local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
+  hsettings.setSuntimeRise(suntime[1])
+  hsettings.setSuntime2(suntime[2])
+  -- print('suntime')
+  -- print(suntime)
+  local vsuntime = suntime[1] .. ',' .. suntime[2]
+  
+  local barrier = hsettings.getBarrier()
+  local hour = hsistem.getHour()
+  
+  -- print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
+  
+  -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
+  local whoStr = id .. '|' .. name .. '|' .. phone.. '|' .. region.. '|' .. master.. '|' .. coordinates .. '|' .. started.. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier.. '|' .. hour
+
+  return whoStr
+end
+
+ function hsistem.createWhoJsonString(id, name)
+  local phone = hsistem.executeGetCommand('phone')
+  local region = hsistem.executeGetCommand('region')
+  local master = hsistem.executeGetCommand('master')
+  local coordinates = hgps.tryGetGpsCoordinates();
+  -- .executeGetCommand('gps')
+  
+  local started = hsistem.tryExecuteGetIsStarted()
+  local voltage = hsistem.tryExecuteGetVoltage();
+  
+  local latitudeLongitude = hstring.splitBy(coordinates, ',')
+  local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
+  hsettings.setSuntimeRise(suntime[1])
+  hsettings.setSuntime2(suntime[2])
+  -- print('suntime')
+  -- print(suntime)
+  local vsuntime = suntime[1] .. ',' .. suntime[2]
+  
+  local barrier = hsettings.getBarrier()
+  local hour = hsistem.getHour()
+  
+  print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
+  
+  -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
+  local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour  );
+
+  return whoStr
+end
 
  function hsistem.executeSetCommand(name, value)
   if (name == 'gpio') then
@@ -419,7 +484,7 @@ end
   end
 
 
-  if(cmdtype == 'gps') then
+  if(cmdtype == 'updategps') then
     hsistem.updategps(command)
     return nil;
   end

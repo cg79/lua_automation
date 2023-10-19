@@ -151,8 +151,8 @@ function hscheduler.gpsAndSuntimeAndScheduler()
 
   local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
 
-  hsettings.setSuntimeRise(suntime[1])
-  hsettings.setSuntime2(suntime[2])
+  -- hsettings.setSuntimeRise(suntime[1])
+  -- hsettings.setSuntime2(suntime[2])
 
   -- hsettings.setSuntimeRise('13:25')
   -- hsettings.setSuntime2('13:26')
