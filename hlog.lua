@@ -23,11 +23,20 @@ function hlog.logToFile(text)
   local filePath = htime.getLogFilePath();
 
   -- print(filePath)
-  -- local filePath = 'hlogs/' .. tostring(dateValues.year) .. '_' .. tostring(dateValues.month) .. '_' .. tostring(dateValues.day) .. '.txt'
+  -- local filePath = 'hlogs/' .. tostring(dateValues.year) .. '-' .. tostring(dateValues.month) .. '-' .. tostring(dateValues.day) .. '.txt'
   -- print(filePath)
   print(text)
   local hms = dateValues.hour .. ':' .. dateValues.min .. ':' .. dateValues.sec .. ':'
   hfile.appendToFile(filePath, hms .. text)
+end
+
+function hlog.deletePreviousXDays(x)
+  if(x == nil) then
+    x = 1
+  end
+
+  local fileName = htime.getPreviousDaysDate(x)
+  hfile.deleteFile(fileName)
 end
 
 return hlog

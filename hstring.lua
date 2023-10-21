@@ -9,6 +9,9 @@ function hstring.test()
   print("hstring merge")
 end
 
+function hstring.replace(s, oldValue, newValue)
+  return string.gsub(s, oldValue, newValue);
+end;
 
 function hstring.splitBy(str, delimiter)
   local arr = {}

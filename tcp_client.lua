@@ -7,7 +7,7 @@ local hexecute = require 'hexecute'
 local hsistem = require 'hsistem'
 local hsettings = require 'hsettings'
 local socket = require("socket") 
-local hgps = require('hgps')
+
 
 
 -- local host = "7.tcp.eu.ngrok.io";
@@ -101,6 +101,11 @@ function receiveCommandsFromServer()
       
     else
       local commandResponse = hsistem.tryExecuteCommandFromServer(commandFromServer)
+      
+      if (commandResponse == nil) then
+        print('nil response for ' .. commandFromServer)
+      end
+
       if(commandResponse ~= nil) then
         -- local message = hjson.
         print('commandResponse 1 ' .. commandResponse[1])

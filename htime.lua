@@ -31,7 +31,7 @@ end
 
 function htime.getLogFileName(dateValues)
   local filePath = tostring(dateValues.year) ..
-  '_' .. tostring(dateValues.month) .. '_' .. tostring(dateValues.day) .. '.txt'
+  '-' .. tostring(dateValues.month) .. '-' .. tostring(dateValues.day) .. '.txt'
   return filePath;
 end
 
@@ -92,6 +92,12 @@ function htime.getSeccondsUntilDate(t1)
   return seconds;
 end
 
+function htime.getPreviousDaysDate(x)
+  local response = os.date("%Y-%m-%d",os.time()- x * 24*60*60)
+  print(response)
+  return response
+end
+
 function htime.getSeccondsUntilDateAsString(dateAsString)
   local t1 = htime.createTimeFromHMS(dateAsString)
   local seconds = os.difftime(t1, htime.localTime())
@@ -122,4 +128,6 @@ function htime.timeAsString()
 end
 
 -- htime.getSecondsUntil4AM();
+
+
 return htime

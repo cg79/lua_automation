@@ -10,16 +10,27 @@ function hfile.test()
   print("hfile merge")
 end
 
-function hfile.readFile(fileName)
+function hfile.readFile0(fileName)
   if hfile.exists(fileName) then
-    local file = io.open(fileName, 'r')
+    local file = io.open(fileName, 'rb')
     io.input(file)
     local text = io.read()
     io.close(file)
+    print(text)
 
     return text
   end
   return nil
+end
+
+function hfile.readFile(fileName)
+  print(fileName)
+  local file = io.open(fileName, "r")
+  local text = file:read("*a") -- The *a text makes it read the contents of the whole file.
+  file:close() 
+
+  print(text)
+  return text
 end
 
 function hfile.writeToFile(fileName, text)
@@ -32,6 +43,10 @@ function hfile.appendToFile(fileName, text)
   local file = io.open(fileName, 'a+')
   file:write(text .. '\n')
   io.close(file)
+end
+
+function hfile.deleteFile(fileName)
+  os.remove(fileName)
 end
 
 

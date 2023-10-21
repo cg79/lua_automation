@@ -7,6 +7,7 @@ local hsettings = require 'hsettings'
 local hgps = require 'hgps'
 local hsuntime = require 'hsuntime'
 local hexecute = require 'hexecute'
+local gpiocommands = require 'gpio_commands'
 
 
 local hscheduler = {
@@ -157,41 +158,6 @@ function hscheduler.gpsAndSuntimeAndScheduler()
   print(suntime[2])
 end
 
-function hscheduler.openDOUT2()
-  local barrier = hsettings.getBarrier();
-  if (barrier ~= nil) then
-    -- verificare daca este permisa executia gpio
-    local vals = hstring.splitBy(barrier, ',');
-    local t1 = htime.createTimeFromHMS(vals[1]);
-
-    local seconds = htime.getSeccondsUntilDate(t1)
-    if (seconds < 0) then
-      hlog.logToFile('!!! incercare de pornire DOUT2 !!!');
-      return;
-    end
-  end
-
-  hlog.logToFile('SUNTIME - PORNIRE DOUT2');
-  hsistem.executeGeneric('/sbin/gpio.sh set DOUT2')
-end
-
-function hscheduler.clearDOUT2()
-  local barrier = hsettings.getBarrier();
-  if (barrier ~= nil) then
-    -- verificare daca este permisa executia gpio
-    local vals = hstring.splitBy(barrier, ',');
-    local t1 = htime.createTimeFromHMS(vals[2]);
-
-    local seconds = htime.getSeccondsUntilDate(t1)
-    if (seconds > 0) then
-      hlog.logToFile('!!! incercare de oprire DOUT2 !!!');
-      return;
-    end
-  end
-
-  hlog.logToFile('SUNTIME - OPRIRE DOUT2');
-  hsistem.executeGeneric('/sbin/gpio.sh clear DOUT2')
-end
 
 function hscheduler.testTime()
 
@@ -224,10 +190,10 @@ function hscheduler.start()
   local sec1 = htime.getSeccondsUntilDateAsString(time1)
   local sec2 = htime.getSeccondsUntilDateAsString(time2)
 
-  hsistem.executeFunctionAfterXSeconds(sec1, hscheduler.openDOUT2)
+  hsistem.executeFunctionAfterXSeconds(sec1, gpiocommands.tryopenDOUT2)
   hexecute.execute('lua tcp_sender.lua & ')
 
-  hsistem.executeFunctionAfterXSeconds(sec2, hscheduler.clearDOUT2)
+  hsistem.executeFunctionAfterXSeconds(sec2, gpiocommands.tryclearDOUT2)
   hexecute.execute('lua tcp_sender.lua & ')
 
   local until4AM = htime.getSecondsUntil4AM();

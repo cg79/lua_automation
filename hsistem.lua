@@ -60,8 +60,13 @@ end
  end
 
  function hsistem.logs(anlunazi)
-    anlunazi = htime.getLogFilePath(anlunazi)
-    response = hfile.readFile(anlunazi)
+    local fileName = htime.getLogFilePath(anlunazi)
+    print('logs file: ' .. fileName)
+    local response = hfile.readFile(fileName)
+
+    response = hstring.replace(response,'{', '[')
+    response = hstring.replace(response,'}', ']')
+    response = hstring.replace(response,'\n', '#')
 
     return response
  end
@@ -156,6 +161,7 @@ end
 
 
  function hsistem.executeGetCommand(name, value)
+  print('execute GET ' .. name)
   local response = ''
 
   if (name == 'gpio') then
@@ -231,7 +237,14 @@ end
   end
 
   if (name == 'barrier') then
-    return hsettings.getBarrier()
+    print('exec barrier')
+    local temp = hsettings.getBarrier()
+    print(temp)
+    return temp
+  end
+
+  if(name == 'logs') then
+    return hsistem.logs(value)
   end
 
  end
@@ -422,7 +435,7 @@ end
     return
   end
   
-  print(command);     
+  print('executeCommandFromServer ' .. command)
 
   local cmdtypeandcmd  = hstring.splitBy(command, ':')
   local cmdtype = cmdtypeandcmd[1];
@@ -494,7 +507,7 @@ end
   end
 
   if(cmdtype == 'get') then
-    vals = hstring.splitBy(command, ',')
+    vals = hstring.splitBy(command, '|')
     response = hsistem.executeGetCommand(vals[1], vals[2])
     if(response == nil) then
         return nil

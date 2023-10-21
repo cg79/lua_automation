@@ -5,6 +5,7 @@ local hconstants = require 'hconstants'
 local hexecute = require 'hexecute'
 local hsettings = require 'hsettings'
 local hjson = require 'hjson'
+local hlog = require 'hlog'
 
 
 local hboot = {
@@ -26,6 +27,7 @@ hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
 hsettings.deviceId();
 
 
+hlog.deletePreviousXDays()
 
 print('gpsAndSuntimeAndScheduler started')
 
