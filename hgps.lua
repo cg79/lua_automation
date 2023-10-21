@@ -32,7 +32,7 @@ function hgps.tryExecuteGetGPS()
   if(ret ~= nil) then 
     return ret
   else 
-    return hgps.readCoordinatesFromFile()
+    return nil
   end
 end
 
@@ -41,8 +41,9 @@ function hgps.tryGetGpsCoordinates()
   local gps_reouter = hgps.tryExecuteGetGPS()
   if (gps_reouter ~= nil) then
     hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE, gps_reouter)
+    return gps_reouter
   end
-  return gps_reouter
+  return nil
 end
 
 function hgps.writeCoordinatesToFile(coordinates)

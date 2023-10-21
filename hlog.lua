@@ -22,9 +22,10 @@ function hlog.logToFile(text)
   local dateValues = htime.getDateValues()
   local filePath = htime.getLogFilePath();
 
-  print(filePath)
+  -- print(filePath)
   -- local filePath = 'hlogs/' .. tostring(dateValues.year) .. '_' .. tostring(dateValues.month) .. '_' .. tostring(dateValues.day) .. '.txt'
   -- print(filePath)
+  print(text)
   local hms = dateValues.hour .. ':' .. dateValues.min .. ':' .. dateValues.sec .. ':'
   hfile.appendToFile(filePath, hms .. text)
 end

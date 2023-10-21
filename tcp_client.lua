@@ -64,15 +64,16 @@ function receiveCommandsFromServer()
     local s, status, partial = tcp:receive()     
    
     local commandFromServer = s or partial;
+    
     print('commandFromServer' .. commandFromServer)
-    -- hlog.logToFile(commandFromServer)
+    hlog.logToFile('commandFromServer' .. commandFromServer)
   
     if (status == 'closed') then
       resetConnection();
       connectToServer();
       
     else
-      local commandResponse = hsistem.executeCommandFromServer(commandFromServer)
+      local commandResponse = hsistem.tryExecuteCommandFromServer(commandFromServer)
       if(commandResponse ~= nil) then
         -- local message = hjson.
         print('commandResponse 1 ' .. commandResponse[1])

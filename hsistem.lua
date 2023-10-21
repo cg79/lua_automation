@@ -36,6 +36,9 @@ end
  end
 
  function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
+  if(seconds <0) then
+    return
+  end
   print("executie dupa " .. seconds)
   
   hexecute.execute("sleep " .. seconds);
@@ -46,6 +49,9 @@ end
  end
 
  function hsistem.executeFunctionAfterXSeconds(seconds, func)
+  if(seconds <0) then
+    return
+  end
   print("executie dupa " .. seconds)
   
   hexecute.execute("sleep " .. seconds);
@@ -83,15 +89,36 @@ end
 -- https://community.teltonika-networks.com/27473/what-command-read-input-voltage-rutx12-from-power-connector
 function hsistem.tryExecuteGetVoltage() 
   status, ret = xpcall(getVoltage, hsistem.errorFct)
-  print ('status')
-  print (status)
 
   if(ret ~= nil) then 
     return ret
   else 
     return -1
   end
+end
 
+
+local function xpcall2(fn, ...)
+  local arg = {...}
+  return xpcall(
+    -- function wrapper to pass function arguments
+    function(...)
+      return fn(unpack(arg))
+    end,
+    -- error function
+      hsistem.errorFct
+  )
+end
+
+function hsistem.tryExecuteCommandFromServer(command)
+  -- status, ret = pcall(executeCommandFromServer, command)
+  status, ret = pcall(hsistem.executeCommandFromServer, command)
+
+  if(status ~= false and ret ~= nil) then 
+    return ret
+  else 
+    return nil
+  end
 end
 
 function hsistem.getIsStarted()
@@ -101,8 +128,6 @@ end
 
 function hsistem.tryExecuteGetIsStarted() 
   status, ret = xpcall(hsistem.getIsStarted, hsistem.errorFct)
-    print ('status')
-    print (status)
   
     if(ret ~= nil) then 
       return ret
@@ -118,8 +143,8 @@ end
 
 function hsistem.tryExecuteGetMemory() 
   status, ret = xpcall(hsistem.getMemory, hsistem.errorFct)
-    print ('status')
-    print (status)
+    -- print ('status')
+    -- print (status)
   
     if(ret ~= nil) then 
       return ret
@@ -184,7 +209,7 @@ end
   end
 
   if (name == 'gpstime') then
-    response = hgsm.tryGetGpsCoordinates()
+    -- response = hgsm.tryGetGpsCoordinates()
     return response
   end
 
@@ -207,10 +232,6 @@ end
 
   if (name == 'barrier') then
     return hsettings.getBarrier()
-  end
-
-  if (name == 'logs') then
-    return hsistem.logs(value)
   end
 
  end
@@ -316,9 +337,9 @@ end
     return
   end
 
-  if (name == 'sms') then
-    return
-  end
+  -- if (name == 'sms') then
+  --   return
+  -- end
 
   if(name == 'suntime') then
     print(value)
@@ -330,34 +351,7 @@ end
     print(value)
     hsistem.updatebarrier(value)
   end
-  
 
-
- end
-
-
- function hsistem.executeCommand(getOrSet, name, value)
-  if (name == 'reboot') then
-    hexecute.execute("reboot")
-    return
-  end
-
-  
-
-  if (name == 'firmware') then
-    hexecute.execute("firmware")
-    return
-  end
-
-  if(getOrSet == 'set') then
-    hsistem.executeSetCommand(name, value)
-    return
-  end
-
-  if(getOrSet == 'get') then
-    hsistem.executeGetCommand(name)
-    return
-  end
  end
 
 
@@ -487,6 +481,10 @@ end
   if(cmdtype == 'updategps') then
     hsistem.updategps(command)
     return nil;
+  end
+
+  if(cmdtype == 'logs') then
+    return hsistem.logs(command)
   end
 
   if(cmdtype == 'get') then

@@ -45,10 +45,7 @@ function hjson.createStatusMessage(id, gpioValue)
   return response .. "\n"
 end
 
-
-
-
-function hjson.createMessageFromRouterCommand(id, name, vals)
+function hjson.createMessageFromRouterCommandold(id, name, vals)
   local jcommandType = hjson.createKeyValue('commandtype', 'valuefromrouter') 
   local jid = hjson.createKeyValue('id', id);
   local jname = hjson.createKeyValue('name', name);
@@ -56,6 +53,18 @@ function hjson.createMessageFromRouterCommand(id, name, vals)
   local jvalue = hjson.createKeyValue('value', vals[2]);
 
   local response = "{"  .. jcommandType .. "," .. jid .. "," .. jname .. "," .. jprop .. "," .. jvalue .. "}\n"
+  return response .. "\n"
+end
+
+
+function hjson.createMessageFromRouterCommand(id, name, vals)
+  local jcommandType = hjson.createKeyValue('commandtype', 'valuefromrouter') 
+  local jid = hjson.createKeyValue('id', id);
+  local jname = hjson.createKeyValue('name', name);
+  local jprop = hjson.createKeyValue(vals[1], vals[2]);
+  -- local jvalue = hjson.createKeyValue('value', vals[2]);
+
+  local response = "{"  .. jcommandType .. "," .. jid .. "," .. jname .. "," .. jprop ..  "}\n"
   return response .. "\n"
 end
 

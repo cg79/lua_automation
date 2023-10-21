@@ -10,22 +10,22 @@ local hexecute = require 'hexecute'
 
 
 local hscheduler = {
-    __VERSION     = '1.0',
-    __DESCRIPTION = 'Scheduler-related functions for lua',
-    __DIRECTORY = './h_schedules'
-  }
-  
-  
+  __VERSION     = '1.0',
+  __DESCRIPTION = 'Scheduler-related functions for lua',
+  __DIRECTORY   = './h_schedules'
+}
+
+
 function hscheduler.test()
   print("hscheduler merge")
 end
 
-function hscheduler.stringCommandAsObject(command) 
--- [8:12:3,1,1]
-  local  splitTable = hstring.splitBy(command, ',')
+function hscheduler.stringCommandAsObject(command)
+  -- [8:12:3,1,1]
+  local splitTable = hstring.splitBy(command, ',')
 
   -- for i=1,#(splitTable) do
-    -- print(splitTable[i])
+  -- print(splitTable[i])
   -- end
 
   local time = htime.createTimeFromHMS(splitTable[1])
@@ -40,30 +40,28 @@ function hscheduler.stringCommandAsObject(command)
 
   -- print(response.time .. ' - ' .. response.commandType .. ' - ' .. response.parameters or 'x')
   return response;
-
 end
 
-function hscheduler.createGenericObjectCommand(command) 
+function hscheduler.createGenericObjectCommand(command)
   -- 8:12:3,/sbin/gpio.sh set DOUT2
-    local  splitTable = hstring.splitBy(command, ',')
-  
-    -- for i=1,#(splitTable) do
-      -- print(splitTable[i])
-    -- end
-  
-    print(splitTable[1])
-    local time = htime.createTimeFromHMS(splitTable[1])
-    local command = splitTable[2]
-  
-    local response = {
-      time = time,
-      command = command,
-    }
-  
-    -- print(response.time .. ' - ' .. response.command)
-    return response;
-  
-  end
+  local splitTable = hstring.splitBy(command, ',')
+
+  -- for i=1,#(splitTable) do
+  -- print(splitTable[i])
+  -- end
+
+  print(splitTable[1])
+  local time = htime.createTimeFromHMS(splitTable[1])
+  local command = splitTable[2]
+
+  local response = {
+    time = time,
+    command = command,
+  }
+
+  -- print(response.time .. ' - ' .. response.command)
+  return response;
+end
 
 function createAnArrayOfObjectsFromADailyCommand(input)
   -- {72,[8:12:3,1,1],[8:15:3,1,0]}
@@ -73,12 +71,12 @@ function createAnArrayOfObjectsFromADailyCommand(input)
 
 
   for capture in string.gmatch(input, "%[(.-)%]") do
-         print('capture: ' .. capture)
-         obj = hscheduler.stringCommandAsObject(capture)
+    print('capture: ' .. capture)
+    obj = hscheduler.stringCommandAsObject(capture)
 
     table.insert(arr, obj)
   end
-  
+
   -- for k, v in pairs(arr) do
   --     print(k,v)
   -- end
@@ -87,9 +85,8 @@ function createAnArrayOfObjectsFromADailyCommand(input)
 end
 
 function getSchedulerFileName(dayIndex)
-  return hscheduler.__DIRECTORY  .. '/' .. dayIndex
+  return hscheduler.__DIRECTORY .. '/' .. dayIndex
 end
-
 
 function hscheduler.getCommandsForDay(dayNo)
   local fileName = ''
@@ -97,13 +94,13 @@ function hscheduler.getCommandsForDay(dayNo)
   local dayIndex = dayNo
   while (dayIndex > 0) do
     fileName = getSchedulerFileName(dayIndex)
-   
+
     fileExists = hfile.exists(fileName)
     -- print(fileName,  fileExists)
-    if  fileExists then
+    if fileExists then
       return hfile.readFile(fileName)
     end
-    dayIndex = dayIndex -1
+    dayIndex = dayIndex - 1
   end
   return nil
 end
@@ -115,7 +112,6 @@ function hscheduler.executeObjectCommand(obj)
   -- end
 end
 
-
 function hscheduler.scheduleObjects(arr)
   hscheduler.executeObjectCommand(arr[1])
 end
@@ -124,12 +120,11 @@ function hscheduler.loadCommandsForDay(dayNo)
   local commandsFromFile = hscheduler.getCommandsForDay(dayNo)
   print('commandsFromFile: ' .. commandsFromFile)
 
-  if(commandsFromFile ~= nil) then
+  if (commandsFromFile ~= nil) then
     local commandsArray = createAnArrayOfObjectsFromADailyCommand(commandsFromFile)
     hscheduler.scheduleObjects(commandsArray)
   end
 end
-
 
 function hscheduler.startOld()
   local dayOfYear = htime.dayOfTheYear()
@@ -143,7 +138,7 @@ function hscheduler.gpsAndSuntimeAndScheduler()
 
   -- citeste coordonatele GPS din fisier
   local gpsCoordinates = hgps.readCoordinatesFromFile()
-  -- latitude, longitude 
+  -- latitude, longitude
 
   print('gpsCoordinates: ' .. gpsCoordinates)
 
@@ -151,8 +146,8 @@ function hscheduler.gpsAndSuntimeAndScheduler()
 
   local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
 
-  -- hsettings.setSuntimeRise(suntime[1])
-  -- hsettings.setSuntime2(suntime[2])
+  hsettings.setSuntimeRise(suntime[1])
+  hsettings.setSuntime2(suntime[2])
 
   -- hsettings.setSuntimeRise('13:25')
   -- hsettings.setSuntime2('13:26')
@@ -160,80 +155,84 @@ function hscheduler.gpsAndSuntimeAndScheduler()
 
   print(suntime[1])
   print(suntime[2])
-
 end
 
 function hscheduler.openDOUT2()
-  barrier = hsettings.getBarrier();
-  if(barrier ~= nil) then
+  local barrier = hsettings.getBarrier();
+  if (barrier ~= nil) then
     -- verificare daca este permisa executia gpio
-    vals = hstring.splitBy(barrier, ',');
-    t1 = htime.createTimeFromHMS(vals[1]);
+    local vals = hstring.splitBy(barrier, ',');
+    local t1 = htime.createTimeFromHMS(vals[1]);
 
-    seconds = htime.getSeccondsUntilDate(t1)
-    if(seconds < 0) then
+    local seconds = htime.getSeccondsUntilDate(t1)
+    if (seconds < 0) then
       hlog.logToFile('!!! incercare de pornire DOUT2 !!!');
       return;
     end
   end
 
+  hlog.logToFile('SUNTIME - PORNIRE DOUT2');
   hsistem.executeGeneric('/sbin/gpio.sh set DOUT2')
 end
 
 function hscheduler.clearDOUT2()
-  barrier = hsettings.getBarrier();
-  if(barrier ~= nil) then
+  local barrier = hsettings.getBarrier();
+  if (barrier ~= nil) then
     -- verificare daca este permisa executia gpio
-    vals = hstring.splitBy(barrier, ',');
-    t1 = htime.createTimeFromHMS(vals[2]);
+    local vals = hstring.splitBy(barrier, ',');
+    local t1 = htime.createTimeFromHMS(vals[2]);
 
-    seconds = htime.getSeccondsUntilDate(t1)
-    if(seconds > 0) then
+    local seconds = htime.getSeccondsUntilDate(t1)
+    if (seconds > 0) then
       hlog.logToFile('!!! incercare de oprire DOUT2 !!!');
       return;
     end
   end
+
+  hlog.logToFile('SUNTIME - OPRIRE DOUT2');
   hsistem.executeGeneric('/sbin/gpio.sh clear DOUT2')
 end
 
+function hscheduler.testTime()
 
-function hscheduler.sheduleCommand(command, func)
-  if command == nil then
-    command = '13:10:1,/sbin/gpio.sh set DOUT2'
-  end
+  -- local now = htime.timeToString()
+  local now = htime.localTime()
+  local nowPlus5Sec = htime.addSecondsToDate(now, 5)
+  print(nowPlus5Sec)
+  local sss = htime.getSeccondsUntilDate(nowPlus5Sec)
+  print(sss)
 
-  obj = hscheduler.createGenericObjectCommand(command)
-  afterHowManySeconds = htime.getSeccondsUntilDate(obj.time)
-
-  if(afterHowManySeconds < 0) then 
-    print('afterHowManySeconds < 0')
-    return
-  end
-  
-  hsistem.executeFunctionAfterXSeconds(afterHowManySeconds, func)
-
-  hexecute.execute('lua hscheduler.lua &')
+  local test = htime.getSeccondsUntilDateAsString(htime.timeToString(nowPlus5Sec))
+  print(test)
 end
-
 
 function hscheduler.start()
 
   hscheduler.gpsAndSuntimeAndScheduler()
+  local time1 = hsettings.getSuntimeRise()
+  local time2 = hsettings.getSuntime2()
 
-  time1 = hsettings.getSuntimeRise()
-  time2 = hsettings.getSuntime2()
+  local now = htime.localTime()
+  local nowPlus5Sec = htime.addSecondsToDate(now, 5)
+  time1 = htime.timeToString(nowPlus5Sec)
+  local nowPlus10Sec = htime.addSecondsToDate(now, 10)
+  time2 = htime.timeToString(nowPlus10Sec)
 
-  command1 = time1 .. ',/sbin/gpio.sh set DOUT2'
-  command2 = time2 .. ',/sbin/gpio.sh clear DOUT2'
+  hlog.logToFile('SUNTIME - TIME1 ' .. time1);
+  hlog.logToFile('SUNTIME - TIME2 ' .. time2);
 
-  hscheduler.sheduleCommand(command1, openDOUT2);
+  local sec1 = htime.getSeccondsUntilDateAsString(time1)
+  local sec2 = htime.getSeccondsUntilDateAsString(time2)
+
+  hsistem.executeFunctionAfterXSeconds(sec1, hscheduler.openDOUT2)
   hexecute.execute('lua tcp_sender.lua & ')
 
-
-  hscheduler.sheduleCommand(command2, clearDOUT2);
+  hsistem.executeFunctionAfterXSeconds(sec2, hscheduler.clearDOUT2)
   hexecute.execute('lua tcp_sender.lua & ')
 
-  until4AM = htime.getSecondsUntil4AM();
+  local until4AM = htime.getSecondsUntil4AM();
+  print(until4AM)
+  hlog.logToFile('SUNTIME - ASTEPTARE PANA la 4AM ' .. until4AM);
   hexecute.wait(until4AM);
 
   hscheduler.start()
@@ -241,7 +240,5 @@ end
 
 hscheduler.start()
 
-  
+
 return hscheduler
-  
-  
