@@ -39,12 +39,14 @@ function connectToServer()
 
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
-  while (tempConnection == nil) do
+  local count = 0;
+  while (tempConnection == nil and count < 3) do
     hexecute.wait(hconstants.RECCONNECT_DELAY);
 
     hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
     tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
     print(tempConnection);
+    count = count + 1
   end
 
   connection = tempConnection;
@@ -55,6 +57,31 @@ function connectToServer()
   -- hexecute.wait(hconstants.RECCONNECT_DELAY);
 end
 
+function connectToServerProd()
+  
+  local tempConnection = tcp:connect(hconstants.SERVER_URL_PROD, hconstants.PORT_PROD);
+
+  -- print(masterSocket.getstats())
+  -- print('status' .. connection.status)
+  local count = 0;
+  while (tempConnection == nil and count < 3) do
+    hexecute.wait(hconstants.RECCONNECT_DELAY);
+
+    hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
+    tempConnection = tcp:connect(hconstants.SERVER_URL_PROD, hconstants.PORT_PRODx);
+    print(tempConnection);
+    count = count + 1
+  end
+
+  -- connection = tempConnection;
+  
+  hlog.logToFile('TCP_CLIENT. CONEXIUNE STABILITA');
+  tcp:send(whoStr);
+
+  -- hexecute.wait(hconstants.RECCONNECT_DELAY);
+end
+
+-- connectToServerProd();
 connectToServer();
 
 

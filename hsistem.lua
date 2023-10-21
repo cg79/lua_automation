@@ -270,11 +270,15 @@ end
   local region = hsistem.executeGetCommand('region')
   local master = hsistem.executeGetCommand('master')
   local coordinates = hgps.tryGetGpsCoordinates();
-  -- .executeGetCommand('gps')
+  print('coordinates ' .. coordinates)
+
+  
   
   local started = hsistem.tryExecuteGetIsStarted()
   local voltage = hsistem.tryExecuteGetVoltage();
   
+  
+
   local latitudeLongitude = hstring.splitBy(coordinates, ',')
   local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
   hsettings.setSuntimeRise(suntime[1])
@@ -283,6 +287,8 @@ end
   -- print(suntime)
   local vsuntime = suntime[1] .. ',' .. suntime[2]
   
+  print('b')
+
   local barrier = hsettings.getBarrier()
   local hour = hsistem.getHour()
   

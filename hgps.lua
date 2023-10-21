@@ -43,7 +43,7 @@ function hgps.tryGetGpsCoordinates()
     hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.GPS_FILE, gps_reouter)
     return gps_reouter
   end
-  return nil
+  return hgps.readCoordinatesFromFile()
 end
 
 function hgps.writeCoordinatesToFile(coordinates)

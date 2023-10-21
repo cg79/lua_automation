@@ -15,9 +15,11 @@ local hconstants = {
     FILE_ID = 'id.txt',
     GPS_FILE = 'gps.txt',
     SERVER = 'localhost',
-    PORT = 8007,
     RECCONNECT_DELAY = 60,
     SERVER_URL = 'https://fullsd.com',
+    PORT = 8007,
+    SERVER_URL_PROD = '134.209.246.72',
+    PORT_PROD = 8007,
     SERVER_FILES_URL = 'https://fullsd.com/api/teltonika/tfiles'
 }
   
@@ -36,5 +38,15 @@ function hconstants.uuid()
 end
 
 return hconstants
-  
-  
+
+-- sudo ufw allow 8008
+-- sudo ufw deny 8008
+
+
+-- stream {
+--     server {
+--       listen 8008;
+--       proxy_pass 127.0.0.1:8007;        
+--       proxy_protocol on;
+--     }
+-- }
