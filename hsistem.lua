@@ -103,18 +103,6 @@ function hsistem.tryExecuteGetVoltage()
 end
 
 
-local function xpcall2(fn, ...)
-  local arg = {...}
-  return xpcall(
-    -- function wrapper to pass function arguments
-    function(...)
-      return fn(unpack(arg))
-    end,
-    -- error function
-      hsistem.errorFct
-  )
-end
-
 function hsistem.tryExecuteCommandFromServer(command)
   -- status, ret = pcall(executeCommandFromServer, command)
   status, ret = pcall(hsistem.executeCommandFromServer, command)
@@ -142,7 +130,7 @@ function hsistem.tryExecuteGetIsStarted()
 end
 
 function hsistem.getMemory()
-  response = hexecute.execute("os memory")
+  response = hexecute.execute('top -l 1 | grep -E "^CPU|^Phys"')
   return response
 end
 
@@ -158,6 +146,23 @@ function hsistem.tryExecuteGetMemory()
     end
 end
 
+
+function hsistem.getSpace()
+  response = hexecute.execute('df -H')
+  return response
+end
+
+function hsistem.tryExecuteGetSpace() 
+  status, ret = xpcall(hsistem.getSpace, hsistem.errorFct)
+    -- print ('status')
+    -- print (status)
+  
+    if(ret ~= nil) then 
+      return ret
+    else 
+      return 0
+    end
+end
 
 
  function hsistem.executeGetCommand(name, value)
@@ -214,13 +219,18 @@ end
     return response
   end
 
-  if (name == 'gpstime') then
-    -- response = hgsm.tryGetGpsCoordinates()
+  if (name == 'version') then
+    response = hsettings.getSoftVersion()
     return response
   end
 
   if (name == 'memory') then
     response = hsistem.tryExecuteGetMemory()
+    return response
+  end 
+
+  if (name == 'space') then
+    response = hsistem.tryExecuteGetSpace()
     return response
   end 
 
@@ -248,6 +258,8 @@ end
   end
 
  end
+
+
 
  function hsistem.getAll(id, name)
   local phone = hsistem.executeGetCommand('phone')

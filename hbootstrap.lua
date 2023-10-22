@@ -27,7 +27,7 @@ hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
 hsettings.deviceId();
 
 
-hlog.deletePreviousXDays()
+hlog.deletePreviousXDays(15)
 
 print('gpsAndSuntimeAndScheduler started')
 

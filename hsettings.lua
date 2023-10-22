@@ -72,6 +72,13 @@ function hsettings.setSuntime2(value)
   hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_SUNTIME2, value)
 end
 
+function hsettings.getSoftVersion()
+  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_SOFT_VERSION)
+  return response
+end
+
+
+
 function hsettings.getBarrier()
   local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_BARRIER)
   return response or ''

@@ -13,6 +13,7 @@ local hconstants = {
     FILE_BARRIER = 'barrier.txt',
     FILE_MASTER = 'master.txt',
     FILE_ID = 'id.txt',
+    FILE_SOFT_VERSION = 'version.txt',
     GPS_FILE = 'gps.txt',
     SERVER = 'localhost',
     RECCONNECT_DELAY = 60,
