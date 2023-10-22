@@ -18,16 +18,16 @@ function hgps.errorFct()
 end
 
 function hgps.executeGetGpsCoordinates()
-  local gps_reouter = hexecute.execute('gpsgpsclt -h')
-  return gps_reouter
+  local latitude = hexecute.execute('gpsctl -- latitude')
+  local longitude = hexecute.execute('gpsctl -- longitude')
+  local response = latitude .. longitude
+
+  return response
 end
 
 
 function hgps.tryExecuteGetGPS() 
   status, ret = xpcall(hgps.executeGetGpsCoordinates, hgps.errorFct)
-
-  -- print(status)
-  -- print ('ret  ')
 
   if(ret ~= nil) then 
     return ret
@@ -56,7 +56,7 @@ function hgps.readCoordinatesFromFile()
 end
 
 function hgps.getGpsTime()
-  local response = hexecute.execute('gpsgpsclt -h')
+  local response = hexecute.execute('gpsctl --datetime')
   return response
 end
 
