@@ -356,9 +356,10 @@ end
     return
   end
 
-  if (name == 'clock') then
-     local gsmTime = 'gsm time'
-    -- seteaza mackintosh clock
+  if (name == 'datetime') then
+    -- date -s '2024-12-25 12:34:07'
+    hexecute.execute("date -s " .. "'" .. value  .. "'")
+    -- todo seteaza mackintosh clock
     return
   end
 
