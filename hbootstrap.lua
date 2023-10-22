@@ -3,6 +3,9 @@
 
 local hexecute = require 'hexecute'
 local hlog = require 'hlog'
+local hfile = require 'hfile'
+local hsettings = require 'hsettings'
+local hconstants = require 'hconstants'
 
 
 local hboot = {
@@ -14,23 +17,10 @@ function hboot.test()
   print("hlog merge")
 end
 
---  1: se adauga symlinkul
--- hboot.execute("ln -s /Users/claudiugombos/work/arduino/lua_automation lua_automation")
-
--- hsettings.setName('pl')
--- hsettings.setPhoneNumber('pl')
--- hsettings.setRegion('pl')
--- hsettings.setIsMaster('pl')
-
-
--- local test = os.clock()
--- print(test)
--- hexecute.execute('lua tcp_client.lua &')
--- local test = hjson.createMessageFromRouterCommand('a', 'b', 'c')
--- print(test)
-
--- local test = hjson.createMessageFromRouterCommand('xxx', 'yyy', 'zzz')
--- print(test)
+hfile.ensureDirectory(hconstants.LOGS_DIRECTORY)
+hfile.ensureDirectory(hconstants.GPS_DIRECTORY)
+hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
+hsettings.deviceId();
 
 hlog.logToFile('!!! PORNIRE ROUTER !!!');
 

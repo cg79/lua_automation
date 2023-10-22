@@ -19,8 +19,11 @@ end
 
 function hgps.executeGetGpsCoordinates()
   local latitude = hexecute.execute('gpsctl -- latitude')
+  if(latitude == nil or latitude == '') then
+    return nil
+  end
   local longitude = hexecute.execute('gpsctl -- longitude')
-  local response = latitude .. longitude
+  local response = latitude .. ',' .. longitude
 
   return response
 end
@@ -61,7 +64,7 @@ function hgps.getGpsTime()
 end
 
 function hgps.tryGetGpsTime() 
-  status, ret = xpcall(getGpsTime, hgps.errorFct)
+  status, ret = xpcall(hgps.getGpsTime, hgps.errorFct)
 
   -- print(status)
 
