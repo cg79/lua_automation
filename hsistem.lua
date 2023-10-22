@@ -175,6 +175,14 @@ end
     return response
   end
 
+  if (name == 'timezone') then
+    -- "gpio 1 sau 0"
+    -- response = hexecute.execute("date + '%Z %z'")
+    response = hexecute.execute("date + '%z'")
+    return response
+  end
+
+
   if (name == 'name') then
     response = hsettings.getName(value) or 'name'
     return response;
@@ -335,6 +343,12 @@ end
     hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
     return
   end
+
+  -- if (name == 'timezone') then
+  --   -- "gpio 1 sau 0"
+  --   hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
+  --   return
+  -- end
 
   if (name == 'name') then
     hsettings.setName(value)
