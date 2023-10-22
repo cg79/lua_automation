@@ -24,13 +24,14 @@ function hfile.readFile0(fileName)
 end
 
 function hfile.readFile(fileName)
-  print(fileName)
-  local file = io.open(fileName, "r")
-  local text = file:read("*a") -- The *a text makes it read the contents of the whole file.
-  file:close() 
+  if hfile.exists(fileName) then
+    local file = io.open(fileName, "r")
+    local text = file:read("*a") -- The *a text makes it read the contents of the whole file.
+    file:close() 
 
-  print(text)
-  return text
+    return text
+  end
+  return nil
 end
 
 function hfile.writeToFile(fileName, text)

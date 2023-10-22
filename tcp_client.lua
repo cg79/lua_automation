@@ -6,7 +6,8 @@ local hconstants = require 'hconstants'
 local hexecute = require 'hexecute'
 local hsistem = require 'hsistem'
 local hsettings = require 'hsettings'
-local socket = require("socket") 
+local socket = require("socket")
+local hfile = require 'hfile'
 
 
 
@@ -15,6 +16,14 @@ local socket = require("socket")
  
 -- https://w3.impa.br/~diego/software/luasocket/introduction.html
 -- https://web.tecgraf.puc-rio.br/luasocket/old/luasocket-1.0/
+
+hfile.ensureDirectory(hconstants.LOGS_DIRECTORY)
+hfile.ensureDirectory(hconstants.GPS_DIRECTORY)
+hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
+hsettings.deviceId();
+
+
+hlog.deletePreviousXDays(15)
 
 print(socket._VERSION)
 

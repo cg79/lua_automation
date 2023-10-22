@@ -1,10 +1,7 @@
 
 
-local hfile = require 'hfile'
-local hconstants = require 'hconstants'
+
 local hexecute = require 'hexecute'
-local hsettings = require 'hsettings'
-local hjson = require 'hjson'
 local hlog = require 'hlog'
 
 
@@ -20,17 +17,6 @@ end
 --  1: se adauga symlinkul
 -- hboot.execute("ln -s /Users/claudiugombos/work/arduino/lua_automation lua_automation")
 
-
-hfile.ensureDirectory(hconstants.LOGS_DIRECTORY)
-hfile.ensureDirectory(hconstants.GPS_DIRECTORY)
-hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
-hsettings.deviceId();
-
-
-hlog.deletePreviousXDays(15)
-
-print('gpsAndSuntimeAndScheduler started')
-
 -- hsettings.setName('pl')
 -- hsettings.setPhoneNumber('pl')
 -- hsettings.setRegion('pl')
@@ -45,6 +31,8 @@ print('gpsAndSuntimeAndScheduler started')
 
 -- local test = hjson.createMessageFromRouterCommand('xxx', 'yyy', 'zzz')
 -- print(test)
+
+hlog.logToFile('!!! PORNIRE ROUTER !!!');
 
 hexecute.execute('lua tcp_client.lua & lua hscheduler.lua &')
 
