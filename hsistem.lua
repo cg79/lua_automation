@@ -257,6 +257,10 @@ end
     return hsistem.logs(value)
   end
 
+  if(name == 'firmware') then
+    return hsistem.execute('cat /etc/version')
+  end
+
  end
 
 
@@ -381,6 +385,10 @@ end
   if(name == 'barrier') then
     print(value)
     hsistem.updatebarrier(value)
+  end
+
+  if(name == 'firmware') then
+    hexecute.execute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
   end
 
  end
