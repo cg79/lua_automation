@@ -1,65 +1,81 @@
 local hstring = require 'hstring'
 local SunTime = require("libsuntime")
+local hsettings = require 'hsettings'
 
 
 local hsuntime = {
-    __VERSION     = '1.0',
-    __DESCRIPTION = 'suntime',
+  __VERSION     = '1.0',
+  __DESCRIPTION = 'suntime',
 }
-  
+
 function hsuntime.test()
   print("hsuntime merge")
 end
 
 function hsuntime.percentToMinutes(rise)
-  
   floor = math.floor(rise)
   percent = rise - floor
   -- 100 .. 60
   -- 25  .. x
 
-  minutes = percent * 60 
-  response = floor .. ':' ..  minutes;
+  minutes = percent * 60
+  response = floor .. ':' .. minutes;
 
   local vals = hstring.splitBy(response, '.')
 
   return vals[1]
 end
 
-function hsuntime.calculateRiseAndSet(latitude, longitude)
-    timezone = 2;
-    altitude = 348
-    degree = true
+function hsuntime.calculateRiseAndSet(coordinates)
+  local latitude = 46.76775971140317;
+  local longitude = 46.76775971140317;
 
-    if latitude == nil then
-      latitude = 46.76775971140317
-    end
+  if (coordinates ~= nil) then
+    local latitudeLongitude = hstring.splitBy(coordinates, ',')
+    latitude = latitudeLongitude[1];
+    longitude = latitudeLongitude[2];
+  end
 
-    if longitude == nil then
-      longitude = 46.76775971140317
-    end
+  local timezone = 2;
+  local altitude = 348
+  local degree = true
 
-    -- SunTime:setPosition("Cluj-Napoca", 46.76775971140317, 23.553090097696654, timezone, altitude, degree)
-    
-    SunTime:setPosition("Cluj-Napoca", latitude, longitude, timezone, altitude, degree)
-    SunTime:setAdvanced()
-    SunTime:setDate()
+  -- SunTime:setPosition("Cluj-Napoca", 46.76775971140317, 23.553090097696654, timezone, altitude, degree)
 
-    SunTime:calculateTimes()
+  SunTime:setPosition("Cluj-Napoca", latitude, longitude, timezone, altitude, degree)
+  SunTime:setAdvanced()
+  SunTime:setDate()
 
-    local response = {}
-    response[1] = hsuntime.percentToMinutes(SunTime.rise)
-    response[2] = hsuntime.percentToMinutes(SunTime.set)
+  SunTime:calculateTimes()
 
-    -- print(SunTime.rise, SunTime.set, SunTime.set_civil) -- or similar see calculateTime()
-    -- print(hsuntime.percentToMinutes(SunTime.set))
-    -- print(response[1])
+  local response = {}
+  response[1] = hsuntime.percentToMinutes(SunTime.rise)
+  response[2] = hsuntime.percentToMinutes(SunTime.set)
 
-    return response;
+  hsettings.setSuntimeRise(SunTime.rise)
+  hsettings.setSuntime2(SunTime.set)
+
+  -- print(SunTime.rise, SunTime.set, SunTime.set_civil) -- or similar see calculateTime()
+  -- print(hsuntime.percentToMinutes(SunTime.set))
+  -- print(response[1])
+
+  return response[1] .. ',' .. response[2];
 end
 
-hsuntime.calculateRiseAndSet()
+function hsuntime.errorFct()
+  print('error hsuntime')
+end
+
+function hsuntime.tryCalculateRiseAndSet(coordinates)
+  status, ret = pcall(hsuntime.calculateRiseAndSet, coordinates)
+
+  if (status ~= false and ret ~= nil) then
+    return ret
+  else
+    return nil
+  end
+end
+
+-- hsuntime.calculateRiseAndSet()
 
 return hsuntime
-  
-  

@@ -1,4 +1,3 @@
-
 local hsettings = require 'hsettings'
 local hschedulersave = require 'hschedulersave'
 local hexecute = require 'hexecute'
@@ -12,76 +11,73 @@ local hsuntime = require('hsuntime')
 local hjson = require 'hjson'
 
 local hsistem = {
-    __VERSION     = '1.0',
-    __DESCRIPTION = 'String-related functions for lua',
+  __VERSION     = '1.0',
+  __DESCRIPTION = 'String-related functions for lua',
 }
-  
-  
+
+
 function hsistem.test()
   print("hsistem merge")
 end
 
 function hsistem.getGPS()
-  return 0,0
+  return 0, 0
 end
 
-
- function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
+function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
   print("executie dupa " .. seconds .. ' secunde')
   hexecute.execute("sleep " .. seconds);
 
-  print(commandType .. ' ' ..  parameters)
+  print(commandType .. ' ' .. parameters)
 
-  return hsistem.executeGeneric(command)
- end
+  return hsistem.executeGeneric(commandType .. parameters)
+end
 
- function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
-  if(seconds <0) then
+function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
+  if (seconds < 0) then
     return
   end
   print("executie dupa " .. seconds)
-  
+
   hexecute.execute("sleep " .. seconds);
 
-  print('command' .. ' ' ..  command)
+  print('command' .. ' ' .. command)
 
   return hsistem.executeGeneric(command)
- end
+end
 
- function hsistem.executeFunctionAfterXSeconds(seconds, func)
-  if(seconds <0) then
+function hsistem.executeFunctionAfterXSeconds(seconds, func)
+  if (seconds < 0) then
     return
   end
   print("executie dupa " .. seconds)
-  
+
   hexecute.execute("sleep " .. seconds);
 
   return func()
- end
+end
 
- function hsistem.logs(anlunazi)
-    local fileName = htime.getLogFilePath(anlunazi)
-    print('logs file: ' .. fileName)
-    local response = hfile.readFile(fileName)
+function hsistem.logs(anlunazi)
+  local fileName = htime.getLogFilePath(anlunazi)
+  print('logs file: ' .. fileName)
+  local response = hfile.readFile(fileName)
 
-    response = hstring.replace(response,'{', '[')
-    response = hstring.replace(response,'}', ']')
-    response = hstring.replace(response,'\n', '#')
+  response = hstring.replace(response, '{', '[')
+  response = hstring.replace(response, '}', ']')
+  response = hstring.replace(response, '\n', '#')
 
-    return response
- end
+  return response
+end
 
-
- function hsistem.errorFct()
+function hsistem.errorFct()
   -- //log
   print('error dout')
- end
+end
 
-
- function hsistem.errorVoltage()
+function hsistem.errorVoltage()
   -- //log
-   print('error v')
- end
+  print('error v')
+end
 
 function getVoltage()
   -- response = hexecute.execute("cat /sys/class/hwmon/hwmon0/device/in0_input")
@@ -92,24 +88,23 @@ end
 
 -- https://community.teltonika-networks.com/33433/rut-955-battery-voltage-via-ssh
 -- https://community.teltonika-networks.com/27473/what-command-read-input-voltage-rutx12-from-power-connector
-function hsistem.tryExecuteGetVoltage() 
+function hsistem.tryExecuteGetVoltage()
   status, ret = xpcall(getVoltage, hsistem.errorFct)
 
-  if(ret ~= nil) then 
+  if (ret ~= nil) then
     return ret
-  else 
+  else
     return -1
   end
 end
-
 
 function hsistem.tryExecuteCommandFromServer(command)
   -- status, ret = pcall(executeCommandFromServer, command)
   status, ret = pcall(hsistem.executeCommandFromServer, command)
 
-  if(status ~= false and ret ~= nil) then 
+  if (status ~= false and ret ~= nil) then
     return ret
-  else 
+  else
     return nil
   end
 end
@@ -119,14 +114,14 @@ function hsistem.getIsStarted()
   return response
 end
 
-function hsistem.tryExecuteGetIsStarted() 
+function hsistem.tryExecuteGetIsStarted()
   status, ret = xpcall(hsistem.getIsStarted, hsistem.errorFct)
-  
-    if(ret ~= nil) then 
-      return ret
-    else 
-      return -1
-    end
+
+  if (ret ~= nil) then
+    return ret
+  else
+    return -1
+  end
 end
 
 function hsistem.getMemory()
@@ -134,38 +129,36 @@ function hsistem.getMemory()
   return response
 end
 
-function hsistem.tryExecuteGetMemory() 
+function hsistem.tryExecuteGetMemory()
   status, ret = xpcall(hsistem.getMemory, hsistem.errorFct)
-    -- print ('status')
-    -- print (status)
-  
-    if(ret ~= nil) then 
-      return ret
-    else 
-      return 0
-    end
-end
+  -- print ('status')
+  -- print (status)
 
+  if (ret ~= nil) then
+    return ret
+  else
+    return 0
+  end
+end
 
 function hsistem.getSpace()
   response = hexecute.execute('df -H')
   return response
 end
 
-function hsistem.tryExecuteGetSpace() 
+function hsistem.tryExecuteGetSpace()
   status, ret = xpcall(hsistem.getSpace, hsistem.errorFct)
-    -- print ('status')
-    -- print (status)
-  
-    if(ret ~= nil) then 
-      return ret
-    else 
-      return 0
-    end
+  -- print ('status')
+  -- print (status)
+
+  if (ret ~= nil) then
+    return ret
+  else
+    return 0
+  end
 end
 
-
- function hsistem.executeGetCommand(name, value)
+function hsistem.executeGetCommand(name, value)
   print('execute GET ' .. name)
   local response = ''
 
@@ -174,6 +167,14 @@ end
     response = hsistem.tryExecuteGetIsStarted()
     return response
   end
+
+  if (name == 'luav') then
+    -- "gpio 1 sau 0"
+    response = hexecute.execute('lua -v')
+    return response
+  end
+
+
 
   if (name == 'timezone') then
     -- "gpio 1 sau 0"
@@ -189,7 +190,7 @@ end
   end
 
   if (name == 'voltage') then
-    return hsistem.tryExecuteGetVoltage() 
+    return hsistem.tryExecuteGetVoltage()
   end
 
   if (name == 'phone') then
@@ -203,7 +204,7 @@ end
   end
 
   if (name == 'gps') then
-    response = hgps.readCoordinatesFromFile() 
+    response = hgps.readCoordinatesFromFile()
     return response
   end
 
@@ -223,7 +224,7 @@ end
   end
 
   if (name == 'gsmtime') then
-    response = hgsm.tryExecuteGetGSMTime() 
+    response = hgsm.tryExecuteGetGSMTime()
     return response
   end
 
@@ -235,16 +236,16 @@ end
   if (name == 'memory') then
     response = hsistem.tryExecuteGetMemory()
     return response
-  end 
+  end
 
   if (name == 'space') then
     response = hsistem.tryExecuteGetSpace()
     return response
-  end 
+  end
 
   if (name == 'suntime') then
-    val1 =  hsettings.getSuntimeRise()
-    val2 =  hsettings.getSuntime2()
+    val1 = hsettings.getSuntimeRise()
+    val2 = hsettings.getSuntime2()
     return val1 .. ',' .. val2;
   end
 
@@ -261,83 +262,74 @@ end
     return temp
   end
 
-  if(name == 'logs') then
+  if (name == 'logs') then
     return hsistem.logs(value)
   end
 
-  if(name == 'firmware') then
+  if (name == 'firmware') then
     return hsistem.execute('cat /etc/version')
   end
+end
 
- end
-
-
-
- function hsistem.getAll(id, name)
+function hsistem.getAll(id, name)
   local phone = hsistem.executeGetCommand('phone')
   local region = hsistem.executeGetCommand('region')
   local master = hsistem.executeGetCommand('master')
   local coordinates = hgps.tryGetGpsCoordinates();
   -- .executeGetCommand('gps')
-  
+
   local started = hsistem.tryExecuteGetIsStarted()
   local voltage = hsistem.tryExecuteGetVoltage();
-  
-  local latitudeLongitude = hstring.splitBy(coordinates, ',')
-  local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
-  hsettings.setSuntimeRise(suntime[1])
-  hsettings.setSuntime2(suntime[2])
-  -- print('suntime')
-  -- print(suntime)
-  local vsuntime = suntime[1] .. ',' .. suntime[2]
-  
+
+  local vsuntime = hsuntime.tryCalculateRiseAndSet(coordinates)
+
   local barrier = hsettings.getBarrier()
   local hour = hsistem.getHour()
-  
+
   -- print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
-  
+
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-  local whoStr = id .. '|' .. name .. '|' .. phone.. '|' .. region.. '|' .. master.. '|' .. coordinates .. '|' .. started.. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier.. '|' .. hour
+  local whoStr = id ..
+  '|' ..
+  name ..
+  '|' ..
+  phone ..
+  '|' ..
+  region ..
+  '|' ..
+  master .. '|' .. coordinates .. '|' .. started .. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier .. '|' .. hour
 
   return whoStr
 end
 
- function hsistem.createWhoJsonString(id, name)
+
+
+function hsistem.createWhoJsonString(id, name)
   local phone = hsistem.executeGetCommand('phone')
   local region = hsistem.executeGetCommand('region')
   local master = hsistem.executeGetCommand('master')
+
+  local started = hsistem.tryExecuteGetIsStarted()
+  local voltage = hsistem.tryExecuteGetVoltage();
+
   local coordinates = hgps.tryGetGpsCoordinates();
   print('coordinates ' .. coordinates)
 
-  
-  
-  local started = hsistem.tryExecuteGetIsStarted()
-  local voltage = hsistem.tryExecuteGetVoltage();
-  
-  
-
-  local latitudeLongitude = hstring.splitBy(coordinates, ',')
-  local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
-  hsettings.setSuntimeRise(suntime[1])
-  hsettings.setSuntime2(suntime[2])
-  -- print('suntime')
-  -- print(suntime)
-  local vsuntime = suntime[1] .. ',' .. suntime[2]
-  
-  print('b')
+  local vsuntime = hsuntime.tryCalculateRiseAndSet(coordinates)
 
   local barrier = hsettings.getBarrier()
   local hour = hsistem.getHour()
-  
+
   print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
-  
+
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-  local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour  );
+  local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier,
+    hour);
 
   return whoStr
 end
 
- function hsistem.executeSetCommand(name, value)
+function hsistem.executeSetCommand(name, value)
   if (name == 'gpio') then
     -- "gpio 1 sau 0"
     hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
@@ -372,7 +364,7 @@ end
 
   if (name == 'datetime') then
     -- date -s '2024-12-25 12:34:07'
-    hexecute.execute("date -s " .. "'" .. value  .. "'")
+    hexecute.execute("date -s " .. "'" .. value .. "'")
     -- todo seteaza mackintosh clock
     return
   end
@@ -391,90 +383,85 @@ end
   --   return
   -- end
 
-  if(name == 'suntime') then
+  if (name == 'suntime') then
     print(value)
     hsistem.updatesuntime(value)
   end
 
 
-  if(name == 'barrier') then
+  if (name == 'barrier') then
     print(value)
     hsistem.updatebarrier(value)
   end
 
-  if(name == 'firmware') then
+  if (name == 'firmware') then
     hexecute.execute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
   end
+end
 
- end
-
-
- function hsistem.reboot()
+function hsistem.reboot()
   hexecute.execute("reboot")
- end
+end
 
- function hsistem.executeGeneric(command)
+function hsistem.executeGeneric(command)
   return hexecute.execute(command)
- end
+end
 
- function hsistem.executeGpio(command)
+function hsistem.executeGpio(command)
   local space = " ";
-  local command = "/sbin/gpio.sh" .. space .. command;     
+  local command = "/sbin/gpio.sh" .. space .. command;
 
   return hexecute.execute(command);
- end
+end
 
- function hsistem.updatesettings(command)
+function hsistem.updatesettings(command)
   local vals = hstring.splitBy(command, '|')
-  
+
   hsistem.executeSetCommand('name', vals[1])
   hsistem.executeSetCommand('phone', vals[2])
   hsistem.executeSetCommand('master', vals[3])
   hsistem.executeSetCommand('region', vals[4])
-  if(vals[5] ~= '') then
+  if (vals[5] ~= '') then
     hsistem.executeSetCommand('coordinates', vals[5])
   end
- end
+end
 
- function hsistem.updategps(command)
-    hsistem.executeSetCommand('gps', command)
- end
+function hsistem.updategps(command)
+  hsistem.executeSetCommand('gps', command)
+end
 
- function hsistem.updatesuntime(suntimeValues)
+function hsistem.updatesuntime(suntimeValues)
   arr = hstring.splitBy(suntimeValues, ',')
   hsettings.setSuntimeRise(arr[1])
   hsettings.setSuntime2(arr[2])
 
   hsistem.executeCommandFromServer('reboot');
- end
+end
 
- function hsistem.updatebarrier(barrier)
+function hsistem.updatebarrier(barrier)
   -- 9:0:0,18:0:0
   -- arr = hstring.splitBy(suntimeValues, ',')
   hsettings.setBarrier(barrier)
- end
- 
+end
 
+function hsistem.createKeyValueResponse(key, value)
+  vals = {}
+  vals[1] = key
+  vals[2] = value
+  return vals;
+end
 
- function hsistem.createKeyValueResponse(key, value)
-    vals = {}
-    vals[1] = key
-    vals[2] = value
-    return  vals;
- end
-
-
- function hsistem.executeCommandFromServer(command)
-  if(command == nil) then
+function hsistem.executeCommandFromServer(command)
+  if (command == nil) then
     print("command is nil. wtf? ");
     return
   end
-  
+
   print('executeCommandFromServer ' .. command)
 
-  local cmdtypeandcmd  = hstring.splitBy(command, ':')
-  local cmdtype = cmdtypeandcmd[1];
-  local command = cmdtypeandcmd[2];
+  local cmdtypeandcmd = hstring.splitBy(command, ':')
+  local cmdtype       = cmdtypeandcmd[1];
+  local command       = cmdtypeandcmd[2];
   print(cmdtype);
 
   if (cmdtype == 'reboot') then
@@ -483,29 +470,29 @@ end
   end
 
   if (cmdtype == 'ping') then
-    return  hsistem.createKeyValueResponse('ping', 'pong');
+    return hsistem.createKeyValueResponse('ping', 'pong');
   end
 
   if (cmdtype == 'generic') then
     response = hsistem.executeGeneric(command)
-    if(response == nil) then
-        return nil
+    if (response == nil) then
+      return nil
     end
     return hsistem.createKeyValueResponse('generic', response);
   end
 
   if (cmdtype == 'gpio') then
     response = hsistem.executeGpio(command)
-    if(response == nil) then
-        return nil
+    if (response == nil) then
+      return nil
     end
     return hsistem.createKeyValueResponse('gpio', response);
   end
 
   if (cmdtype == 'fotocell') then
     response = hsistem.executeGpio(command)
-    if(response == nil) then
-        return nil
+    if (response == nil) then
+      return nil
     end
     return hsistem.createKeyValueResponse('fotocell', response);
   end
@@ -516,48 +503,48 @@ end
     return
   end
 
-  if(cmdtype == 'updatesettings') then
+  if (cmdtype == 'updatesettings') then
     hsistem.updatesettings(command)
     return nil;
   end
 
-  if(cmdtype == 'updatesuntime') then
+  if (cmdtype == 'updatesuntime') then
     hsistem.updatesuntime(command)
     return nil;
   end
 
-  if(cmdtype == 'updatebarrier') then
+  if (cmdtype == 'updatebarrier') then
     hsistem.updatebarrier(command)
     return nil;
   end
 
 
-  if(cmdtype == 'updategps') then
+  if (cmdtype == 'updategps') then
     hsistem.updategps(command)
     return nil;
   end
 
-  if(cmdtype == 'logs') then
+  if (cmdtype == 'logs') then
     return hsistem.logs(command)
   end
 
-  if(cmdtype == 'get') then
+  if (cmdtype == 'get') then
     vals = hstring.splitBy(command, '|')
     response = hsistem.executeGetCommand(vals[1], vals[2])
-    if(response == nil) then
-        return nil
+    if (response == nil) then
+      return nil
     end
     propName = vals[2] or 'get'
     return hsistem.createKeyValueResponse(propName, response);
   end
 
-  if(cmdtype == 'set') then
+  if (cmdtype == 'set') then
     -- set:name,ion
     print('set command: ' .. command)
     setValues = hstring.splitBy(command, '|')
     response = hsistem.executeSetCommand(setValues[1], setValues[2])
-    if(response == nil) then
-        return nil
+    if (response == nil) then
+      return nil
     end
     return hsistem.createKeyValueResponse('set', response);
   end
@@ -567,19 +554,13 @@ end
     hsistem.reboot()
     return
   end
-  
+end
 
-
- end
-
- 
- function hsistem.getHour() 
-  local response = htime.timeAsString() .. ',' .. hgsm.tryExecuteGetGSMTime()  .. ',' .. hgps.tryGetGpsTime()
+function hsistem.getHour()
+  local response = htime.timeAsString() .. ',' .. hgsm.tryExecuteGetGSMTime() .. ',' .. hgps.tryGetGpsTime()
   return response
- end
+end
 
 --  print(hsistem.getHour())
 
 return hsistem
-  
-  

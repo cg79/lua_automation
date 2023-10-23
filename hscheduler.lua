@@ -201,7 +201,8 @@ function hscheduler.start()
   hlog.logToFile('SUNTIME - ASTEPTARE PANA la 4AM ' .. until4AM);
   hexecute.wait(until4AM);
 
-  hscheduler.start()
+  -- hscheduler.start()
+  hexecute.execute("reboot")
 end
 
 hscheduler.start()

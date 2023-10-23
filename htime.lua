@@ -89,7 +89,7 @@ end
 
 function htime.getSeccondsUntilDate(t1)
   local seconds = os.difftime(t1, htime.localTime())
-  return seconds;
+  return math.floor(seconds);
 end
 
 function htime.getPreviousDaysDate(x)

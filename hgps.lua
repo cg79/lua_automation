@@ -3,6 +3,7 @@ local hfile = require 'hfile'
 local htime = require 'htime'
 local hconstants = require 'hconstants'
 local hexecute = require 'hexecute'
+local hlog = require 'hlog'
 
 local hgps = {
     __VERSION     = '1.0',
@@ -19,9 +20,17 @@ end
 
 function hgps.executeGetGpsCoordinates()
   local latitude = hexecute.execute('gpsctl -- latitude')
+  
   if(latitude == nil or latitude == '') then
     return nil
   end
+
+  hlog.logToFile('gps latitude ' .. latitude)
+
+  if(latitude == 256 or latitude == '256') then
+    return nil
+  end
+
   local longitude = hexecute.execute('gpsctl -- longitude')
   local response = latitude .. ',' .. longitude
 

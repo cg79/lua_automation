@@ -90,8 +90,8 @@ function connectToServerProd()
   -- hexecute.wait(hconstants.RECCONNECT_DELAY);
 end
 
--- connectToServerProd();
-connectToServer();
+connectToServerProd();
+-- connectToServer();
 
 
 -- ###################################
