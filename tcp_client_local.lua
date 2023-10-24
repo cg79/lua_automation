@@ -33,8 +33,8 @@ local name = hsistem.executeGetCommand('name')
 local whoStr = hsistem.createWhoJsonString(id, name)
 
 local masterSocket = socket.tcp();
-local tcp = assert(masterSocket);
-local connection = nil;
+local tcp = assert(masterSocket)  
+  -- local connection = nil;
 
 function resetConnection()
   tcp:close();
@@ -44,7 +44,7 @@ end
 
 function connectToServer()
   
-  local tempConnection = tcp:connect(hconstants.SERVER_URL, hconstants.PORT);
+  local tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
 
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
@@ -52,11 +52,9 @@ function connectToServer()
   while (tempConnection == nil and count < 3) do
     hexecute.wait(hconstants.RECCONNECT_DELAY);
 
-    hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server ' .. hconstants.SERVER_URL .. ' ' .. hconstants.PORT);
-    tempConnection = tcp:connect(hconstants.SERVER_URL, hconstants.PORT);
+    hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
+    tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
     print(tempConnection);
-    print('count ' .. count);
-
     count = count + 1
   end
 
@@ -68,8 +66,32 @@ function connectToServer()
   -- hexecute.wait(hconstants.RECCONNECT_DELAY);
 end
 
+function connectToServerProd()
+  
+  local tempConnection = tcp:connect(hconstants.SERVER_URL_PROD, hconstants.PORT_PROD);
 
-connectToServer();
+  -- print(masterSocket.getstats())
+  -- print('status' .. connection.status)
+  local count = 0;
+  while (tempConnection == nil and count < 3) do
+    hexecute.wait(hconstants.RECCONNECT_DELAY);
+
+    hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
+    tempConnection = tcp:connect(hconstants.SERVER_URL_PROD, hconstants.PORT_PROD);
+    print(tempConnection);
+    count = count + 1
+  end
+
+  -- connection = tempConnection;
+  
+  hlog.logToFile('TCP_CLIENT. CONEXIUNE STABILITA');
+  tcp:send(whoStr);
+
+  -- hexecute.wait(hconstants.RECCONNECT_DELAY);
+end
+
+connectToServerProd();
+-- connectToServer();
 
 
 -- ###################################
@@ -84,7 +106,8 @@ function receiveCommandsFromServer()
   
     if (status == 'closed') then
       resetConnection();
-      connectToServer();
+      connectToServerProd();
+      
     else
       local commandResponse = hsistem.tryExecuteCommandFromServer(commandFromServer)
       
