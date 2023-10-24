@@ -42,8 +42,8 @@ function resetConnection()
   tcp = assert(masterSocket)  
 end
 
-local SERVER_URL = 'tcp://5.tcp.eu.ngrok.io'
-local SERVER_PORT = 14858;
+local SERVER_URL = 'tcp://4.tcp.eu.ngrok.io'
+local SERVER_PORT = 12728;
 
 function connectToServer()
   

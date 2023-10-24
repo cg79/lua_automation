@@ -10,6 +10,8 @@ local socket = require("socket")
 local hfile = require 'hfile'
 
 
+SERVER_URL = '134.209.246.72'
+PORT = 8007;
 
 -- local host = "7.tcp.eu.ngrok.io";
 -- local port = 14456;
@@ -44,7 +46,7 @@ end
 
 function connectToServer()
   
-  local tempConnection = tcp:connect(hconstants.SERVER_URL, hconstants.PORT);
+  local tempConnection = tcp:connect(SERVER_URL, PORT);
 
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
@@ -52,8 +54,8 @@ function connectToServer()
   while (tempConnection == nil and count < 3) do
     hexecute.wait(hconstants.RECCONNECT_DELAY);
 
-    hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server ' .. hconstants.SERVER_URL .. ' ' .. hconstants.PORT);
-    tempConnection = tcp:connect(hconstants.SERVER_URL, hconstants.PORT);
+    hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server ' .. SERVER_URL .. ' ' .. PORT);
+    tempConnection = tcp:connect(SERVER_URL, PORT);
     print(tempConnection);
     print('count ' .. count);
 

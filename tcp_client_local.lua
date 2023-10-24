@@ -42,9 +42,12 @@ function resetConnection()
   tcp = assert(masterSocket)  
 end
 
+local SERVER = 'localhost'
+local PORT = 8007;
+
 function connectToServer()
   
-  local tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
+  local tempConnection = tcp:connect(SERVER, PORT);
 
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
@@ -53,7 +56,7 @@ function connectToServer()
     hexecute.wait(hconstants.RECCONNECT_DELAY);
 
     hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
-    tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
+    tempConnection = tcp:connect(SERVER, PORT);
     print(tempConnection);
     count = count + 1
   end
@@ -68,7 +71,7 @@ end
 
 function connectToServerProd()
   
-  local tempConnection = tcp:connect(hconstants.SERVER_URL_PROD, hconstants.PORT_PROD);
+  local tempConnection = tcp:connect(SERVER, PORT);
 
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
@@ -77,7 +80,7 @@ function connectToServerProd()
     hexecute.wait(hconstants.RECCONNECT_DELAY);
 
     hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server');
-    tempConnection = tcp:connect(hconstants.SERVER_URL_PROD, hconstants.PORT_PROD);
+    tempConnection = tcp:connect(SERVER, PORT);
     print(tempConnection);
     count = count + 1
   end
@@ -85,6 +88,7 @@ function connectToServerProd()
   -- connection = tempConnection;
   
   hlog.logToFile('TCP_CLIENT. CONEXIUNE STABILITA');
+  print('whoStr ' .. whoStr)
   tcp:send(whoStr);
 
   -- hexecute.wait(hconstants.RECCONNECT_DELAY);
@@ -106,7 +110,7 @@ function receiveCommandsFromServer()
   
     if (status == 'closed') then
       resetConnection();
-      connectToServerProd();
+      -- connectToServerProd();
       
     else
       local commandResponse = hsistem.tryExecuteCommandFromServer(commandFromServer)
