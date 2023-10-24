@@ -30,10 +30,16 @@ function hjson.createWhoCommand(id, name, phone, region, master, coordinates, st
   local vBarrier = hjson.createKeyValue('barrier', barrier)
   local vhour = hjson.createKeyValue('hour', hour)
 
-  local response = "{" .. sid .. "," .. vs .. "," .. vt.. "," .. sctype .. "," .. sname .. "," .. sphone .. "," .. sregion .. "," .. smaster .. "," .. scoordinates .. ","
+
+
+  local response = "{" .. sid .. "," .. vs .. "," .. vt.. ",\n"
+  response = response .. sctype .. "," .. sname .. "," .. sphone .. "," .. sregion .. ",\n"
+  response = response .. smaster .. "," .. scoordinates .. ",\n"
   response = response .. vSuntime .. "," .. vBarrier .. "," .. vhour .. "}\n"
 
-  return response .. "\n"
+  print(response)
+  -- return response .. "\n"
+  return response
 end
 
 function hjson.createStatusMessage(id, gpioValue) 

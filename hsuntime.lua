@@ -27,6 +27,7 @@ function hsuntime.percentToMinutes(rise)
 end
 
 function hsuntime.calculateRiseAndSet(coordinates)
+  
   local latitude = 46.76775971140317;
   local longitude = 46.76775971140317;
 
