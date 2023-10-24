@@ -16,7 +16,7 @@ function hgsm.test()
 end
 
 function hgsm.executeGetGSMTime()
-  local gps_reouter = hexecute.execute('gsmctl -H')
+  local gps_reouter = hexecute.execute('gsmctl -T 2')
   return gps_reouter
 end
 

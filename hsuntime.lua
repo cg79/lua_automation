@@ -27,9 +27,9 @@ function hsuntime.percentToMinutes(rise)
 end
 
 function hsuntime.calculateRiseAndSet(coordinates)
-  
+
   local latitude = 46.76775971140317;
-  local longitude = 46.76775971140317;
+  local longitude = 23.553090097696654;
 
   if (coordinates ~= nil) then
     local latitudeLongitude = hstring.splitBy(coordinates, ',')
