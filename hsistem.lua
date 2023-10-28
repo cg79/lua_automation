@@ -392,7 +392,7 @@ function hsistem.executeSetCommand(name, value)
   if (name == 'barrier') then
     print(value)
     hsistem.updatebarrier(value)
-    return
+    return hsettings.getBarrier()
   end
 
   if (name == 'firmware') then
@@ -464,7 +464,7 @@ function hsistem.executeCommandFromServer(command)
 
   print('executeCommandFromServer ' .. command)
 
-  local cmdtypeandcmd = hstring.splitBy(command, ':')
+  local cmdtypeandcmd = hstring.splitBy(command, '>')
   local cmdtype       = cmdtypeandcmd[1];
   local command       = cmdtypeandcmd[2];
   -- local responsePropName = cmdtypeandcmd[3];

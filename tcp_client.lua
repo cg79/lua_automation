@@ -57,15 +57,12 @@ function connectToServer()
 
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
-  local count = 0;
-  while (tempConnection == nil and count < 3) do
+  while (tempConnection == nil) do
     hexecute.wait(hconstants.RECCONNECT_DELAY);
 
     hlog.logToFile('TCP_CLIENT. Se incearca conexiunea la server ' .. SERVER_URL .. ' ' .. PORT);
     tempConnection = tcp:connect(SERVER_URL, PORT);
-    print('count ' .. count);
 
-    count = count + 1
   end
 
   connection = tempConnection;
@@ -86,10 +83,6 @@ function receiveCommandsFromServer()
     local s, status, partial = tcp:receive()     
    
     local commandFromServer = s or partial;
-
-    if(commandFromServer == '' or commandFromServer == nil) then
-      return;
-    end
     
     print('commandFromServer' .. commandFromServer)
     hlog.logToFile('commandFromServer' .. commandFromServer)
