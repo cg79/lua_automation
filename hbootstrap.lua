@@ -18,9 +18,8 @@ function hboot.test()
 end
 
 hfile.ensureDirectory(hconstants.LOGS_DIRECTORY)
-hfile.ensureDirectory(hconstants.GPS_DIRECTORY)
 hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
-hsettings.deviceId();
+hsettings.deviceGuid();
 
 hlog.logToFile('!!! PORNIRE ROUTER !!!');
 

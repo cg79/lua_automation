@@ -17,11 +17,11 @@ function hsettings.log(text)
   print(text)
 end
 
-function hsettings.deviceId()
-  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_ID);
+function hsettings.deviceGuid()
+  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_GUID);
   if(response == nil) then
     response = hconstants.uuid()
-    hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_ID, response)
+    hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_GUID, response)
   end
   
   return response

@@ -39,6 +39,20 @@ function hstring.textUntil(input, text)
   return response 
 end
 
+function hstring.randomChars() 
+  local randlowercase = string.char(math.random(97, 97 + 25))
+  local count = 0;
+  local response = ''
+  while count < 7 do
+   response = response .. randlowercase;
+   randlowercase = string.char(math.random(97, 97 + 25))
+    count = count + 1;
+  end
+  return response;
+end
+
+
+print(hstring.randomChars())
 -- local array  = splitBy('cat,dog', ',')
 -- arrToString(array)
 

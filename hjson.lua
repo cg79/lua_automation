@@ -16,10 +16,10 @@ function hjson.createKeyValue(key, value)
   return response
 end
 
-function hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, suntime, barrier, hour) 
+function hjson.createWhoCommand(guid, name, phone, region, master, coordinates, started, voltage, suntime, barrier, hour) 
 
   voltage = 1234;
-  local sid = hjson.createKeyValue('guid', id);
+  local sid = hjson.createKeyValue('guid', guid);
   local sctype = hjson.createKeyValue('commandtype', 'who');
   local sname = hjson.createKeyValue('name', name);
   local sphone = hjson.createKeyValue('phone', phone);
@@ -44,8 +44,8 @@ function hjson.createWhoCommand(id, name, phone, region, master, coordinates, st
   return response
 end
 
-function hjson.createStatusMessage(id, gpioValue) 
-  local sid = hjson.createKeyValue('guid', id);
+function hjson.createStatusMessage(guid, gpioValue) 
+  local sid = hjson.createKeyValue('guid', guid);
   local status = hjson.createKeyValue('commandtype', 'status');
   local gpio = hjson.createKeyValue('gpio', gpioValue);
 
@@ -53,26 +53,29 @@ function hjson.createStatusMessage(id, gpioValue)
   return response .. "\n"
 end
 
-function hjson.createMessageFromRouterCommandold(id, name, vals)
+function hjson.createMessageFromRouterCommandold(guid, name, vals)
   local jcommandType = hjson.createKeyValue('commandtype', 'valuefromrouter') 
-  local jid = hjson.createKeyValue('id', id);
+  local jguid = hjson.createKeyValue('guid', guid);
   local jname = hjson.createKeyValue('name', name);
   local jprop = hjson.createKeyValue('prop', vals[1]);
   local jvalue = hjson.createKeyValue('value', vals[2]);
 
-  local response = "{"  .. jcommandType .. "," .. jid .. "," .. jname .. "," .. jprop .. "," .. jvalue .. "}\n"
+  local response = "{"  .. jcommandType .. "," .. jguid .. "," .. jname .. "," .. jprop .. "," .. jvalue .. "}\n"
   return response .. "\n"
 end
 
 
-function hjson.createMessageFromRouterCommand(id, name, vals)
-  local jcommandType = hjson.createKeyValue('commandtype', 'valuefromrouter') 
-  local jid = hjson.createKeyValue('id', id);
-  local jname = hjson.createKeyValue('name', name);
+function hjson.createMessageFromRouterCommand(guid, vals)
+  local jcommandType = hjson.createKeyValue('commandtype', 'valuefromrouter')
+  local jid = hjson.createKeyValue('guid', guid);
+  
   local jprop = hjson.createKeyValue(vals[1], vals[2]);
-  -- local jvalue = hjson.createKeyValue('value', vals[2]);
+  local jname = hjson.createKeyValue('name', vals[1]);
+  local jvalue = hjson.createKeyValue('value', vals[2] or '');
 
-  local response = "{"  .. jcommandType .. "," .. jid .. "," .. jname .. "," .. jprop ..  "}\n"
+  print('jval ' .. jvalue)
+
+  local response = "{"  .. jcommandType .. "," .. jid .. "," .. jprop .. "," .. jname ..","..  jvalue .. "}\n"
   return response .. "\n"
 end
 

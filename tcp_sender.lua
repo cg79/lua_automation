@@ -11,7 +11,7 @@ local socket = require("socket")
 print('TCP_SENDER ' .. socket._VERSION)
 
 local name = hsistem.executeGetCommand('name')
-local id = hsettings.deviceId()
+local guid = hsettings.deviceGuid()
 
 
 
@@ -35,7 +35,7 @@ function connectAndSendStatus()
 
   if (tempConnection ~= nil) then
     local status = hsistem.executeGetCommand('gpio') or 'unknown';
-    local statusMessage = hjson.createStatusMessage(id, status);
+    local statusMessage = hjson.createStatusMessage(guid, status);
     
     hlog.logToFile('TCP_SENDER. CONEXIUNE STABILITA');
     tcp:send(statusMessage);

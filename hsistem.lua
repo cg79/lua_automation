@@ -185,7 +185,7 @@ function hsistem.executeGetCommand(name, value)
 
 
   if (name == 'name') then
-    response = hsettings.getName(value) or 'name'
+    response = hsettings.getName() or hstring.randomChars()
     return response;
   end
 
@@ -194,12 +194,12 @@ function hsistem.executeGetCommand(name, value)
   end
 
   if (name == 'phone') then
-    response = hsettings.getPhoneNumber(value) or 'phone'
+    response = hsettings.getPhoneNumber() or 'phone'
     return response;
   end
 
   if (name == 'region') then
-    response = hsettings.getRegion(value) or '-'
+    response = hsettings.getRegion() or ''
     return response
   end
 
@@ -209,7 +209,7 @@ function hsistem.executeGetCommand(name, value)
   end
 
   if (name == 'master') then
-    response = hsettings.getIsMaster(value) or 0
+    response = hsettings.getIsMaster() or 0
     return response
   end
 
@@ -244,15 +244,15 @@ function hsistem.executeGetCommand(name, value)
   end
 
   if (name == 'suntime') then
-    val1 = hsettings.getSuntimeRise()
-    val2 = hsettings.getSuntime2()
+    local val1 = hsettings.getSuntimeRise()
+    local val2 = hsettings.getSuntime2()
     return val1 .. ',' .. val2;
   end
 
   if (name == 'all') then
-    local id = hsettings.deviceId()
+    local guid = hsettings.deviceGuid()
     local name = hsistem.executeGetCommand('name')
-    return hsistem.getAll(id, name)
+    return hsistem.getAll(guid, name)
   end
 
   if (name == 'barrier') then
@@ -271,7 +271,7 @@ function hsistem.executeGetCommand(name, value)
   end
 end
 
-function hsistem.getAll(id, name)
+function hsistem.getAll(guid, name)
   local phone = hsistem.executeGetCommand('phone')
   local region = hsistem.executeGetCommand('region')
   local master = hsistem.executeGetCommand('master')
@@ -289,22 +289,15 @@ function hsistem.getAll(id, name)
   -- print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
 
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-  local whoStr = id ..
-  '|' ..
-  name ..
-  '|' ..
-  phone ..
-  '|' ..
-  region ..
-  '|' ..
-  master .. '|' .. coordinates .. '|' .. started .. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier .. '|' .. hour
+  local whoStr = guid .. '|' .. name .. '|' .. phone .. '|' .. region .. '|'
+  whoStr = whoStr .. master .. '|' .. coordinates .. '|' .. started .. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier .. '|' .. hour
 
   return whoStr
 end
 
 
 
-function hsistem.createWhoJsonString(id, name)
+function hsistem.createWhoJsonString(guid, name)
   local phone = hsistem.executeGetCommand('phone')
   local region = hsistem.executeGetCommand('region')
   local master = hsistem.executeGetCommand('master')
@@ -323,7 +316,7 @@ function hsistem.createWhoJsonString(id, name)
   print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
 
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-  local whoStr = hjson.createWhoCommand(id, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier,
+  local whoStr = hjson.createWhoCommand(guid, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier,
     hour);
 
   return whoStr
@@ -333,7 +326,13 @@ function hsistem.executeSetCommand(name, value)
   if (name == 'gpio') then
     -- "gpio 1 sau 0"
     hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
-    return
+    response = hsistem.tryExecuteGetIsStarted()
+
+    print('dddd '..response)
+    if(response == -1) then
+      response = value
+    end
+    return response
   end
 
   -- if (name == 'timezone') then
@@ -344,12 +343,12 @@ function hsistem.executeSetCommand(name, value)
 
   if (name == 'name') then
     hsettings.setName(value)
-    return
+    return hsettings.getName();
   end
 
   if (name == 'phone') then
     hsettings.setPhoneNumber(value)
-    return
+    return hsettings.getPhoneNumber();
   end
 
   if (name == 'region') then
@@ -386,17 +385,22 @@ function hsistem.executeSetCommand(name, value)
   if (name == 'suntime') then
     print(value)
     hsistem.updatesuntime(value)
+    return
   end
 
 
   if (name == 'barrier') then
     print(value)
     hsistem.updatebarrier(value)
+    return
   end
 
   if (name == 'firmware') then
     hexecute.execute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
+    return
   end
+
+  return 'WARNING: command ' .. name .. ' is not implemented'
 end
 
 function hsistem.reboot()
@@ -422,7 +426,8 @@ function hsistem.updatesettings(command)
   hsistem.executeSetCommand('master', vals[3])
   hsistem.executeSetCommand('region', vals[4])
   if (vals[5] ~= '') then
-    hsistem.executeSetCommand('coordinates', vals[5])
+    print('update coordinates ' .. vals[5])
+    hsistem.executeSetCommand('gps', vals[5])
   end
 end
 
@@ -462,6 +467,7 @@ function hsistem.executeCommandFromServer(command)
   local cmdtypeandcmd = hstring.splitBy(command, ':')
   local cmdtype       = cmdtypeandcmd[1];
   local command       = cmdtypeandcmd[2];
+  -- local responsePropName = cmdtypeandcmd[3];
   print(cmdtype);
 
   if (cmdtype == 'reboot') then
@@ -546,7 +552,8 @@ function hsistem.executeCommandFromServer(command)
     if (response == nil) then
       return nil
     end
-    return hsistem.createKeyValueResponse('set', response);
+    propName = setValues[3] or 'set'
+    return hsistem.createKeyValueResponse(propName, response);
   end
 
   if (name == 'download') then
