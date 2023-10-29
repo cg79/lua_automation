@@ -47,10 +47,11 @@ function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
 end
 
 function hsistem.executeFunctionAfterXSeconds(seconds, func)
+  print("executie dupa " .. seconds)
   if (seconds < 0) then
     return
   end
-  print("executie dupa " .. seconds)
+  
 
   hexecute.execute("sleep " .. seconds);
 
@@ -62,9 +63,9 @@ function hsistem.logs(anlunazi)
   print('logs file: ' .. fileName)
   local response = hfile.readFile(fileName)
 
-  response = hstring.replace(response, '{', '[')
-  response = hstring.replace(response, '}', ']')
-  response = hstring.replace(response, '\n', '#')
+  response = hstring.replace(response, '{', '\n')
+  response = hstring.replace(response, '}', '\n')
+  -- response = hstring.replace(response, '\n', '#')
 
   return response
 end
@@ -158,6 +159,12 @@ function hsistem.tryExecuteGetSpace()
   end
 end
 
+function hsistem.getSuntime()
+  local val1 = hsettings.getSuntimeRise()
+  local val2 = hsettings.getSuntime2()
+  return val1 .. ',' .. val2;
+end
+
 function hsistem.executeGetCommand(name, value)
   print('execute GET ' .. name)
   local response = ''
@@ -171,15 +178,9 @@ function hsistem.executeGetCommand(name, value)
   if (name == 'luav') then
     -- "gpio 1 sau 0"
     response = hexecute.execute('lua -v')
-    return response
-  end
-
-
-
-  if (name == 'timezone') then
-    -- "gpio 1 sau 0"
-    -- response = hexecute.execute("date + '%Z %z'")
-    response = hexecute.execute("date + '%z'")
+    if (response ~= nil) then
+      response = tostring(response)
+    end
     return response
   end
 
@@ -219,12 +220,27 @@ function hsistem.executeGetCommand(name, value)
   end
 
   if (name == 'datetime') then
-    response = hexecute.execute("date")
+    -- response = hexecute.execute("date")
+    response = htime.date()
     return response
   end
 
   if (name == 'gsmtime') then
     response = hgsm.tryExecuteGetGSMTime()
+    if (response ~= nil) then
+      response = tostring(response)
+    end
+
+    return response
+  end
+
+  if (name == 'timezone') then
+    -- "gpio 1 sau 0"
+    -- response = hexecute.execute("date + '%Z %z'")
+    response = hexecute.execute("date + '%z'")
+    if (response ~= nil) then
+      response = tostring(response)
+    end
     return response
   end
 
@@ -244,9 +260,7 @@ function hsistem.executeGetCommand(name, value)
   end
 
   if (name == 'suntime') then
-    local val1 = hsettings.getSuntimeRise()
-    local val2 = hsettings.getSuntime2()
-    return val1 .. ',' .. val2;
+    return hsistem.getSuntime()
   end
 
   if (name == 'all') then
@@ -281,7 +295,7 @@ function hsistem.getAll(guid, name)
   local started = hsistem.tryExecuteGetIsStarted()
   local voltage = hsistem.tryExecuteGetVoltage();
 
-  local vsuntime = hsuntime.tryCalculateRiseAndSet(coordinates)
+  local vsuntime = hsistem.getSuntime()
 
   local barrier = hsettings.getBarrier()
   local hour = hsistem.getHour()
@@ -290,12 +304,11 @@ function hsistem.getAll(guid, name)
 
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
   local whoStr = guid .. '|' .. name .. '|' .. phone .. '|' .. region .. '|'
-  whoStr = whoStr .. master .. '|' .. coordinates .. '|' .. started .. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier .. '|' .. hour
+  whoStr = whoStr ..
+  master .. '|' .. coordinates .. '|' .. started .. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier .. '|' .. hour
 
   return whoStr
 end
-
-
 
 function hsistem.createWhoJsonString(guid, name)
   local phone = hsistem.executeGetCommand('phone')
@@ -316,7 +329,8 @@ function hsistem.createWhoJsonString(guid, name)
   print(name, phone, region, master, coordinates, started, voltage, vsuntime, barrier, hour);
 
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
-  local whoStr = hjson.createWhoCommand(guid, name, phone, region, master, coordinates, started, voltage, vsuntime, barrier,
+  local whoStr = hjson.createWhoCommand(guid, name, phone, region, master, coordinates, started, voltage, vsuntime,
+    barrier,
     hour);
 
   return whoStr
@@ -328,8 +342,8 @@ function hsistem.executeSetCommand(name, value)
     hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
     response = hsistem.tryExecuteGetIsStarted()
 
-    print('dddd '..response)
-    if(response == -1) then
+    print('dddd ' .. response)
+    if (response == -1) then
       response = value
     end
     return response
@@ -436,7 +450,7 @@ function hsistem.updategps(command)
 end
 
 function hsistem.updatesuntime(suntimeValues)
-  arr = hstring.splitBy(suntimeValues, ',')
+  local arr = hstring.splitBy(suntimeValues, ',')
   hsettings.setSuntimeRise(arr[1])
   hsettings.setSuntime2(arr[2])
 

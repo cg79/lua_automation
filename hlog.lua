@@ -39,6 +39,8 @@ function hlog.deletePreviousXDays(x)
   hfile.deleteFile(fileName)
 end
 
+-- print(type("Hello world"))
+
 return hlog
   
   

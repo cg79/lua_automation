@@ -40,6 +40,16 @@ function hfile.writeToFile(fileName, text)
   io.close(file)
 end
 
+function hfile.tryWriteToFile(fileName, text)
+  status, ret = pcall(hfile.writeToFile, fileName, text)
+
+  if (status ~= false and ret ~= nil) then
+    return ret
+  else
+    return nil
+  end
+end
+
 function hfile.appendToFile(fileName, text)
   local file = io.open(fileName, 'a+')
   file:write(text .. '\n')

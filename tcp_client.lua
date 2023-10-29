@@ -84,7 +84,7 @@ function receiveCommandsFromServer()
    
     local commandFromServer = s or partial;
     
-    print('commandFromServer' .. commandFromServer)
+    -- print('commandFromServer' .. commandFromServer)
     hlog.logToFile('commandFromServer' .. commandFromServer)
   
     if (status == 'closed') then
@@ -99,10 +99,21 @@ function receiveCommandsFromServer()
 
       if(commandResponse ~= nil) then
         -- local message = hjson.
-        print('commandResponse 1 ' .. commandResponse[1])
-        print('commandResponse 2 ' .. commandResponse[2])
+        -- print(#(commandResponse))
+        print('commandResponse ' ..#(commandResponse))
+        print(commandResponse[1])
+        print(commandResponse[2])
 
-        local msg = hjson.createMessageFromRouterCommand(guid, commandResponse)
+        local v1 = commandResponse[1];
+        if(type(v1) ~= "string") then
+          v1= tostring(v1)
+        end
+        local v2 = commandResponse[2];
+        if(type(v2) ~= "string") then
+          v2= tostring(v2)
+        end
+
+        local msg = hjson.createMessageFromRouterCommand(guid, v1,v2)
         print('sending ' .. msg)
         tcp:send(msg);
       end
@@ -111,8 +122,15 @@ function receiveCommandsFromServer()
    end
 end
 
+function tryReceiveCommandsFromServer()
+  status, ret = xpcall(receiveCommandsFromServer, hsistem.errorFct)
+
+  
+end
+
 
 receiveCommandsFromServer();
+-- tryReceiveCommandsFromServer()
 
 
  

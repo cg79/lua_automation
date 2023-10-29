@@ -65,13 +65,13 @@ function hjson.createMessageFromRouterCommandold(guid, name, vals)
 end
 
 
-function hjson.createMessageFromRouterCommand(guid, vals)
+function hjson.createMessageFromRouterCommand(guid, v1,v2)
   local jcommandType = hjson.createKeyValue('commandtype', 'valuefromrouter')
   local jid = hjson.createKeyValue('guid', guid);
   
-  local jprop = hjson.createKeyValue(vals[1], vals[2]);
-  local jname = hjson.createKeyValue('name', vals[1]);
-  local jvalue = hjson.createKeyValue('value', vals[2] or '');
+  local jprop = hjson.createKeyValue(v1, v2);
+  local jname = hjson.createKeyValue('name', v1);
+  local jvalue = hjson.createKeyValue('value', v2 or '');
 
   print('jval ' .. jvalue)
 

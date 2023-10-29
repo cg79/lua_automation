@@ -10,7 +10,7 @@ function jugglerstart.test()
   print("jugglerstart merge")
 end
 
-gpiocommands.tryopenDOUT2()
+gpiocommands.tryStartGPIO()
 
 
 return jugglerstart

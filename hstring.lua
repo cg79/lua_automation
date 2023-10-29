@@ -52,7 +52,7 @@ function hstring.randomChars()
 end
 
 
-print(hstring.randomChars())
+-- print(hstring.randomChars())
 -- local array  = splitBy('cat,dog', ',')
 -- arrToString(array)
 

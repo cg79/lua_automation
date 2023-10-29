@@ -31,7 +31,7 @@ end
 
 function htime.getLogFileName(dateValues)
   local filePath = tostring(dateValues.year) ..
-  '-' .. tostring(dateValues.month) .. '-' .. tostring(dateValues.day) .. '.txt'
+      '-' .. tostring(dateValues.month) .. '-' .. tostring(dateValues.day) .. '.txt'
   return filePath;
 end
 
@@ -55,9 +55,18 @@ end
 function htime.createTimeFromHMSValues(hour, minute, second)
   local date = htime.getDateValues()
   -- print(date.hour .. ' - ' .. date.min)
+  hour = hour or 0;
+  minute = minute or 0;
+  second = second or 0;
 
-  local response = os.time({ year = date.year, month = date.month, day = date.day, hour = hour, min = minute, sec =
-  second })
+  local response = os.time({
+    year = date.year,
+    month = date.month,
+    day = date.day,
+    hour = hour,
+    min = minute,
+    sec = second
+  })
 
   return response
 end
@@ -93,8 +102,8 @@ function htime.getSeccondsUntilDate(t1)
 end
 
 function htime.getPreviousDaysDate(x)
-  local response = os.date("%Y-%m-%d",os.time()- x * 24*60*60)
-  print(response)
+  local response = os.date("%Y-%m-%d", os.time() - x * 24 * 60 * 60)
+  -- print(response)
   return response
 end
 
@@ -127,7 +136,43 @@ function htime.timeAsString()
   return htime.timeToString(htime.localTime())
 end
 
+function htime.date()
+  local dateObj = htime.getDateValues()
+  return dateObj.year .. '-' .. dateObj.month .. '-' .. dateObj.day .. '|' .. htime.timeAsString();
+end
+
+function htime.secondsToHHMMSS(seconds)
+  local negative = '';
+  if(seconds<0) then
+    negative= '-';
+    seconds = seconds * -1;
+  end
+  local hSec = 60 * 60;
+  local hours = math.floor(seconds / hSec);
+  local hReminderSec = seconds % hSec;
+  local minutes = math.floor(hReminderSec / 60);
+  local mReminderSec = hReminderSec % 60;
+  return negative .. hours .. ':' .. minutes .. ':' .. mReminderSec;
+end
+
+function htime.test()
+
+  local t2 = htime.createTimeFromHMS('9');
+  local seconds = htime.getSeccondsUntilDate(t2)
+  print(seconds .. '     ' .. htime.secondsToHHMMSS(seconds))
+  return seconds;
+end
+
 -- htime.getSecondsUntil4AM();
 
+-- print(htime.date())
+
+--htime.secondsToHHMMSS(69340)
+-- htime.secondsToHHMMSS(3601)
+
+-- print(htime.timeToString(htime.createTimeFromHMS('5:6:3')))
+
+-- print(htime.getSecondsUntil4AM())
+-- htime.test()
 
 return htime

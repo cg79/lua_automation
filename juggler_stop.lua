@@ -10,7 +10,7 @@ function jugglerstop.test()
   print("jugglerstop merge")
 end
 
-gpiocommands.tryclearDOUT2()
+gpiocommands.tryStopGPIO()
 
 
 return jugglerstop

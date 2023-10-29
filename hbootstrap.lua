@@ -23,7 +23,11 @@ hsettings.deviceGuid();
 
 hlog.logToFile('!!! PORNIRE ROUTER !!!');
 
-hexecute.execute('lua tcp_client.lua & lua hscheduler.lua &')
+hexecute.execute('lua tcp_client.lua &')
+
+hexecute.wait(30)
+
+hexecute.execute('lua hscheduler.lua &')
 
 return hboot
   

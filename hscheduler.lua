@@ -5,7 +5,6 @@ local htime = require 'htime'
 local hsistem = require 'hsistem'
 local hsettings = require 'hsettings'
 local hgps = require 'hgps'
-local hsuntime = require 'hsuntime'
 local hexecute = require 'hexecute'
 local gpiocommands = require 'gpio_commands'
 
@@ -64,7 +63,7 @@ function hscheduler.createGenericObjectCommand(command)
   return response;
 end
 
-function createAnArrayOfObjectsFromADailyCommand(input)
+function hscheduler.createAnArrayOfObjectsFromADailyCommand(input)
   -- {72,[8:12:3,1,1],[8:15:3,1,0]}
   local arr = {}
   local dayValue = 0;
@@ -85,7 +84,7 @@ function createAnArrayOfObjectsFromADailyCommand(input)
   return arr
 end
 
-function getSchedulerFileName(dayIndex)
+function hscheduler.getSchedulerFileName(dayIndex)
   return hscheduler.__DIRECTORY .. '/' .. dayIndex
 end
 
@@ -94,7 +93,7 @@ function hscheduler.getCommandsForDay(dayNo)
   local fileExists = false
   local dayIndex = dayNo
   while (dayIndex > 0) do
-    fileName = getSchedulerFileName(dayIndex)
+    fileName = hscheduler.getSchedulerFileName(dayIndex)
 
     fileExists = hfile.exists(fileName)
     -- print(fileName,  fileExists)
@@ -122,7 +121,7 @@ function hscheduler.loadCommandsForDay(dayNo)
   print('commandsFromFile: ' .. commandsFromFile)
 
   if (commandsFromFile ~= nil) then
-    local commandsArray = createAnArrayOfObjectsFromADailyCommand(commandsFromFile)
+    local commandsArray = hscheduler.createAnArrayOfObjectsFromADailyCommand(commandsFromFile)
     hscheduler.scheduleObjects(commandsArray)
   end
 end
@@ -143,19 +142,24 @@ function hscheduler.gpsAndSuntimeAndScheduler()
 
   print('gpsCoordinates: ' .. gpsCoordinates)
 
-  local latitudeLongitude = hstring.splitBy(gpsCoordinates, ',')
+  -- local latitudeLongitude = hstring.splitBy(gpsCoordinates, ',')
 
-  local suntime = hsuntime.calculateRiseAndSet(latitudeLongitude[1], latitudeLongitude[2])
+  local suntime = hsistem.getSuntime()
 
-  hsettings.setSuntimeRise(suntime[1])
-  hsettings.setSuntime2(suntime[2])
+  print('aaa ', suntime)
+
+  local riseAndSunSetArray = hstring.splitBy(suntime, ',')
+
+  hsettings.setSuntimeRise(riseAndSunSetArray[1])
+  hsettings.setSuntime2(riseAndSunSetArray[2])
 
   -- hsettings.setSuntimeRise('13:25')
   -- hsettings.setSuntime2('13:26')
 
 
-  print(suntime[1])
-  print(suntime[2])
+  print(riseAndSunSetArray[1])
+  print(riseAndSunSetArray[2])
+  return riseAndSunSetArray;
 end
 
 
@@ -174,13 +178,14 @@ end
 
 function hscheduler.start()
 
-  hscheduler.gpsAndSuntimeAndScheduler()
-  local time1 = hsettings.getSuntimeRise()
-  local time2 = hsettings.getSuntime2()
+  local riseAndSunSetArray = hscheduler.gpsAndSuntimeAndScheduler()
+  local time1 = riseAndSunSetArray[1];
+  local time2 = riseAndSunSetArray[2];
 
   local now = htime.localTime()
   local nowPlus5Sec = htime.addSecondsToDate(now, 5)
   time1 = htime.timeToString(nowPlus5Sec)
+
   local nowPlus10Sec = htime.addSecondsToDate(now, 10)
   time2 = htime.timeToString(nowPlus10Sec)
 
@@ -190,20 +195,21 @@ function hscheduler.start()
   local sec1 = htime.getSeccondsUntilDateAsString(time1)
   local sec2 = htime.getSeccondsUntilDateAsString(time2)
 
-  hsistem.executeFunctionAfterXSeconds(sec1, gpiocommands.tryopenDOUT2)
-  hexecute.execute('lua tcp_sender.lua & ')
+  hsistem.executeFunctionAfterXSeconds(sec1, gpiocommands.tryStartGPIO)
+  -- hexecute.execute('lua tcp_sender.lua & ')
 
-  hsistem.executeFunctionAfterXSeconds(sec2, gpiocommands.tryclearDOUT2)
-  hexecute.execute('lua tcp_sender.lua & ')
+  hsistem.executeFunctionAfterXSeconds(sec2, gpiocommands.tryStopGPIO)
+  -- hexecute.execute('lua tcp_sender.lua & ')
 
   local until4AM = htime.getSecondsUntil4AM();
   print(until4AM)
-  hlog.logToFile('SUNTIME - ASTEPTARE PANA la 4AM ' .. until4AM);
+
+  hlog.logToFile('SUNTIME - ASTEPTARE PANA la 4AM ' .. until4AM .. '--> ' .. htime.secondsToHHMMSS(until4AM));
   hexecute.wait(until4AM);
 
-  -- hscheduler.start()
   hexecute.execute("reboot")
 end
+
 
 hscheduler.start()
 

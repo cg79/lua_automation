@@ -2,7 +2,6 @@ local hstring = require 'hstring'
 -- local hfile = require 'hfile'
 local hlog = require 'hlog'
 local htime = require 'htime'
-local hsistem = require 'hsistem'
 local hsettings = require 'hsettings'
 -- local hgps = require 'hgps'
 -- local hsuntime = require 'hsuntime'
@@ -19,62 +18,95 @@ function gpiocommands.test()
   print("gpiocommands merge")
 end
 
+function gpiocommands.startGPIO()
+  local allowStartGPIO = gpiocommands.allowStartGPIO()
 
-function gpiocommands.openDOUT2()
-  local barrier = hsettings.getBarrier();
-
-  hlog.logToFile('executie open DOUT2 ' .. barrier)
-  if (barrier ~= nil and barrier ~= '') then
-    
-    -- verificare daca este permisa executia gpio
-    local vals = hstring.splitBy(barrier, ',');
-    local t1 = htime.createTimeFromHMS(vals[1]);
-
-    local seconds = htime.getSeccondsUntilDate(t1)
-    if (seconds < 0) then
-      hlog.logToFile('!!! incercare de pornire DOUT2 !!!');
-      return;
-    end
+  if(allowStartGPIO == false) then
+    hlog.logToFile('PREVENIRE PORNIRE');
+    return
   end
 
   hlog.logToFile('SUNTIME - PORNIRE DOUT2');
   hexecute.execute('/sbin/gpio.sh set DOUT2')
 end
 
-function gpiocommands.tryopenDOUT2()
-  status, ret = pcall(gpiocommands.openDOUT2)
+function gpiocommands.tryStartGPIO()
+  status, ret = pcall(gpiocommands.startGPIO)
 
-  if(status ~= false and ret ~= nil) then 
+  if (status ~= false and ret ~= nil) then
     return ret
-  else 
+  else
     return nil
   end
 end
 
-function gpiocommands.clearDOUT2()
+function gpiocommands.allowStartGPIO()
   local barrier = hsettings.getBarrier();
-  if (barrier ~= nil and barrier ~= '') then
-    -- verificare daca este permisa executia gpio
-    local vals = hstring.splitBy(barrier, ',');
-    local t1 = htime.createTimeFromHMS(vals[2]);
-
-    local seconds = htime.getSeccondsUntilDate(t1)
-    if (seconds > 0) then
-      hlog.logToFile('!!! incercare de oprire DOUT2 !!!');
-      return;
-    end
+  if (barrier == nil or barrier == '') then
+    return true
   end
+
+  local vals = hstring.splitBy(barrier, ',');
+  local t1 = htime.createTimeFromHMS(vals[1]);
+  local t2 = htime.createTimeFromHMS(vals[2]);
+  local seconds1 = htime.getSeccondsUntilDate(t1)
+  local seconds2 = htime.getSeccondsUntilDate(t2)
+  print(seconds1 .. '   ' .. htime.secondsToHHMMSS(seconds1) .. ' b1')
+  print(seconds2 .. '   ' .. htime.secondsToHHMMSS(seconds2) .. ' b2')
+
+  if(seconds1 <0 and seconds2 < 0) then
+    return true
+  end
+
+  if(seconds1 >0 and seconds2 > 0) then
+    return true
+  end
+
+  return false;
+end
+
+function gpiocommands.allowStopGPIO()
+  local barrier = hsettings.getBarrier();
+  if (barrier == nil or barrier == '') then
+    return true
+  end
+
+  local vals = hstring.splitBy(barrier, ',');
+  local t1 = htime.createTimeFromHMS(vals[1]);
+  local t2 = htime.createTimeFromHMS(vals[2]);
+  local seconds1 = htime.getSeccondsUntilDate(t1)
+  local seconds2 = htime.getSeccondsUntilDate(t2)
+  print(seconds1 .. '   ' .. htime.secondsToHHMMSS(seconds1) .. ' b1')
+  print(seconds2 .. '   ' .. htime.secondsToHHMMSS(seconds2) .. ' b2')
+
+  if(seconds1 < 0 and seconds2 > 0) then
+    return true
+  end
+
+  return false;
+end
+
+
+
+function gpiocommands.stopGPIO()
+  local allowStopGPIO = gpiocommands.allowStopGPIO()
+
+  if(allowStopGPIO == false) then
+    hlog.logToFile('PREVENIRE OPRIRE');
+    return
+  end
+
 
   hlog.logToFile('SUNTIME - OPRIRE DOUT2');
   hexecute.execute('/sbin/gpio.sh clear DOUT2')
 end
 
-function gpiocommands.tryclearDOUT2()
-  status, ret = pcall(gpiocommands.clearDOUT2)
+function gpiocommands.tryStopGPIO()
+  status, ret = pcall(gpiocommands.stopGPIO)
 
-  if(status ~= false and ret ~= nil) then 
+  if (status ~= false and ret ~= nil) then
     return ret
-  else 
+  else
     return nil
   end
 end
