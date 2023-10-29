@@ -386,15 +386,17 @@ function hsistem.executeSetCommand(name, value)
 
   if (name == 'datetime') then
     -- date -s '2024-12-25 12:34:07'
+
+    -- print('set DATETIME ' .. value)
     hexecute.tryExecute("date -s " .. "'" .. value .. "'")
     -- todo seteaza mackintosh clock
     return
   end
 
-  if (name == 'schedule') then
-    hschedulersave.saveCommandsToDisc(value)
-    return
-  end
+  -- if (name == 'schedule') then
+  --   hschedulersave.saveCommandsToDisc(value)
+  --   return
+  -- end
 
   if (name == 'gps') then
     hgps.writeCoordinatesToFile(value)
@@ -418,10 +420,10 @@ function hsistem.executeSetCommand(name, value)
     return hsettings.getBarrier()
   end
 
-  if (name == 'firmware') then
-    hexecute.tryExecute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
-    return
-  end
+  -- if (name == 'firmware') then
+  --   hexecute.tryExecute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
+  --   return
+  -- end
 
   return 'WARNING: command ' .. name .. ' is not implemented'
 end
