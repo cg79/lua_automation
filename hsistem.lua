@@ -9,6 +9,7 @@ local hgsm = require 'hgsm'
 local htime = require 'htime'
 local hsuntime = require('hsuntime')
 local hjson = require 'hjson'
+local gpiocommands = require 'gpio_commands'
 
 local hsistem = {
   __VERSION     = '1.0',
@@ -339,10 +340,15 @@ end
 function hsistem.executeSetCommand(name, value)
   if (name == 'gpio') then
     -- "gpio 1 sau 0"
-    hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
+    -- hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
+
+    if (value == 1) then
+      gpiocommands.tryStartGPIO()
+    else
+      gpiocommands.tryStopGPIO()
+    end
     response = hsistem.tryExecuteGetIsStarted()
 
-    print('dddd ' .. response)
     if (response == -1) then
       response = value
     end

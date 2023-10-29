@@ -21,6 +21,8 @@ hfile.ensureDirectory(hconstants.LOGS_DIRECTORY)
 hfile.ensureDirectory(hconstants.SETTINGS_DIRECTORY)
 hsettings.deviceGuid();
 
+hexecute.wait(10)
+
 hlog.logToFile('!!! PORNIRE ROUTER !!!');
 
 hexecute.execute('lua tcp_client.lua &')

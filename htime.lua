@@ -172,7 +172,7 @@ end
 
 -- print(htime.timeToString(htime.createTimeFromHMS('5:6:3')))
 
--- print(htime.getSecondsUntil4AM())
+print(htime.getSecondsUntil4AM())
 -- htime.test()
 
 return htime

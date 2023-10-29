@@ -196,10 +196,10 @@ function hscheduler.start()
   local sec2 = htime.getSeccondsUntilDateAsString(time2)
 
   hsistem.executeFunctionAfterXSeconds(sec1, gpiocommands.tryStartGPIO)
-  -- hexecute.execute('lua tcp_sender.lua & ')
+  hexecute.execute('lua tcp_sender.lua & ')
 
   hsistem.executeFunctionAfterXSeconds(sec2, gpiocommands.tryStopGPIO)
-  -- hexecute.execute('lua tcp_sender.lua & ')
+  hexecute.execute('lua tcp_sender.lua & ')
 
   local until4AM = htime.getSecondsUntil4AM();
   print(until4AM)
