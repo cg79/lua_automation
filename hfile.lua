@@ -81,7 +81,7 @@ end
 function hfile.ensureDirectory(path)
   -- "/" works on both Unix and Windows
   if not hfile.exists(path) then
-    hexecute.execute("mkdir " .. path)
+    hexecute.tryExecute("mkdir " .. path)
   end
 end
 

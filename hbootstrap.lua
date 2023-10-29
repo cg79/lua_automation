@@ -25,11 +25,11 @@ hexecute.wait(10)
 
 hlog.logToFile('!!! PORNIRE ROUTER !!!');
 
-hexecute.execute('lua tcp_client.lua &')
+hexecute.tryExecute('lua tcp_client.lua &')
 
 hexecute.wait(30)
 
-hexecute.execute('lua hscheduler.lua &')
+hexecute.tryExecute('lua hscheduler.lua &')
 
 return hboot
   

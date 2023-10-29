@@ -19,7 +19,7 @@ function hgps.errorFct()
 end
 
 function hgps.executeGetGpsCoordinates()
-  local latitude = hexecute.execute('gpsctl -- latitude')
+  local latitude = hexecute.tryExecute('gpsctl -- latitude')
   
   if(latitude == nil or latitude == '') then
     return nil
@@ -31,7 +31,7 @@ function hgps.executeGetGpsCoordinates()
     return nil
   end
 
-  local longitude = hexecute.execute('gpsctl -- longitude')
+  local longitude = hexecute.tryExecute('gpsctl -- longitude')
   local response = latitude .. ',' .. longitude
 
   return response
@@ -68,7 +68,7 @@ function hgps.readCoordinatesFromFile()
 end
 
 function hgps.getGpsTime()
-  local response = hexecute.execute('gpsctl --datetime')
+  local response = hexecute.tryExecute('gpsctl --datetime')
   return response
 end
 

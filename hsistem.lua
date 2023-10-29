@@ -27,7 +27,7 @@ end
 
 function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
   print("executie dupa " .. seconds .. ' secunde')
-  hexecute.execute("sleep " .. seconds);
+  hexecute.tryExecute("sleep " .. seconds);
 
   print(commandType .. ' ' .. parameters)
 
@@ -40,7 +40,7 @@ function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
   end
   print("executie dupa " .. seconds)
 
-  hexecute.execute("sleep " .. seconds);
+  hexecute.tryExecute("sleep " .. seconds);
 
   print('command' .. ' ' .. command)
 
@@ -54,7 +54,7 @@ function hsistem.executeFunctionAfterXSeconds(seconds, func)
   end
   
 
-  hexecute.execute("sleep " .. seconds);
+  hexecute.tryExecute("sleep " .. seconds);
 
   return func()
 end
@@ -82,9 +82,9 @@ function hsistem.errorVoltage()
 end
 
 function getVoltage()
-  -- response = hexecute.execute("cat /sys/class/hwmon/hwmon0/device/in0_input")
+  -- response = hexecute.tryExecute("cat /sys/class/hwmon/hwmon0/device/in0_input")
   response = hfile.readFile('/sys/class/hwmon/hwmon0/device/in0_input')
-  -- response = hexecute.execute("ubus call ioman.gpio.din1 status")
+  -- response = hexecute.tryExecute("ubus call ioman.gpio.din1 status")
   return response
 end
 
@@ -112,7 +112,7 @@ function hsistem.tryExecuteCommandFromServer(command)
 end
 
 function hsistem.getIsStarted()
-  response = hexecute.execute("/sbin/gpio.sh get DOUT2")
+  response = hexecute.tryExecute("/sbin/gpio.sh get DOUT2")
   return response
 end
 
@@ -127,7 +127,7 @@ function hsistem.tryExecuteGetIsStarted()
 end
 
 function hsistem.getMemory()
-  response = hexecute.execute('top -l 1 | grep -E "^CPU|^Phys"')
+  response = hexecute.tryExecute('top -l 1 | grep -E "^CPU|^Phys"')
   return response
 end
 
@@ -144,7 +144,7 @@ function hsistem.tryExecuteGetMemory()
 end
 
 function hsistem.getSpace()
-  response = hexecute.execute('df -H')
+  response = hexecute.tryExecute('df -H')
   return response
 end
 
@@ -178,7 +178,7 @@ function hsistem.executeGetCommand(name, value)
 
   if (name == 'luav') then
     -- "gpio 1 sau 0"
-    response = hexecute.execute('lua -v')
+    response = hexecute.tryExecute('lua -v')
     if (response ~= nil) then
       response = tostring(response)
     end
@@ -216,12 +216,12 @@ function hsistem.executeGetCommand(name, value)
   end
 
   if (name == 'time') then
-    response = hexecute.execute("date +%T")
+    response = htime.timeAsString()
     return response
   end
 
   if (name == 'datetime') then
-    -- response = hexecute.execute("date")
+    -- response = hexecute.tryExecute("date")
     response = htime.date()
     return response
   end
@@ -237,8 +237,8 @@ function hsistem.executeGetCommand(name, value)
 
   if (name == 'timezone') then
     -- "gpio 1 sau 0"
-    -- response = hexecute.execute("date + '%Z %z'")
-    response = hexecute.execute("date + '%z'")
+    -- response = hexecute.tryExecute("date + '%Z %z'")
+    response = htime.timezone()
     if (response ~= nil) then
       response = tostring(response)
     end
@@ -343,7 +343,7 @@ end
 function hsistem.executeSetCommand(name, value)
   if (name == 'gpio') then
     -- "gpio 1 sau 0"
-    -- hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
+    -- hexecute.tryExecute("/sbin/gpio.sh set DOUT2 " .. value)
 
     if (value == 1) then
       gpiocommands.tryStartGPIO()
@@ -360,7 +360,7 @@ function hsistem.executeSetCommand(name, value)
 
   -- if (name == 'timezone') then
   --   -- "gpio 1 sau 0"
-  --   hexecute.execute("/sbin/gpio.sh set DOUT2 " .. value)
+  --   hexecute.tryExecute("/sbin/gpio.sh set DOUT2 " .. value)
   --   return
   -- end
 
@@ -386,7 +386,7 @@ function hsistem.executeSetCommand(name, value)
 
   if (name == 'datetime') then
     -- date -s '2024-12-25 12:34:07'
-    hexecute.execute("date -s " .. "'" .. value .. "'")
+    hexecute.tryExecute("date -s " .. "'" .. value .. "'")
     -- todo seteaza mackintosh clock
     return
   end
@@ -419,7 +419,7 @@ function hsistem.executeSetCommand(name, value)
   end
 
   if (name == 'firmware') then
-    hexecute.execute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
+    hexecute.tryExecute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
     return
   end
 
@@ -427,18 +427,18 @@ function hsistem.executeSetCommand(name, value)
 end
 
 function hsistem.reboot()
-  hexecute.execute("reboot")
+  hexecute.tryExecute("reboot")
 end
 
 function hsistem.executeGeneric(command)
-  return hexecute.execute(command)
+  return hexecute.tryExecute(command)
 end
 
 function hsistem.executeGpio(command)
   local space = " ";
   local command = "/sbin/gpio.sh" .. space .. command;
 
-  return hexecute.execute(command);
+  return hexecute.tryExecute(command);
 end
 
 function hsistem.updatesettings(command)

@@ -21,6 +21,14 @@ function htime.addSecondsToDate(time, seconds)
   return time;
 end
 
+function htime.timezone()
+  return os.date('%m/%d/%y %H:%M:%S %z',htime.localTime())
+
+  -- https://www.lua.org/manual/5.4/manual.html#pdf-os.date
+  -- year, month (1–12), day (1–31), hour (0–23), min (0–59), sec (0–61, due to leap seconds), wday (weekday, 1–7, Sunday is
+  -- 1), yday (day of the year, 1–366), and isdst (daylight saving flag, a boolean)
+end
+
 function htime.getDateValues()
   return os.date("*t")
 
@@ -172,7 +180,10 @@ end
 
 -- print(htime.timeToString(htime.createTimeFromHMS('5:6:3')))
 
-print(htime.getSecondsUntil4AM())
+-- print(htime.getSecondsUntil4AM())
 -- htime.test()
+
+-- print(htime.timezone())
+-- print( os.date('%m/%d/%y %H:%M:%S %z',htime.localTime()))
 
 return htime

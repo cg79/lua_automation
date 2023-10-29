@@ -27,8 +27,8 @@ function gpiocommands.startGPIO()
   end
 
   hlog.logToFile('SUNTIME - PORNIRE DOUT2');
-  -- hexecute.execute('/sbin/gpio.sh set DOUT2')
-  hexecute.execute("/sbin/gpio.sh set DOUT2 1")
+  -- hexecute.tryExecute('/sbin/gpio.sh set DOUT2')
+  hexecute.tryExecute("/sbin/gpio.sh set DOUT2 1")
 end
 
 function gpiocommands.tryStartGPIO()
@@ -99,8 +99,8 @@ function gpiocommands.stopGPIO()
 
 
   hlog.logToFile('SUNTIME - OPRIRE DOUT2');
-  -- hexecute.execute('/sbin/gpio.sh clear DOUT2')
-  hexecute.execute("/sbin/gpio.sh set DOUT2 0")
+  -- hexecute.tryExecute('/sbin/gpio.sh clear DOUT2')
+  hexecute.tryExecute("/sbin/gpio.sh set DOUT2 0")
 end
 
 function gpiocommands.tryStopGPIO()
