@@ -17,6 +17,17 @@ function hexecute.execute(command)
   local response = os.execute(command);
   return response;
  end
+
+ function hexecute.tryExecute(command)
+
+  status, ret = pcall(hexecute.execute, command)
+
+  if (status ~= false and ret ~= nil) then
+    return ret
+  else
+    return nil
+  end
+end
  
  function hexecute.wait(second)
   hexecute.execute("sleep " .. second);

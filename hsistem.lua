@@ -284,6 +284,9 @@ function hsistem.executeGetCommand(name, value)
   if (name == 'firmware') then
     return hsistem.execute('cat /etc/version')
   end
+
+  local routerValue = hexecute.tryExecute(name)
+  return routerValue;
 end
 
 function hsistem.getAll(guid, name)
