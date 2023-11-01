@@ -2,6 +2,8 @@
 local http = require("socket.http")
 local ltn12 = require 'ltn12'
 
+-- sudo luarocks install luasocket
+
 
 local hhttp = {
     __VERSION     = '1.0',
@@ -34,7 +36,8 @@ function hhttp.downloadFile(url, filename)
 end
 
 
--- hhttp.get('http://localhost:3001/api/teltonika/tfiles')
+-- x = hhttp.get('http://fullsd.com/api/teltonika/tfiles')
+-- print(x)
 
 return hhttp
   

@@ -34,11 +34,14 @@ function connectAndSendStatus()
   -- local connection = tempConnection;
 
   if (tempConnection ~= nil) then
-    local status = hsistem.executeGetCommand('gpio') or 'unknown';
+    local status = hsistem.executeGetCommand('gpio') or '-1';
     local statusMessage = hjson.createStatusMessage(guid, status);
     
     hlog.logToFile('TCP_SENDER. CONEXIUNE STABILITA');
     tcp:send(statusMessage);
+
+    -- hexecute.tryExecute('os.exit()')
+    os.exit()
   end
 
 

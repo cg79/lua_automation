@@ -16,13 +16,13 @@ local hconstants = {
     GPS_FILE = 'gps.txt',
     SERVER = 'localhost',
     RECCONNECT_DELAY = 60,
-    SERVER_URL = 'https://fullsd.com',
+    SERVER_URL = 'http://fullsd.com',
     PORT = 8007,
     -- SERVER_URL_PROD = '134.209.246.72',
     SERVER_URL_PROD = 'tcp://0.tcp.eu.ngrok.io',
     PORT_PROD = 11163,
     -- PORT_PROD = 8007,
-    SERVER_FILES_URL = 'https://fullsd.com/api/teltonika/tfiles'
+    SERVER_FILES_URL = 'http://fullsd.com/api/teltonika/tfiles'
 }
   
   

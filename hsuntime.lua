@@ -20,6 +20,7 @@ function hsuntime.percentToMinutes(rise)
 
   minutes = percent * 60
   response = floor .. ':' .. minutes;
+  print('RRR ', response)
 
   local vals = hstring.splitBy(response, '.')
 
@@ -53,8 +54,8 @@ function hsuntime.calculateRiseAndSet(coordinates)
   response[1] = hsuntime.percentToMinutes(SunTime.rise)
   response[2] = hsuntime.percentToMinutes(SunTime.set)
 
-  hsettings.setSuntimeRise(SunTime.rise)
-  hsettings.setSuntime2(SunTime.set)
+  hsettings.setSuntimeRise(response[1])
+  hsettings.setSuntime2(response[2])
 
   -- print(SunTime.rise, SunTime.set, SunTime.set_civil) -- or similar see calculateTime()
   -- print(hsuntime.percentToMinutes(SunTime.set))

@@ -182,13 +182,13 @@ function hscheduler.start()
   local time1 = riseAndSunSetArray[1];
   local time2 = riseAndSunSetArray[2];
 
-  local now = htime.localTime()
-  local nowPlus5Sec = htime.addSecondsToDate(now, 5)
-  time1 = htime.timeToString(nowPlus5Sec)
+  -- local now = htime.localTime()
+  -- local nowPlus5Sec = htime.addSecondsToDate(now, 5)
+  -- time1 = htime.timeToString(nowPlus5Sec)
 
-  local nowPlus10Sec = htime.addSecondsToDate(now, 10)
-  time2 = htime.timeToString(nowPlus10Sec)
-
+  -- local nowPlus10Sec = htime.addSecondsToDate(now, 10)
+  -- time2 = htime.timeToString(nowPlus10Sec)
+  
   hlog.logToFile('SUNTIME - TIME1 ' .. time1);
   hlog.logToFile('SUNTIME - TIME2 ' .. time2);
 
@@ -196,10 +196,10 @@ function hscheduler.start()
   local sec2 = htime.getSeccondsUntilDateAsString(time2)
 
   hsistem.executeFunctionAfterXSeconds(sec1, gpiocommands.tryStartGPIO)
-  hexecute.tryExecute('lua tcp_sender.lua & ')
+  hexecute.tryExecute('lua tcp_sender.lua')
 
   hsistem.executeFunctionAfterXSeconds(sec2, gpiocommands.tryStopGPIO)
-  hexecute.tryExecute('lua tcp_sender.lua & ')
+  hexecute.tryExecute('lua tcp_sender.lua')
 
   local until4AM = htime.getSecondsUntil4AM();
   print(until4AM)

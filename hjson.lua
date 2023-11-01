@@ -46,8 +46,8 @@ end
 
 function hjson.createStatusMessage(guid, gpioValue) 
   local sid = hjson.createKeyValue('guid', guid);
-  local status = hjson.createKeyValue('commandtype', 'status');
-  local gpio = hjson.createKeyValue('gpio', gpioValue);
+  local status = hjson.createKeyValue('commandtype', 'valuefromrouter');
+  local gpio = hjson.createKeyValue('started', gpioValue);
 
   local response = "{" .. sid .. "," .. status .. "," .. gpio .. "}\n"
   return response .. "\n"

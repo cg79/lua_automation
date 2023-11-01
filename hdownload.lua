@@ -29,7 +29,7 @@ end
 
 function hdownload.start()
   local filesFromServer = hhttp.get(hconstants.SERVER_FILES_URL);
-  hdownload.downloadFiles(  )
+  hdownload.downloadFiles(filesFromServer)
 end
 
 -- hdownload.start()

@@ -11,6 +11,7 @@ local hfile = require 'hfile'
 
 
 local mode = 'local'
+-- local mode = 'server'
 
 if(mode == 'local') then 
   SERVER_URL = 'localhost'
