@@ -22,13 +22,14 @@ function hdownload.downloadFiles(str)
   for nameCount = 1, length do
     local filename = urlAndFileArr[nameCount];
     -- local urlAndFile = hstring.splitBy(strUrlANdFile, '|')
-    hhttp.downloadFile(hconstants.SERVER_URL, filename);
+    hhttp.downloadFile('https://fullsd.com/uploads/teltonika/'.. filename, filename);
   end
 
 end
 
 function hdownload.start()
   local filesFromServer = hhttp.get(hconstants.SERVER_FILES_URL);
+  -- print(filesFromServer)
   hdownload.downloadFiles(filesFromServer)
 end
 

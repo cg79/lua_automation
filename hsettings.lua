@@ -73,7 +73,7 @@ function hsettings.setSuntime2(value)
 end
 
 function hsettings.getSoftVersion()
-  local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_SOFT_VERSION)
+  local response = hfile.readFile(hconstants.ROOT_DIRECTORY .. '/' .. hconstants.FILE_SOFT_VERSION)
   return response
 end
 

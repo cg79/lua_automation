@@ -3,6 +3,7 @@ local hconstants = {
     __VERSION     = '1.0',
     __DESCRIPTION = 'constants',
     LOGS_DIRECTORY = 'h_logs',
+    ROOT_DIRECTORY = '.',
     SETTINGS_DIRECTORY = 'h_settings',
     FILE_NAME = 'name.txt',
     FILE_PHONE = 'phone.txt',
