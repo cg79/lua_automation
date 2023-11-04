@@ -1,12 +1,10 @@
-
 local hlog = require 'hlog'
 local hstring = require 'hstring'
 local hjson = require 'hjson'
 local hconstants = require 'hconstants'
-local hexecute = require 'hexecute'
 local hsistem = require 'hsistem'
 local hsettings = require 'hsettings'
-local socket = require("socket") 
+local socket = require("socket")
 
 print('TCP_SENDER ' .. socket._VERSION)
 
@@ -16,10 +14,9 @@ local guid = hsettings.deviceGuid()
 
 
 local masterSocket = socket.tcp();
-local tcp = assert(masterSocket)  
+local tcp = assert(masterSocket)
 
 function connectAndSendStatus()
-  
   local tempConnection = tcp:connect(hconstants.SERVER, hconstants.PORT);
   -- print(masterSocket.getstats())
   -- print('status' .. connection.status)
@@ -36,7 +33,7 @@ function connectAndSendStatus()
   if (tempConnection ~= nil) then
     local status = hsistem.executeGetCommand('gpio') or '-1';
     local statusMessage = hjson.createStatusMessage(guid, status);
-    
+
     hlog.logToFile('TCP_SENDER. CONEXIUNE STABILITA');
     tcp:send(statusMessage);
 
@@ -49,15 +46,3 @@ function connectAndSendStatus()
 end
 
 connectAndSendStatus();
-
-
-
-
-
- 
-
-
-
-
-
-
