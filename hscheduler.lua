@@ -12,7 +12,8 @@ local gpiocommands = require 'gpio_commands'
 local hscheduler = {
   __VERSION     = '1.0',
   __DESCRIPTION = 'Scheduler-related functions for lua',
-  __DIRECTORY   = './h_schedules'
+  __DIRECTORY   = './h_schedules',
+  STARTED       = 0
 }
 
 
@@ -162,9 +163,7 @@ function hscheduler.gpsAndSuntimeAndScheduler()
   return riseAndSunSetArray;
 end
 
-
 function hscheduler.testTime()
-
   -- local now = htime.timeToString()
   local now = htime.localTime()
   local nowPlus5Sec = htime.addSecondsToDate(now, 5)
@@ -177,10 +176,10 @@ function hscheduler.testTime()
 end
 
 function hscheduler.start()
-
   local riseAndSunSetArray = hscheduler.gpsAndSuntimeAndScheduler()
   local time1 = riseAndSunSetArray[1];
   local time2 = riseAndSunSetArray[2];
+  hlog.logToFile('Starting scheduler ' .. time1 .. ',' .. time2)
 
   -- local now = htime.localTime()
   -- local nowPlus5Sec = htime.addSecondsToDate(now, 5)
@@ -188,7 +187,11 @@ function hscheduler.start()
 
   -- local nowPlus10Sec = htime.addSecondsToDate(now, 10)
   -- time2 = htime.timeToString(nowPlus10Sec)
-  
+
+  -- time1 = 'plm'
+  hscheduler.STARTED = 1;
+  print(hscheduler.STARTED);
+
   hlog.logToFile('SUNTIME - TIME1 ' .. time1);
   hlog.logToFile('SUNTIME - TIME2 ' .. time2);
 
@@ -210,8 +213,9 @@ function hscheduler.start()
   hexecute.tryExecute("reboot")
 end
 
+-- hscheduler.start()
 
-hscheduler.start()
+hsistem.tryExecuteFunction(hscheduler.start)
 
 
 return hscheduler

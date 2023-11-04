@@ -1,5 +1,4 @@
 local hsettings = require 'hsettings'
-local hschedulersave = require 'hschedulersave'
 local hexecute = require 'hexecute'
 local hgps = require 'hgps'
 local hstring = require 'hstring'
@@ -10,6 +9,7 @@ local htime = require 'htime'
 local hsuntime = require('hsuntime')
 local hjson = require 'hjson'
 local gpiocommands = require 'gpio_commands'
+-- local hscheduler = require 'hscheduler'
 
 local hsistem = {
   __VERSION     = '1.0',
@@ -31,7 +31,7 @@ function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
 
   print(commandType .. ' ' .. parameters)
 
-  return hsistem.executeGeneric(commandType .. parameters)
+  return hexecute.tryExecute(commandType .. parameters)
 end
 
 function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
@@ -44,7 +44,7 @@ function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
 
   print('command' .. ' ' .. command)
 
-  return hsistem.executeGeneric(command)
+  return hexecute.tryExecute(command)
 end
 
 function hsistem.executeFunctionAfterXSeconds(seconds, func)
@@ -52,7 +52,7 @@ function hsistem.executeFunctionAfterXSeconds(seconds, func)
   if (seconds < 0) then
     return
   end
-  
+
 
   hexecute.tryExecute("sleep " .. seconds);
 
@@ -309,7 +309,8 @@ function hsistem.getAll(guid, name)
   -- local whoStr = '{"commandtype":"who","name":"router1"}\n';
   local whoStr = guid .. '|' .. name .. '|' .. phone .. '|' .. region .. '|'
   whoStr = whoStr ..
-  master .. '|' .. coordinates .. '|' .. started .. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier .. '|' .. hour
+      master ..
+      '|' .. coordinates .. '|' .. started .. '|' .. voltage .. '|' .. vsuntime .. '|' .. barrier .. '|' .. hour
 
   return whoStr
 end
@@ -420,6 +421,16 @@ function hsistem.executeSetCommand(name, value)
     return hsettings.getBarrier()
   end
 
+  if (name == 'startscheduler') then
+    -- print(hscheduler.STARTED)
+    -- hsistem.updatebarrier(value)
+    -- return hsettings.getBarrier()
+    -- return hscheduler.STARTED
+    return 0;
+  end
+
+
+
   -- if (name == 'firmware') then
   --   hexecute.tryExecute('sysupgrade /tmp/RUT9XX_R_00.05.00.5_WEBUI.bin')
   --   return
@@ -430,10 +441,6 @@ end
 
 function hsistem.reboot()
   hexecute.tryExecute("reboot")
-end
-
-function hsistem.executeGeneric(command)
-  return hexecute.tryExecute(command)
 end
 
 function hsistem.executeGpio(command)
@@ -505,7 +512,7 @@ function hsistem.executeCommandFromServer(command)
   end
 
   if (cmdtype == 'generic') then
-    response = hsistem.executeGeneric(command)
+    response = hexecute.tryExecute(command)
     if (response == nil) then
       return nil
     end
@@ -591,6 +598,20 @@ end
 function hsistem.getHour()
   local response = htime.timeAsString() .. ',' .. hgsm.tryExecuteGetGSMTime() .. ',' .. hgps.tryGetGpsTime()
   return response
+end
+
+function hsistem.tryExecuteFunction(fct)
+  status, ret = pcall(fct)
+
+  print(status)
+  print(ret)
+  if (status ~= false and ret ~= nil) then
+    return ret
+  else
+    -- local errMessage = ret or 'unk'
+    -- hlog.logToFile('ERROR: ' .. errMessage)
+    return nil
+  end
 end
 
 --  print(hsistem.getHour())
