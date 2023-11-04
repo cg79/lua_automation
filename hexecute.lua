@@ -60,4 +60,30 @@ function hexecute.executeAfterXSeconds(seconds, commandType, parameters)
   return hexecute.tryExecute(commandType .. parameters)
 end
 
+function hexecute.executeFunctionAfterXSeconds(seconds, func)
+  print("executie dupa " .. seconds)
+  if (seconds < 0) then
+    return
+  end
+
+
+  hexecute.tryExecute("sleep " .. seconds);
+
+  return func()
+end
+
+function hexecute.tryExecuteFunction(fct)
+  status, ret = pcall(fct)
+
+  print(status)
+  print(ret)
+  if (status ~= false and ret ~= nil) then
+    return ret
+  else
+    -- local errMessage = ret or 'unk'
+    -- hlog.logToFile('ERROR: ' .. errMessage)
+    return nil
+  end
+end
+
 return hexecute

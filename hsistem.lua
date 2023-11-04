@@ -38,18 +38,6 @@ function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
   return hexecute.tryExecute(command)
 end
 
-function hsistem.executeFunctionAfterXSeconds(seconds, func)
-  print("executie dupa " .. seconds)
-  if (seconds < 0) then
-    return
-  end
-
-
-  hexecute.tryExecute("sleep " .. seconds);
-
-  return func()
-end
-
 function hsistem.logs(anlunazi)
   local fileName = htime.getLogFilePath(anlunazi)
   print('logs file: ' .. fileName)
@@ -589,20 +577,6 @@ end
 function hsistem.getHour()
   local response = htime.timeAsString() .. ',' .. hgsm.tryExecuteGetGSMTime() .. ',' .. hgps.tryGetGpsTime()
   return response
-end
-
-function hsistem.tryExecuteFunction(fct)
-  status, ret = pcall(fct)
-
-  print(status)
-  print(ret)
-  if (status ~= false and ret ~= nil) then
-    return ret
-  else
-    -- local errMessage = ret or 'unk'
-    -- hlog.logToFile('ERROR: ' .. errMessage)
-    return nil
-  end
 end
 
 --  print(hsistem.getHour())
