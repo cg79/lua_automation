@@ -139,12 +139,6 @@ function hsistem.tryExecuteGetSpace()
   end
 end
 
-function hsistem.getSuntime()
-  local val1 = hsettings.getSuntimeRise()
-  local val2 = hsettings.getSuntime2()
-  return val1 .. ',' .. val2;
-end
-
 function hsistem.executeGetCommand(name, value)
   print('execute GET ' .. name)
   local response = ''
@@ -240,7 +234,7 @@ function hsistem.executeGetCommand(name, value)
   end
 
   if (name == 'suntime') then
-    return hsistem.getSuntime()
+    return hsettings.getSuntime()
   end
 
   if (name == 'all') then
@@ -278,7 +272,7 @@ function hsistem.getAll(guid, name)
   local started = hsistem.tryExecuteGetIsStarted()
   local voltage = hsistem.tryExecuteGetVoltage();
 
-  local vsuntime = hsistem.getSuntime()
+  local vsuntime = hsettings.getSuntime()
 
   local barrier = hsettings.getBarrier()
   local hour = hsistem.getHour()

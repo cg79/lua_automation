@@ -2,7 +2,6 @@ local hstring = require 'hstring'
 local hfile = require 'hfile'
 local hlog = require 'hlog'
 local htime = require 'htime'
-local hsistem = require 'hsistem'
 local hsettings = require 'hsettings'
 local hgps = require 'hgps'
 local hexecute = require 'hexecute'
@@ -145,7 +144,7 @@ function hscheduler.gpsAndSuntimeAndScheduler()
 
   -- local latitudeLongitude = hstring.splitBy(gpsCoordinates, ',')
 
-  local suntime = hsistem.getSuntime()
+  local suntime = hsettings.getSuntime()
 
   print('aaa ', suntime)
 

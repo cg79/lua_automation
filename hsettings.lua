@@ -1,14 +1,13 @@
-
 local hfile = require 'hfile'
 local hconstants = require 'hconstants'
 
 
 local hsettings = {
-    __VERSION     = '1.0',
-    __DESCRIPTION = 'settings',
+  __VERSION     = '1.0',
+  __DESCRIPTION = 'settings',
 }
-  
-  
+
+
 function hsettings.test()
   print("hsettings merge")
 end
@@ -19,11 +18,11 @@ end
 
 function hsettings.deviceGuid()
   local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_GUID);
-  if(response == nil) then
+  if (response == nil) then
     response = hconstants.uuid()
     hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_GUID, response)
   end
-  
+
   return response
 end
 
@@ -77,8 +76,6 @@ function hsettings.getSoftVersion()
   return response
 end
 
-
-
 function hsettings.getBarrier()
   local response = hfile.readFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_BARRIER)
   return response or ''
@@ -87,7 +84,6 @@ end
 function hsettings.setBarrier(value)
   hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_BARRIER, value)
 end
-
 
 function hsettings.setIsMaster(region)
   hfile.writeToFile(hconstants.SETTINGS_DIRECTORY .. '/' .. hconstants.FILE_MASTER, region)
@@ -98,7 +94,10 @@ function hsettings.getIsMaster()
   return response
 end
 
+function hsettings.getSuntime()
+  local val1 = hsettings.getSuntimeRise()
+  local val2 = hsettings.getSuntime2()
+  return val1 .. ',' .. val2;
+end
 
 return hsettings
-  
-  
