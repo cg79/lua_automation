@@ -108,7 +108,7 @@ end
 
 function hscheduler.executeObjectCommand(obj)
   local afterHowManySeconds = htime.getSeccondsUntilDate(obj.time)
-  hsistem.executeAfterXSeconds(afterHowManySeconds, obj.commandType, obj.parameters)
+  hexecute.executeAfterXSeconds(afterHowManySeconds, obj.commandType, obj.parameters)
   -- if index < #arr then
   -- end
 end

@@ -1,11 +1,9 @@
-
-
 local hexecute = {
-    __VERSION     = '1.0',
-    __DESCRIPTION = 'os execute functions',
+  __VERSION     = '1.0',
+  __DESCRIPTION = 'os execute functions',
 }
-  
-  
+
+
 function hexecute.test()
   print("hexecute merge")
 end
@@ -19,9 +17,9 @@ function hexecute.executePOpen(command)
   s = string.gsub(s, '%s+$', '')
   s = string.gsub(s, '[\n\r]+', ' ')
   return s
- end
+end
 
- function hexecute.tryExecutePOpen(command)
+function hexecute.tryExecutePOpen(command)
   status, ret = pcall(hexecute.executePOpen, command)
 
   if (status ~= false and ret ~= nil) then
@@ -37,9 +35,9 @@ function hexecute.execute(command)
   local response = os.execute(command);
   -- print(response)
   return response;
- end
+end
 
- function hexecute.tryExecute(command)
+function hexecute.tryExecute(command)
   status, ret = pcall(hexecute.execute, command)
 
   if (status ~= false and ret ~= nil) then
@@ -48,12 +46,18 @@ function hexecute.execute(command)
     return nil
   end
 end
- 
- function hexecute.wait(second)
-  hexecute.execute("sleep " .. second);
- end
 
-  
+function hexecute.wait(second)
+  hexecute.execute("sleep " .. second);
+end
+
+function hexecute.executeAfterXSeconds(seconds, commandType, parameters)
+  print("executie dupa " .. seconds .. ' secunde')
+  hexecute.tryExecute("sleep " .. seconds);
+
+  print(commandType .. ' ' .. parameters)
+
+  return hexecute.tryExecute(commandType .. parameters)
+end
+
 return hexecute
-  
-  

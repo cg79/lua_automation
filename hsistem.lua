@@ -25,15 +25,6 @@ function hsistem.getGPS()
   return 0, 0
 end
 
-function hsistem.executeAfterXSeconds(seconds, commandType, parameters)
-  print("executie dupa " .. seconds .. ' secunde')
-  hexecute.tryExecute("sleep " .. seconds);
-
-  print(commandType .. ' ' .. parameters)
-
-  return hexecute.tryExecute(commandType .. parameters)
-end
-
 function hsistem.executeGenericCommandAfterXSeconds(seconds, command)
   if (seconds < 0) then
     return
