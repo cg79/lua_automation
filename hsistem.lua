@@ -494,7 +494,13 @@ function hsistem.executeCommandFromServer(command)
   end
 
   if (cmdtype == 'gpio') then
-    response = hexecute.tryExecuteFunction(hsistem.executeGpio, command)
+    -- response = hexecute.tryExecuteFunction(hsistem.executeGpio, command)
+    if (command == '1') then
+      response = gpiocommands.tryStartGPIO()
+    else
+      response = gpiocommands.tryStopGPIO()
+    end
+
     if (response == nil) then
       return nil
     end
