@@ -183,6 +183,10 @@ function htime.setTime(timeAsString)
   htime.setDateTime(command)
 end
 
+function htime.updateMithubishiTime(gsmTime)
+  return os.execute('modbus 192.168.1.1 ' .. gsmTime)
+end
+
 -- htime.getSecondsUntil4AM();
 
 -- print(htime.date())

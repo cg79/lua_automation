@@ -1,5 +1,5 @@
 local gpiocommands = require 'gpio_commands'
-
+local hexecute = require 'hexecute'
 
 local jugglerstop = {
   __VERSION     = '1.0',
@@ -11,6 +11,7 @@ function jugglerstop.test()
 end
 
 gpiocommands.tryStopGPIO()
+hexecute.tryExecute('lua tcp_sender.lua')
 
 
 return jugglerstop

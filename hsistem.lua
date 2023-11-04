@@ -494,20 +494,20 @@ function hsistem.executeCommandFromServer(command)
   end
 
   if (cmdtype == 'gpio') then
-    response = hsistem.executeGpio(command)
+    response = hexecute.tryExecuteFunction(hsistem.executeGpio, command)
     if (response == nil) then
       return nil
     end
     return hsistem.createKeyValueResponse('gpio', response);
   end
 
-  if (cmdtype == 'fotocell') then
-    response = hsistem.executeGpio(command)
-    if (response == nil) then
-      return nil
-    end
-    return hsistem.createKeyValueResponse('fotocell', response);
-  end
+  -- if (cmdtype == 'fotocell') then
+  --   response = hsistem.executeGpio(command)
+  --   if (response == nil) then
+  --     return nil
+  --   end
+  --   return hsistem.createKeyValueResponse('fotocell', response);
+  -- end
 
   if (cmdtype == 'modbus') then
     -- hsistem.executeGpio(command)
@@ -574,13 +574,6 @@ function hsistem.getHour()
   return response
 end
 
-function hsistem.corelateSystemTimeWithGsm()
-  local gsmTime = hgsm.tryExecuteGetGSMTime()
-  if (gsmTime ~= nil) then
-    return htime.setTime(gsmTime)
-  end
-end
-
 function hsistem.corelateSystemTimeWithGps()
   local gpsTime = hgps.getGpsTime()
   if (gpsTime ~= nil) then
@@ -588,8 +581,17 @@ function hsistem.corelateSystemTimeWithGps()
   end
 end
 
+function hsistem.corelateSystemTimeWithGsm()
+  local gsmTime = hgsm.tryExecuteGetGSMTime() or ''
+  print('GSM TIME ' .. gsmTime)
+  if (gsmTime ~= nil) then
+    hexecute.tryExecuteFunction(htime.setTime, gsmTime)
+    hexecute.tryExecuteFunction(htime.updateMithubishiTime, gsmTime)
+  end
+end
+
 function hsistem.corelateTime()
-  hsistem.corelateSystemTimeWithGsm()
+  hexecute.tryExecuteFunction(hsistem.corelateSystemTimeWithGsm)
 end
 
 --  print(hsistem.getHour())

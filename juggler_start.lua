@@ -1,4 +1,5 @@
 local gpiocommands = require 'gpio_commands'
+local hexecute = require 'hexecute'
 
 
 local jugglerstart = {
@@ -11,6 +12,7 @@ function jugglerstart.test()
 end
 
 gpiocommands.tryStartGPIO()
+hexecute.tryExecute('lua tcp_sender.lua')
 
 
 return jugglerstart

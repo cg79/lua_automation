@@ -72,8 +72,8 @@ function hexecute.executeFunctionAfterXSeconds(seconds, func)
   return func()
 end
 
-function hexecute.tryExecuteFunction(fct)
-  status, ret = pcall(fct)
+function hexecute.tryExecuteFunction(fct, param)
+  status, ret = pcall(fct, param)
 
   print(status)
   print(ret)
