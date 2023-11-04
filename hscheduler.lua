@@ -175,10 +175,12 @@ function hscheduler.testTime()
 end
 
 function hscheduler.start()
+  hlog.logToFile('Starting scheduler ' .. time1 .. ',' .. time2)
+
   local riseAndSunSetArray = hscheduler.gpsAndSuntimeAndScheduler()
   local time1 = riseAndSunSetArray[1];
   local time2 = riseAndSunSetArray[2];
-  hlog.logToFile('Starting scheduler ' .. time1 .. ',' .. time2)
+  hlog.logToFile('Starting scheduler cu orele start/stop: ' .. time1 .. ',' .. time2)
 
   -- local now = htime.localTime()
   -- local nowPlus5Sec = htime.addSecondsToDate(now, 5)

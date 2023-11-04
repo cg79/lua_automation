@@ -22,7 +22,7 @@ function htime.addSecondsToDate(time, seconds)
 end
 
 function htime.timezone()
-  return os.date('%m/%d/%y %H:%M:%S %z',htime.localTime())
+  return os.date('%m/%d/%y %H:%M:%S %z', htime.localTime())
 
   -- https://www.lua.org/manual/5.4/manual.html#pdf-os.date
   -- year, month (1–12), day (1–31), hour (0–23), min (0–59), sec (0–61, due to leap seconds), wday (weekday, 1–7, Sunday is
@@ -151,8 +151,8 @@ end
 
 function htime.secondsToHHMMSS(seconds)
   local negative = '';
-  if(seconds<0) then
-    negative= '-';
+  if (seconds < 0) then
+    negative = '-';
     seconds = seconds * -1;
   end
   local hSec = 60 * 60;
@@ -164,11 +164,23 @@ function htime.secondsToHHMMSS(seconds)
 end
 
 function htime.test()
-
   local t2 = htime.createTimeFromHMS('9');
   local seconds = htime.getSeccondsUntilDate(t2)
   print(seconds .. '     ' .. htime.secondsToHHMMSS(seconds))
   return seconds;
+end
+
+function htime.setDateTime()
+  -- date -s '2024-12-25 12:34:07'
+  hexecute.tryExecute("date -s " .. "'" .. value .. "'")
+end
+
+function htime.setTime(timeAsString)
+  -- date -s '2024-12-25 12:34:07'
+  local command = htime.getDateValues()
+  -- print(date.hour .. ' - ' .. date.min)
+
+  htime.setDateTime(command)
 end
 
 -- htime.getSecondsUntil4AM();

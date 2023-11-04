@@ -359,10 +359,11 @@ function hsistem.executeSetCommand(name, value)
   end
 
   if (name == 'datetime') then
+    htime.setDateTime(value)
     -- date -s '2024-12-25 12:34:07'
 
     -- print('set DATETIME ' .. value)
-    hexecute.tryExecute("date -s " .. "'" .. value .. "'")
+    -- hexecute.tryExecute("date -s " .. "'" .. value .. "'")
     -- todo seteaza mackintosh clock
     return
   end
@@ -571,6 +572,24 @@ end
 function hsistem.getHour()
   local response = htime.timeAsString() .. ',' .. hgsm.tryExecuteGetGSMTime() .. ',' .. hgps.tryGetGpsTime()
   return response
+end
+
+function hsistem.corelateSystemTimeWithGsm()
+  local gsmTime = hgsm.tryExecuteGetGSMTime()
+  if (gsmTime ~= nil) then
+    return htime.setTime(gsmTime)
+  end
+end
+
+function hsistem.corelateSystemTimeWithGps()
+  local gpsTime = hgps.getGpsTime()
+  if (gpsTime ~= nil) then
+    return htime.setTime(gpsTime)
+  end
+end
+
+function hsistem.corelateTime()
+  hsistem.corelateSystemTimeWithGsm()
 end
 
 --  print(hsistem.getHour())

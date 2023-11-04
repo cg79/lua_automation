@@ -21,7 +21,7 @@ end
 function gpiocommands.startGPIO()
   local allowStartGPIO = gpiocommands.allowStartGPIO()
 
-  if(allowStartGPIO == false) then
+  if (allowStartGPIO == false) then
     hlog.logToFile('PREVENIRE PORNIRE');
     return
   end
@@ -55,11 +55,11 @@ function gpiocommands.allowStartGPIO()
   print(seconds1 .. '   ' .. htime.secondsToHHMMSS(seconds1) .. ' b1')
   print(seconds2 .. '   ' .. htime.secondsToHHMMSS(seconds2) .. ' b2')
 
-  if(seconds1 <0 and seconds2 < 0) then
+  if (seconds1 < 0 and seconds2 < 0) then
     return true
   end
 
-  if(seconds1 >0 and seconds2 > 0) then
+  if (seconds1 > 0 and seconds2 > 0) then
     return true
   end
 
@@ -80,19 +80,17 @@ function gpiocommands.allowStopGPIO()
   print(seconds1 .. '   ' .. htime.secondsToHHMMSS(seconds1) .. ' b1')
   print(seconds2 .. '   ' .. htime.secondsToHHMMSS(seconds2) .. ' b2')
 
-  if(seconds1 < 0 and seconds2 > 0) then
+  if (seconds1 < 0 and seconds2 > 0) then
     return true
   end
 
   return false;
 end
 
-
-
 function gpiocommands.stopGPIO()
   local allowStopGPIO = gpiocommands.allowStopGPIO()
 
-  if(allowStopGPIO == false) then
+  if (allowStopGPIO == false) then
     hlog.logToFile('PREVENIRE OPRIRE');
     return
   end
@@ -112,6 +110,5 @@ function gpiocommands.tryStopGPIO()
     return nil
   end
 end
-
 
 return gpiocommands

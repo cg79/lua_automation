@@ -1,18 +1,16 @@
-
-
-
 local hexecute = require 'hexecute'
 local hlog = require 'hlog'
 local hfile = require 'hfile'
 local hsettings = require 'hsettings'
 local hconstants = require 'hconstants'
+local hsistem = require 'hsistem'
 
 
 local hboot = {
-    __VERSION     = '1.0',
-    __DESCRIPTION = 'bootlua',
+  __VERSION     = '1.0',
+  __DESCRIPTION = 'bootlua',
 }
-  
+
 function hboot.test()
   print("hlog merge")
 end
@@ -23,7 +21,11 @@ hsettings.deviceGuid();
 
 hexecute.wait(10)
 
-hlog.logToFile('!!! PORNIRE ROUTER !!!');
+hlog.logToFile('!!! CORELARE TIMP !!!');
+
+hsistem.corelateTime()
+
+hlog.logToFile('!!! PORNIRE SERVER !!!');
 
 hexecute.tryExecute('lua tcp_client.lua &')
 
@@ -32,5 +34,3 @@ hexecute.wait(30)
 hexecute.tryExecute('lua hscheduler.lua &')
 
 return hboot
-  
-  
